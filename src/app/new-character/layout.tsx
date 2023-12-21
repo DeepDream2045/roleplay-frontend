@@ -1,4 +1,4 @@
-// app/dashboard/layout.tsx
+// app/new-character/layout.tsx
 
 import { PropsWithChildren } from "react";
 
@@ -6,9 +6,11 @@ import { Header } from "@/app/components/Header";
 import { Sidebar } from "@/app/components/Sidebar";
 import Link from "next/link";
 
-type DashboardLayoutProps = PropsWithChildren<{}>;
+type NewCharacterLayoutProps = PropsWithChildren<{}>;
 
-export default function DashboardLayout({ children }: DashboardLayoutProps) {
+export default function NewCharacterLayout({
+    children,
+}: NewCharacterLayoutProps) {
     return (
         <div className="grid grid-cols-12 gap-4">
             <aside className="col-span-2 h-screen sticky top-0 w-52 py-4 border-r">
@@ -43,14 +45,15 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 </div>
             </aside>
             <div className="col-span-10 min-h-screen">
-                <header className="sticky top-0 flex flex-1 bg-neutral-50 py-2 justify-center z-10">
-                    <input
-                        type="text"
-                        placeholder="Search"
-                        className="flex w-7/12 border rounded-lg h-10 placeholder:pl-4"
-                    />
+                <header className="sticky top-0 flex flex-col flex-1 bg-neutral-50 py-2 items-center z-10">
+                    <div className="max-w-screen-md w-full ">
+                        <div className="font-bold">New Character</div>
+                        <div className="font-normal text-sm">Draft</div>
+                    </div>
                 </header>
-                <main className="flex flex-1 max-w-full">{children}</main>
+                <main className="flex flex-1 max-w-full flex-col items-center">
+                    {children}
+                </main>
             </div>
         </div>
     );
