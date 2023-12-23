@@ -5,6 +5,7 @@ import { PropsWithChildren } from "react";
 import { Header } from "@/app/components/Header";
 import { Sidebar } from "@/app/components/Sidebar";
 import Link from "next/link";
+import { Home, PlusCircle, MessageCircleMore, User } from "lucide-react";
 
 type DashboardLayoutProps = PropsWithChildren<{}>;
 
@@ -20,24 +21,28 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                         href="/dashboard"
                         className="h-10 flex flex-1 flex-row items-center px-4 py-2 text-base"
                     >
+                        <Home className="w-6 h-6 mr-2" />
                         Home
                     </Link>
                     <Link
                         href="/new-character"
                         className="h-10 flex flex-1 flex-row items-center px-4 py-2 text-base"
                     >
+                        <PlusCircle className="w-6 h-6 mr-2" />
                         Create Character
                     </Link>
                     <Link
-                        href="/dashboard"
+                        href="/chats"
                         className="h-10 flex flex-1 flex-row items-center px-4 py-2 text-base"
                     >
+                        <MessageCircleMore className="w-6 h-6 mr-2" />
                         Chats
                     </Link>
                     <Link
                         href="/dashboard"
                         className="h-10 flex flex-1 flex-row items-center px-4 py-2 text-base"
                     >
+                        <User className="w-6 h-6 mr-2" />
                         Profile
                     </Link>
                 </div>
