@@ -63,7 +63,7 @@ function Chats(props: ChatsProps): ReactElement {
                 {/* Message List */}
                 <div className="flex flex-1 flex-col-reverse pt-4 pb-8 px-4 gap-4">
                     <MessageComponent
-                        message="I may have a serious exterior, but deep down I just want someone to share my cape with while slaying Titans."
+                        message="I have something tell you, but it's a secret. so please don't tell anyone lol"
                         rigth
                     />
                     <MessageComponent

@@ -12,7 +12,7 @@ export default function MessageComponent({
     rigth = false,
 }: MessageComponentProps) {
     const wrapperClass = rigth
-        ? "flex flex-row-reverse justify-end gap-4 pl-32 items-end"
+        ? "flex flex-row-reverse justify-start gap-4"
         : "flex flex-row gap-4 pr-32 items-end";
     return (
         <div className={wrapperClass}>
@@ -26,7 +26,13 @@ export default function MessageComponent({
                 />
             )}
 
-            <div className="flex bg-blue-50 p-2 rounded-lg">{message}</div>
+            <div
+                className={`flex ${
+                    rigth ? "bg-gray-200" : "bg-blue-50"
+                } p-2 rounded-lg`}
+            >
+                {message}
+            </div>
         </div>
     );
 }
