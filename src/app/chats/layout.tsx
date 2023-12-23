@@ -2,8 +2,6 @@
 
 import { PropsWithChildren } from "react";
 
-import { Header } from "@/app/components/Header";
-import { Sidebar } from "@/app/components/Sidebar";
 import Link from "next/link";
 import { Home, PlusCircle, MessageCircleMore, User } from "lucide-react";
 
@@ -12,6 +10,7 @@ type ChatsLayoutProps = PropsWithChildren<{}>;
 export default function ChatsLayout({ children }: ChatsLayoutProps) {
     return (
         <div className="grid grid-cols-12 gap-4">
+            {/* Sidebar Icon Only */}
             <aside className="w-16 h-screen sticky top-0 py-4 border-r">
                 <div className="h-10 flex flex-row items-center px-4">
                     <h2 className="text-sm bg-blue-300 p-1 rounded-full">CA</h2>
