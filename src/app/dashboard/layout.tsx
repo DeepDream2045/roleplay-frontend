@@ -16,7 +16,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 </div>
                 <div className="flex mt-6 flex-col">
                     <Link
-                        href="/dashboard"
+                        href="/"
                         className="h-10 flex flex-1 flex-row items-center px-4 py-2 text-base"
                     >
                         <Home className="w-6 h-6 mr-2" />
@@ -37,7 +37,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                         Chats
                     </Link>
                     <Link
-                        href="/dashboard"
+                        href="/"
                         className="h-10 flex flex-1 flex-row items-center px-4 py-2 text-base"
                     >
                         <User className="w-6 h-6 mr-2" />
