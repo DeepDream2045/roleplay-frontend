@@ -4,7 +4,7 @@ interface InputOption {
 }
 
 interface InputFormProps {
-    label: string;
+    label?: string;
     helperText?: string;
     id: string;
     type: "text" | "textarea" | "radio";
@@ -31,7 +31,7 @@ export default function InputForm({
     options = [],
 }: InputFormProps) {
     return (
-        <div>
+        <div className="w-full">
             {type !== "radio" && (
                 <label htmlFor={id} className="font-semibold text-sm">
                     {label}
