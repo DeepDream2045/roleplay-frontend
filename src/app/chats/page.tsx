@@ -4,18 +4,13 @@ import { ReactElement, useState } from "react";
 import ChatsLayout from "@/app/chats/layout";
 import Image from "next/image";
 import InputForm from "../components/InputForm";
-import Toggle from "../components/Toggle";
 import ChatComponent from "./ChatComponent";
 import { MoreHorizontal, SendHorizonal } from "lucide-react";
 import MessageComponent from "./MessageComponent";
 
-interface ChatsProps {
-    children: ReactElement;
-}
+interface ChatsProps {}
 
 function Chats(props: ChatsProps): ReactElement {
-    const [isShowPrompt, setIsShowPrompt] = useState<boolean>(true);
-
     return (
         <div className="flex flex-1 flex-row w-full">
             {/* Chat List */}

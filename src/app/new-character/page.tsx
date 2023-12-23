@@ -6,9 +6,7 @@ import Image from "next/image";
 import InputForm from "../components/InputForm";
 import Toggle from "../components/Toggle";
 
-interface NewCharacterProps {
-    children: ReactElement;
-}
+interface NewCharacterProps {}
 
 function NewCharacter(props: NewCharacterProps): ReactElement {
     const [isShowPrompt, setIsShowPrompt] = useState<boolean>(true);

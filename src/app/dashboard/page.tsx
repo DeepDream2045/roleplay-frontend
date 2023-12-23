@@ -4,9 +4,7 @@ import RecentChatCard from "../components/dashboard/RecentChatCard";
 import Category from "../components/dashboard/Category";
 import CharacterCard from "../components/dashboard/CharacterCard";
 
-interface DashboardProps {
-    children: ReactElement;
-}
+interface DashboardProps {}
 
 function Dashboard(props: DashboardProps): ReactElement {
     return (
