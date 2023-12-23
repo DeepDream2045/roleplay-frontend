@@ -1,0 +1,9 @@
+version: "3.8"
+services:
+  dashboard-front-end:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5902:5902"
+    restart: always
