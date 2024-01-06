@@ -2,14 +2,15 @@ import { ReactElement } from "react";
 import DashboardLayout from "@/app/dashboard/layout";
 import { getServerSession } from "next-auth";
 import NewCharacterForm from "./form";
+import AskToLogin from "./AskToLogin";
 
 interface NewCharacterProps {}
 
 async function NewCharacter(props: NewCharacterProps) {
     const session = await getServerSession();
 
-    if (!session) {
-        return <div>Not authenticated</div>;
+    if (session) {
+        return <AskToLogin />;
     }
 
     return (

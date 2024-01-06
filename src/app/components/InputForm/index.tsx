@@ -7,7 +7,7 @@ interface InputFormProps {
     label?: string;
     helperText?: string;
     id: string;
-    type: "text" | "textarea" | "radio";
+    type: "text" | "textarea" | "radio" | "email";
     rows?: number;
     placeholder?: string;
     required?: boolean;
@@ -52,9 +52,11 @@ export default function InputForm({
                 </div>
             )}
 
-            {type === "text" && (
+            {(type === "text" || type === "email") && (
                 <input
                     id={id}
+                    type={type}
+                    placeholder={placeholder}
                     className="w-full mt-2 p-2 border h-10 border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 />
             )}

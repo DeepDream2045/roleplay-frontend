@@ -11,8 +11,8 @@ export default function NewCharacterLayout({
     children,
 }: NewCharacterLayoutProps) {
     return (
-        <div className="grid grid-cols-12 gap-4">
-            <aside className="col-span-2 h-screen sticky top-0 w-52 py-4 border-r">
+        <div className="flex gap-4">
+            <aside className="h-screen sticky top-0 min-w-52 max-w-52 py-4 border-r">
                 <div className="h-10 flex flex-row items-center px-4">
                     <h2 className="text-xl">Chatbot AI</h2>
                 </div>
@@ -47,7 +47,7 @@ export default function NewCharacterLayout({
                     </Link>
                 </div>
             </aside>
-            <div className="col-span-10 min-h-screen">{children}</div>
+            <div className="min-h-screen flex flex-1 flex-col">{children}</div>
         </div>
     );
 }
