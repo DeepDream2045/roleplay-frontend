@@ -12,6 +12,12 @@ const config: Config = {
       height: {
         "18": "4.5rem",
       },
+      maxWidth: {
+        vw: "100vw",
+      },
+      width: {
+        vw: "100vw",
+      },
     },
   },
   plugins: [

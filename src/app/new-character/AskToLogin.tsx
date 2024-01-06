@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import InputForm from "../components/InputForm";
-import Button from "@/components/01-atoms/Button";
+import Button from "@/components/atoms/Button";
 import ModalWrapper from "../components/ModalWrapper";
 import Link from "next/link";
 import { X } from "lucide-react";

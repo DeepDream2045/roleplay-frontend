@@ -19,27 +19,29 @@ function Dashboard(props: DashboardProps): ReactElement {
                         {"View All >"}
                     </span>
                 </div>
-                <div className="mt-8 flex flex-row gap-8">
-                    <RecentChatCard
-                        imageSrc="/images/Levi Ackerman Profile Picture.webp"
-                        name="Levi Ackerman Character Chat"
-                        message="I may have a serious exterior, but deep down I just
+                <div className="mt-8 flex flex-row gap-8 flex-wrap">
+                    {Array(6)
+                        .fill("x")
+                        .map((val, index) => {
+                            return (
+                                <RecentChatCard
+                                    key={index + 1}
+                                    imageSrc="/images/Levi Ackerman Profile Picture.webp"
+                                    name="Levi Ackerman Character Chat"
+                                    message="I may have a serious exterior, but deep down I just
                             want someone to share my cape with while slaying
                             Titans."
-                        time="11:42 PM"
-                    />
-                    <RecentChatCard
-                        imageSrc="/images/Levi Ackerman Profile Picture.webp"
-                        name="Levi Ackerman Character Chat"
-                        message="I may have a serious exterior, but deep down I just
-                            want someone to share my cape with while slaying
-                            Titans."
-                        time="11:42 PM"
-                    />
+                                    time="11:42 PM"
+                                />
+                            );
+                        })}
                 </div>
             </div>
             {/* Tags */}
-            <div className="sticky top-14 bg-neutral-50 z-10 py-8 flex gap-2 flex-row overflow-x-auto">
+            <div
+                style={{ maxWidth: "calc(100vw - 16rem)" }}
+                className="sticky top-14 bg-neutral-50 z-10 py-8 flex flex-row gap-2 overflow-x-auto overflow-hidden flex-grow-0 flex-shrink-0"
+            >
                 <Category active>Featured</Category>
                 <Category>Recommended</Category>
                 <Category>All</Category>
@@ -56,71 +58,23 @@ function Dashboard(props: DashboardProps): ReactElement {
                 <Category>Hero</Category>
                 <Category>Historical</Category>
             </div>
+
             {/* All Character */}
             <div className="flex flex-wrap flex-row">
-                <CharacterCard
-                    imageSrc="/images/Sasuke Uchiha Profile Picture.webp"
-                    profileImageSrc="/images/default-character-placeholder-full.webp"
-                    name="Sasuke"
-                    profileName="lilianne"
-                    timeString="107.3K . 1 month ago"
-                />
-                <CharacterCard
-                    imageSrc="/images/Sasuke Uchiha Profile Picture.webp"
-                    profileImageSrc="/images/default-character-placeholder-full.webp"
-                    name="Sasuke"
-                    profileName="lilianne"
-                    timeString="107.3K . 1 month ago"
-                />
-                <CharacterCard
-                    imageSrc="/images/Sasuke Uchiha Profile Picture.webp"
-                    profileImageSrc="/images/default-character-placeholder-full.webp"
-                    name="Sasuke"
-                    profileName="lilianne"
-                    timeString="107.3K . 1 month ago"
-                />
-                <CharacterCard
-                    imageSrc="/images/Sasuke Uchiha Profile Picture.webp"
-                    profileImageSrc="/images/default-character-placeholder-full.webp"
-                    name="Sasuke"
-                    profileName="lilianne"
-                    timeString="107.3K . 1 month ago"
-                />
-                <CharacterCard
-                    imageSrc="/images/Sasuke Uchiha Profile Picture.webp"
-                    profileImageSrc="/images/default-character-placeholder-full.webp"
-                    name="Sasuke"
-                    profileName="lilianne"
-                    timeString="107.3K . 1 month ago"
-                />
-                <CharacterCard
-                    imageSrc="/images/Sasuke Uchiha Profile Picture.webp"
-                    profileImageSrc="/images/default-character-placeholder-full.webp"
-                    name="Sasuke"
-                    profileName="lilianne"
-                    timeString="107.3K . 1 month ago"
-                />
-                <CharacterCard
-                    imageSrc="/images/Sasuke Uchiha Profile Picture.webp"
-                    profileImageSrc="/images/default-character-placeholder-full.webp"
-                    name="Sasuke"
-                    profileName="lilianne"
-                    timeString="107.3K . 1 month ago"
-                />
-                <CharacterCard
-                    imageSrc="/images/Sasuke Uchiha Profile Picture.webp"
-                    profileImageSrc="/images/default-character-placeholder-full.webp"
-                    name="Sasuke"
-                    profileName="lilianne"
-                    timeString="107.3K . 1 month ago"
-                />
-                <CharacterCard
-                    imageSrc="/images/Sasuke Uchiha Profile Picture.webp"
-                    profileImageSrc="/images/default-character-placeholder-full.webp"
-                    name="Sasuke"
-                    profileName="lilianne"
-                    timeString="107.3K . 1 month ago"
-                />
+                {Array(18)
+                    .fill("x")
+                    .map((val, index) => {
+                        return (
+                            <CharacterCard
+                                key={`char-${index + 1}`}
+                                imageSrc="/images/Sasuke Uchiha Profile Picture.webp"
+                                profileImageSrc="/images/default-character-placeholder-full.webp"
+                                name="Sasuke"
+                                profileName="lilianne"
+                                timeString="107.3K . 1 month ago"
+                            />
+                        );
+                    })}
             </div>
         </div>
     );
