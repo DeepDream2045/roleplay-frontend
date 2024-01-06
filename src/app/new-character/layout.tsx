@@ -14,7 +14,7 @@ export default function NewCharacterLayout({
         <div className="flex gap-4">
             <aside className="h-screen sticky top-0 min-w-52 max-w-52 py-4 border-r">
                 <div className="h-10 flex flex-row items-center px-4">
-                    <h2 className="text-xl">Chatbot AI</h2>
+                    <h2>Chatbot AI</h2>
                 </div>
                 <div className="flex mt-6 flex-col">
                     <Link

@@ -13,7 +13,7 @@ export default function ChatsLayout({ children }: ChatsLayoutProps) {
             {/* Sidebar Icon Only */}
             <aside className="w-16 h-screen sticky top-0 py-4 border-r">
                 <div className="h-10 flex flex-row items-center px-4">
-                    <h2 className="text-sm bg-blue-300 p-1 rounded-full">CA</h2>
+                    <h4 className="text-sm bg-blue-300 p-1 rounded-full">CA</h4>
                 </div>
                 <div className="flex mt-6 flex-col items-center">
                     <Link

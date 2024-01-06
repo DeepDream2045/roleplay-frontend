@@ -16,7 +16,7 @@ function Chats(props: ChatsProps): ReactElement {
             {/* Chat List */}
             <div className="w-96 border-r min-h-full py-4 sticky top-0">
                 <div className="h-16 flex">
-                    <h2 className="text-3xl font-semibold px-4">Chats</h2>
+                    <h1 className="text-3xl font-semibold px-4">Chats</h1>
                 </div>
                 <div className="flex flex-col gap-2">
                     {/* Chat Component */}

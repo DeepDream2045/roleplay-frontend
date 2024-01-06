@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import plugin from "tailwindcss/plugin";
 
 const config: Config = {
   content: [
@@ -8,16 +9,52 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
       height: {
         "18": "4.5rem",
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(({ addBase, theme }) => {
+      addBase({
+        h1: {
+          fontSize: theme("fontSize.3xl"),
+          fontWeight: theme("fontWeight.bold"),
+          lineHeight: theme("lineHeight.snug"),
+          cursor: theme("cursor.default"),
+        },
+        h2: {
+          fontSize: theme("fontSize.xl"),
+          fontWeight: theme("fontWeight.semibold"),
+          lineHeight: theme("lineHeight.normal"),
+          cursor: theme("cursor.default"),
+        },
+        h3: {
+          fontSize: theme("fontSize.lg"),
+          fontWeight: theme("fontWeight.medium"),
+          lineHeight: theme("lineHeight.normal"),
+          cursor: theme("cursor.default"),
+        },
+        h4: {
+          fontSize: theme("fontSize.base"),
+          fontWeight: theme("fontWeight.medium"),
+          lineHeight: theme("lineHeight.normal"),
+          cursor: theme("cursor.default"),
+        },
+        h5: {
+          fontSize: theme("fontSize.sm"),
+          fontWeight: theme("fontWeight.medium"),
+          lineHeight: theme("lineHeight.normal"),
+          cursor: theme("cursor.default"),
+        },
+        p: {
+          lineHeight: theme("lineHeight.normal"),
+        },
+        span: {
+          lineHeight: theme("lineHeight.normal"),
+        },
+      });
+    }),
+  ],
 };
 export default config;
