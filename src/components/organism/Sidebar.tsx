@@ -1,45 +1,61 @@
-// "use client";
+"use client";
 
 import { Home, PlusCircle, MessageCircleMore, User } from "lucide-react";
-import Link from "next/link";
+import { usePathname } from "next/navigation";
+import NavLink from "../atoms/NavLink";
 
 interface SidebarProps {}
 
 export default function Sidebar({}: SidebarProps) {
+    const pathName = usePathname();
+
+    const sidebarSize = pathName.includes("/chats")
+        ? "min-w-16 max-w-16"
+        : "min-w-52 max-w-52";
+
+    const sidebarHeader = pathName.includes("/chats") ? (
+        <div className="h-10 flex flex-row items-center px-4">
+            <h4 className="text-sm bg-blue-300 p-1 rounded-full">CA</h4>
+        </div>
+    ) : (
+        <div className="h-10 flex flex-row items-center px-4">
+            <h2 className="text-xl">Chatbot AI</h2>
+        </div>
+    );
     return (
-        <aside className="flex flex-col h-screen sticky top-0 min-w-52 max-w-52 py-4 border-r">
-            <div className="h-10 flex flex-row items-center px-4">
-                <h2 className="text-xl">Chatbot AI</h2>
-            </div>
+        <aside
+            className={`flex flex-col h-screen sticky top-0 ${sidebarSize} py-4 border-r`}
+        >
+            {sidebarHeader}
             <div className="flex flex-col mt-6 ">
-                <Link
-                    href="/"
-                    className="h-10 flex flex-1 flex-row items-center px-4 py-2 text-base"
-                >
-                    <Home className="w-6 h-6 mr-2" />
-                    Home
-                </Link>
-                <Link
-                    href="/new-character"
-                    className="h-10 flex flex-1 flex-row items-center px-4 py-2 text-base"
-                >
-                    <PlusCircle className="w-6 h-6 mr-2" />
-                    Create Character
-                </Link>
-                <Link
-                    href="/chats"
-                    className="h-10 flex flex-1 flex-row items-center px-4 py-2 text-base"
-                >
-                    <MessageCircleMore className="w-6 h-6 mr-2" />
-                    Chats
-                </Link>
-                <Link
-                    href="/"
-                    className="h-10 flex flex-1 flex-row items-center px-4 py-2 text-base"
-                >
-                    <User className="w-6 h-6 mr-2" />
-                    Profile
-                </Link>
+                <NavLink
+                    path="/"
+                    Icon={Home}
+                    label="Home"
+                    active={pathName === "/"}
+                    iconOnly={pathName.includes("/chats")}
+                />
+                <NavLink
+                    path="/new-character"
+                    Icon={PlusCircle}
+                    label="Create Character"
+                    active={pathName.includes("/new-character")}
+                    iconOnly={pathName.includes("/chats")}
+                />
+                <NavLink
+                    path="/chats"
+                    Icon={MessageCircleMore}
+                    label="Chats"
+                    active={pathName.includes("/chats")}
+                    iconOnly={pathName.includes("/chats")}
+                />
+                <NavLink
+                    path="/"
+                    Icon={User}
+                    label="Profile"
+                    active={pathName.includes("/profile")}
+                    iconOnly={pathName.includes("/chats")}
+                />
             </div>
         </aside>
     );

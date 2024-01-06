@@ -13,8 +13,6 @@ async function NewCharacter(props: NewCharacterProps) {
         return <AskToLogin />;
     }
 
-    console.log({ session });
-
     return (
         <>
             <header className="sticky top-0 flex flex-col flex-1 bg-neutral-50 py-2 items-center z-10">
