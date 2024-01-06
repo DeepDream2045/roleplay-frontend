@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import InputForm from "../components/InputForm";
-import Button from "../components/Button";
+import Button from "@/components/01-atoms/Button";
 import ModalWrapper from "../components/ModalWrapper";
 import Link from "next/link";
 import { X } from "lucide-react";
@@ -23,13 +23,15 @@ export default function AskToLogin() {
                         Once you sign in, you can create new AI characters to
                         talk to and interact.
                     </p>
-                    <button
-                        type="button"
-                        className="h-10 px-4 w-fit rounded-lg bg-blue-500 text-white font-semibold mt-10"
+                    <Button
+                        variant="fill"
+                        color="primary"
+                        size="medium"
                         onClick={handleModal}
+                        className="mt-10"
                     >
                         Sign in
-                    </button>
+                    </Button>
                 </div>
             </div>
             {modalShow && (
@@ -53,9 +55,9 @@ export default function AskToLogin() {
                                     <p className="text-base font-light">
                                         Sign in to use DreamTavern!
                                     </p>
-                                    <Button className="mt-4 bg-white text-gray-500 border border-gray-400">
+                                    {/* <Button className="mt-4 bg-white text-gray-500 border border-gray-400">
                                         Sign in with google
-                                    </Button>
+                                    </Button> */}
                                 </div>
                                 <hr className="border-t" />
                                 <form className="mt-4 flex flex-col">
@@ -65,7 +67,13 @@ export default function AskToLogin() {
                                         label="Email"
                                         placeholder="Enter your email address"
                                     />
-                                    <Button className="mt-4">
+                                    <Button
+                                        variant="fill"
+                                        type="submit"
+                                        color="primary"
+                                        size="fullWidth"
+                                        className="mt-4"
+                                    >
                                         Sign in with email
                                     </Button>
                                 </form>
