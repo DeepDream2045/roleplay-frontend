@@ -76,6 +76,7 @@ export default function Button({
     className,
     disabled,
     onClick,
+    type,
 }: ButtonProps) {
     let btnSizeClass: HTMLButtonElement["className"] = "";
     let btnVariantClass: ButtonHTMLAttributes<HTMLButtonElement>["className"] =
@@ -95,6 +96,7 @@ export default function Button({
 
     return (
         <button
+            type={type}
             className={`${btnSizeClass} ${btnVariantClass} ${className}`}
             onClick={onClick}
         >

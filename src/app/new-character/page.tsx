@@ -1,17 +1,19 @@
 import { ReactElement } from "react";
 import DashboardLayout from "@/app/dashboard/layout";
-import { getServerSession } from "next-auth";
 import NewCharacterForm from "./form";
 import AskToLogin from "./AskToLogin";
+import { auth } from "@/lib/authConfig";
 
 interface NewCharacterProps {}
 
 async function NewCharacter(props: NewCharacterProps) {
-    const session = await getServerSession();
+    const session = await auth();
 
     if (!session) {
         return <AskToLogin />;
     }
+
+    console.log({ session });
 
     return (
         <>

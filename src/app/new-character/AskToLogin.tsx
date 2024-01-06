@@ -7,6 +7,8 @@ import ModalWrapper from "../components/ModalWrapper";
 import Link from "next/link";
 import { X } from "lucide-react";
 
+import { handleGoogleLogin } from "@/lib/authAction";
+
 export default function AskToLogin() {
     const [modalShow, setModalShow] = useState<Boolean>(false);
 
@@ -24,11 +26,12 @@ export default function AskToLogin() {
                         talk to and interact.
                     </p>
                     <Button
+                        type="submit"
                         variant="fill"
                         color="primary"
                         size="medium"
-                        onClick={handleModal}
                         className="mt-10"
+                        onClick={handleModal}
                     >
                         Sign in
                     </Button>
@@ -55,9 +58,17 @@ export default function AskToLogin() {
                                     <p className="text-base font-light">
                                         Sign in to use DreamTavern!
                                     </p>
-                                    {/* <Button className="mt-4 bg-white text-gray-500 border border-gray-400">
-                                        Sign in with google
-                                    </Button> */}
+                                    <form action={handleGoogleLogin}>
+                                        <Button
+                                            variant="custom"
+                                            color="custom"
+                                            size="custom"
+                                            className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold"
+                                            type="submit"
+                                        >
+                                            Sign in with Google
+                                        </Button>
+                                    </form>
                                 </div>
                                 <hr className="border-t" />
                                 <form className="mt-4 flex flex-col">

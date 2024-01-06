@@ -18,6 +18,7 @@ export default function NewCharacterForm(props: any): ReactElement {
                     height={300}
                     alt="Levi Ackerman profile picture"
                     className="w-72 rounded-2xl aspect-square"
+                    priority
                 />
                 <div className="font-semibold flex flex-col text-blue-500">
                     Add or Generate
