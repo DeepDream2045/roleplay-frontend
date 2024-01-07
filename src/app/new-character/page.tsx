@@ -1,8 +1,8 @@
 import { ReactElement } from "react";
 import DashboardLayout from "@/app/dashboard/layout";
 import NewCharacterForm from "./form";
-import AskToLogin from "./AskToLogin";
 import { auth } from "@/lib/authConfig";
+import AskToLogin from "@/components/organism/AskToLogin";
 
 interface NewCharacterProps {}
 
@@ -10,7 +10,12 @@ async function NewCharacter(props: NewCharacterProps) {
     const session = await auth();
 
     if (!session) {
-        return <AskToLogin />;
+        return (
+            <AskToLogin
+                title="Sign in to create new AI characters"
+                subtitle="Once you sign in, you can create new AI characters to talk to and interact."
+            />
+        );
     }
 
     return (

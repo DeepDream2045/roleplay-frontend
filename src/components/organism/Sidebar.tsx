@@ -1,6 +1,12 @@
 "use client";
 
-import { Home, PlusCircle, MessageCircleMore, User } from "lucide-react";
+import {
+    Home,
+    PlusCircle,
+    MessageCircleMore,
+    User,
+    LogOut,
+} from "lucide-react";
 import { usePathname } from "next/navigation";
 import NavLink from "../atoms/NavLink";
 
@@ -54,6 +60,12 @@ export default function Sidebar({}: SidebarProps) {
                     Icon={User}
                     label="Profile"
                     active={pathName.includes("/profile")}
+                    iconOnly={pathName.includes("/chats")}
+                />
+                <NavLink
+                    path="/api/auth/signout"
+                    Icon={LogOut}
+                    label="Logout"
                     iconOnly={pathName.includes("/chats")}
                 />
             </div>

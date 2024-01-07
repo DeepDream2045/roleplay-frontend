@@ -1,15 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import InputForm from "../components/InputForm";
+import InputForm from "@/app/components/InputForm";
 import Button from "@/components/atoms/Button";
-import ModalWrapper from "../components/ModalWrapper";
+import ModalWrapper from "@/app/components/ModalWrapper";
 import Link from "next/link";
 import { X } from "lucide-react";
 
 import { handleGoogleLogin } from "@/lib/authAction";
 
-export default function AskToLogin() {
+interface AskToLoginProps {
+    title: string;
+    subtitle: string;
+}
+
+export default function AskToLogin({ title, subtitle }: AskToLoginProps) {
     const [modalShow, setModalShow] = useState<Boolean>(false);
 
     const handleModal = () => {
@@ -20,11 +25,8 @@ export default function AskToLogin() {
         <>
             <div className="flex flex-col flex-1 items-center justify-center">
                 <div className="flex flex-col max-w-screen-md">
-                    <h1>Sign in to create new AI characters</h1>
-                    <p className="text-base mt-8 font-normal">
-                        Once you sign in, you can create new AI characters to
-                        talk to and interact.
-                    </p>
+                    <h1>{title}</h1>
+                    <p className="text-base mt-8 font-normal">{subtitle}</p>
                     <Button
                         type="submit"
                         variant="fill"
