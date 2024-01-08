@@ -10,7 +10,7 @@ function Dashboard(props: DashboardProps): ReactElement {
     return (
         <div className="px-2 mt-8 flex flex-1 flex-col max-w-full pb-12">
             {/* Recent Chat */}
-            <div>
+            <div className="flex flex-col">
                 <div className="flex flex-row items-center gap-6 ">
                     <h3 className="text-2xl font-semibold">
                         Continue your chat
@@ -19,7 +19,7 @@ function Dashboard(props: DashboardProps): ReactElement {
                         {"View All >"}
                     </span>
                 </div>
-                <div className="mt-8 flex flex-row gap-8 flex-wrap">
+                <div className="mt-8 flex flex-row gap-8 flex-wrap max-h-[18rem] overflow-hidden flex-grow-0">
                     {Array(6)
                         .fill("x")
                         .map((val, index) => {
@@ -38,10 +38,7 @@ function Dashboard(props: DashboardProps): ReactElement {
                 </div>
             </div>
             {/* Tags */}
-            <div
-                style={{ maxWidth: "calc(100vw - 16rem)" }}
-                className="sticky top-14 bg-neutral-50 z-10 py-8 flex flex-row gap-2 overflow-x-auto overflow-hidden flex-grow-0 flex-shrink-0"
-            >
+            <div className="sticky top-14 bg-neutral-50 z-10 py-8 flex flex-row gap-2 overflow-x-auto overflow-hidden flex-grow-0 flex-shrink-0">
                 <Category active>Featured</Category>
                 <Category>Recommended</Category>
                 <Category>All</Category>
