@@ -4,6 +4,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
+    env_file:
+      - ./dockersecretproduction.env
     ports:
-      - "5902:5902"
+      - "5910:5910"
     restart: always
