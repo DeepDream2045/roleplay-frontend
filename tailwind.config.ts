@@ -18,6 +18,21 @@ const config: Config = {
       width: {
         vw: "100vw",
       },
+      colors: {
+        "neon-carrot": {
+          "50": "#fff8ed",
+          "100": "#ffefd4",
+          "200": "#ffdba8",
+          "300": "#ffc171",
+          "400": "#ff9933",
+          "500": "#fe7e11",
+          "600": "#ef6307",
+          "700": "#c64808",
+          "800": "#9d3a0f",
+          "900": "#7e3110",
+          "950": "#441606",
+        },
+      },
     },
   },
   plugins: [
@@ -54,9 +69,11 @@ const config: Config = {
           cursor: theme("cursor.default"),
         },
         p: {
+          fontSize: theme("fontSize.base"),
           lineHeight: theme("lineHeight.normal"),
         },
         span: {
+          fontSize: theme("fontSize.base"),
           lineHeight: theme("lineHeight.normal"),
         },
       });

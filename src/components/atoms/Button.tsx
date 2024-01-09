@@ -42,27 +42,27 @@ const btnClass: ButtonClass = {
         fill: {
             primary: {
                 default: "text-white bg-blue-500",
-                disabled: "text-white bg-blue-500",
+                disabled: "text-white bg-blue-200",
             },
             secondary: {
-                default: "text-white bg-blue-500",
-                disabled: "text-white bg-blue-500",
+                default: "text-white bg-neon-carrot-500",
+                disabled: "text-white bg-neon-carrot-200",
             },
             success: {
                 default: "text-white bg-green-500",
-                disabled: "text-white bg-green-500",
+                disabled: "text-white bg-green-200",
             },
             error: {
                 default: "text-white bg-red-500",
-                disabled: "text-white bg-red-500",
+                disabled: "text-white bg-red-200",
             },
             info: {
                 default: "text-white bg-blue-500",
-                disabled: "text-white bg-blue-500",
+                disabled: "text-white bg-blue-200",
             },
             warning: {
                 default: "text-white bg-yellow-500",
-                disabled: "text-white bg-yellow-500",
+                disabled: "text-white bg-yellow-200",
             },
         },
     },
