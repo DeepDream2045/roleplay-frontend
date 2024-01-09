@@ -38,14 +38,14 @@ export default function CharacterCard({
                     />
                 </div>
 
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col">
                     <p className="text-base font-semibold truncate">{name}</p>
 
-                    <div className="flex flex-col gap-1 text-sm font-light">
-                        <p>@{profileName}</p>
+                    <div className="flex flex-col gap-1 font-light">
+                        <p className="text-sm">@{profileName}</p>
 
                         <div>
-                            <p>{timeString}</p>
+                            <p className="text-xs">{timeString}</p>
                         </div>
                     </div>
                 </div>
