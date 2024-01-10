@@ -2,9 +2,7 @@
 
 import { PropsWithChildren } from "react";
 
-import Link from "next/link";
-import { Home, PlusCircle, MessageCircleMore, User } from "lucide-react";
-import Sidebar from "@/components/organism/Sidebar";
+import Sidebar from "@/components/organism/Sidebar/Sidebar";
 
 type NewCharacterLayoutProps = PropsWithChildren<{}>;
 

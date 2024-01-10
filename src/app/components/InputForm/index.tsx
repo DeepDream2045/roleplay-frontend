@@ -15,6 +15,7 @@ interface InputFormProps {
     footerFieldText?: string;
     onFooterFieldClick?: () => void;
     options?: InputOption[];
+    name: string;
 }
 
 export default function InputForm({
@@ -29,6 +30,7 @@ export default function InputForm({
     onFooterFieldClick,
     rows = 3,
     options = [],
+    name,
 }: InputFormProps) {
     return (
         <div className="w-full">
@@ -57,6 +59,7 @@ export default function InputForm({
                     id={id}
                     type={type}
                     placeholder={placeholder}
+                    name={name}
                     className="w-full mt-2 p-2 border h-10 border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 />
             )}
@@ -68,6 +71,7 @@ export default function InputForm({
                     placeholder={placeholder}
                     value={value}
                     rows={rows}
+                    name={name}
                 />
             )}
 
@@ -78,7 +82,7 @@ export default function InputForm({
                             <input
                                 id={`radio-${option.value}`}
                                 type="radio"
-                                name="access"
+                                name={name}
                                 value={option.value}
                                 className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                 required

@@ -2,7 +2,7 @@
 
 import { PropsWithChildren } from "react";
 
-import Sidebar from "@/components/organism/Sidebar";
+import Sidebar from "@/components/organism/Sidebar/Sidebar";
 
 type DashboardLayoutProps = PropsWithChildren<{}>;
 

@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 import DashboardLayout from "@/app/dashboard/layout";
 import NewCharacterForm from "./form";
 import { auth } from "@/lib/authConfig";
-import AskToLogin from "@/components/organism/AskToLogin";
+import AskToLogin from "@/components/organism/AskToLogin/AskToLogin";
 
 interface NewCharacterProps {}
 

@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 import ChatsLayout from "@/app/chats/layout";
 import { auth } from "@/lib/authConfig";
 import Conversation from "./Conversation";
-import AskToLogin from "@/components/organism/AskToLogin";
+import AskToLogin from "@/components/organism/AskToLogin/AskToLogin";
 
 interface ChatsProps {}
 

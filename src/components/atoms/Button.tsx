@@ -99,6 +99,7 @@ export default function Button({
             type={type}
             className={`${btnSizeClass} ${btnVariantClass} ${className}`}
             onClick={onClick}
+            disabled={disabled}
         >
             {children}
         </button>
