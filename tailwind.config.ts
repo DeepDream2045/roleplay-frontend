@@ -11,6 +11,10 @@ const config: Config = {
     extend: {
       height: {
         "18": "4.5rem",
+        "112": "28rem",
+      },
+      minWidth: {
+        md: "28rem",
       },
       maxWidth: {
         vw: "100vw",

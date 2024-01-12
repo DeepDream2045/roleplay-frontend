@@ -2,17 +2,30 @@
 
 import InputForm from "@/app/components/InputForm";
 import { magicLinkRequestService } from "@/lib/magicLinkAction";
-import React from "react";
+import React, { Dispatch, SetStateAction, useEffect } from "react";
 import { useFormState } from "react-dom";
 import MagicLinkLoginSubmit from "./MagicLinkLoginSubmit";
 
-function MagicLinkLoginForm() {
+type MagicLinkLoginFormProps = {
+    afterEmailSent: Dispatch<SetStateAction<boolean>>;
+};
+
+function MagicLinkLoginForm({ afterEmailSent }: MagicLinkLoginFormProps) {
     const [state, formAction] = useFormState<any, any>(
         magicLinkRequestService,
         {
-            message: null,
+            formSubmitted: false,
+            emailSuccessSent: false,
         }
     );
+
+    useEffect(() => {
+        console.log({ state });
+
+        if (state.emailSuccessSent) {
+            afterEmailSent(true);
+        }
+    }, [state]);
 
     return (
         <form className="mt-4 flex flex-col" action={formAction}>
