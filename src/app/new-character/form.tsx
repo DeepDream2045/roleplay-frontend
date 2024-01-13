@@ -36,6 +36,7 @@ export default function NewCharacterForm(props: any): ReactElement {
                     docs.
                 </div>
                 <InputForm
+                    name="short_description"
                     id="short-description"
                     label="Short description"
                     helperText="Describe the character. This will be displayed on the character page, but not used by the AI."
@@ -45,6 +46,7 @@ export default function NewCharacterForm(props: any): ReactElement {
                 />
                 <InputForm
                     id="name"
+                    name="character_name"
                     label="Name"
                     type="text"
                     placeholder="Bulma"
@@ -53,6 +55,7 @@ export default function NewCharacterForm(props: any): ReactElement {
                 />
                 <InputForm
                     id="gender"
+                    name="character_gender"
                     label="Gender"
                     placeholder="Gender of the character: male, female, N/A, etc."
                     required
@@ -60,6 +63,7 @@ export default function NewCharacterForm(props: any): ReactElement {
                 />
                 <InputForm
                     id="character-prompt"
+                    name="character_prompt"
                     label="Character prompt"
                     helperText="Provide the exact character description as you want it to be used by the AI to generate responses and messsages."
                     placeholder="Name:BulmaBody: Bulma is a 16-year-old girl with green hair  in a braided ponytail with a red ribbon and milky colored skin.
@@ -72,6 +76,7 @@ Mind: Bulma is a complex character, balancing tomboyish and girly traits alongsi
 
                 <InputForm
                     id="visibility"
+                    name="visibility"
                     label="Visibility"
                     helperText="You can also change the visibility after the character is created."
                     type="radio"
@@ -109,6 +114,7 @@ Mind: Bulma is a complex character, balancing tomboyish and girly traits alongsi
                 </div>
                 <InputForm
                     id="initial-message"
+                    name="character_initial_message"
                     label="Initial message"
                     helperText="This is the first message that the character will say for the conversation. If this is empty, we will use the name and the description to generate the initial message when creating the character."
                     type="textarea"
@@ -116,6 +122,7 @@ Mind: Bulma is a complex character, balancing tomboyish and girly traits alongsi
                 />
                 <InputForm
                     id="example-dialogues"
+                    name="character_example_dialogues"
                     label="Example dialogues"
                     helperText="Sample messages of the character and / or the user. Start the message with '{{char}}:' or '{{user}}:' to indicate who is speaking."
                     type="textarea"
