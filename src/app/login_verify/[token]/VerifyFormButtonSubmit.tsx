@@ -8,7 +8,7 @@ export default function VerifyFormButtonSubmit({
 }: {
     setPendingStatus: Dispatch<SetStateAction<Boolean>>;
 }) {
-    const btnRef = useRef(null);
+    const btnRef = useRef<HTMLButtonElement>(null);
     const { pending } = useFormStatus();
 
     useEffect(() => {
