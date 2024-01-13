@@ -3,9 +3,10 @@
 // import { redirect } from "next/navigation";
 // import { signIn } from "./authConfig";
 
-// export const handleGoogleLogin = async () => {
-//     "use server";
-//     const response = await signIn("google", { redirect: false });
+export const handleGoogleLogin = async () => {
+    "use server";
+    // const response = await signIn("google", { redirect: false });
 
-//     redirect(response);
-// };
+    // redirect(response);
+    return true;
+};

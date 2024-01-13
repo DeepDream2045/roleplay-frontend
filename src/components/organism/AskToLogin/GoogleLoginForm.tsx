@@ -1,13 +1,13 @@
 import Button from "@/components/atoms/Button";
 import React from "react";
 
-import { handleGoogleLogin } from "@/lib/authAction";
+// import { handleGoogleLogin } from "@/lib/authAction";
 
 function GoogleLoginForm() {
     return (
         <div>
             <p className="text-base font-light">Sign in to use DreamTavern!</p>
-            <form action={handleGoogleLogin}>
+            <form>
                 <Button
                     variant="custom"
                     color="custom"

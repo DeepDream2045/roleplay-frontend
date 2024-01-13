@@ -80,6 +80,7 @@ export default function Conversation() {
                         placeholder="Type a message..."
                         type="text"
                         id="message"
+                        name="message"
                     />
                     <SendHorizonal className="w-6 h-6 ml-4" />
                 </div>
