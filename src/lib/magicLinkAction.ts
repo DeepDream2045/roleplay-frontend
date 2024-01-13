@@ -1,4 +1,8 @@
+"use server";
+
 import { Sleep } from "@/lib/sleep";
+import { AuthSession, updateAuthSession } from "./authSession";
+import { redirect } from "next/navigation";
 
 const MAIN_API_BASE_URL = process.env.NEXT_PUBLIC_MAIN_API_BASE_URL!;
 
@@ -46,4 +50,39 @@ export async function magicLinkVerifyService(token: string) {
     });
 
     return req;
+}
+
+export async function magicLinkVerifyServiceAction(
+    token: string,
+    state: any,
+    formData: any
+) {
+    const verifyReq = await magicLinkVerifyService(token);
+
+    if (verifyReq.ok && verifyReq.status === 200) {
+        const data = await verifyReq.json();
+        if (data?.error) {
+            return data?.error;
+        }
+        console.log(data);
+        const newSession: AuthSession = {
+            user: {
+                id: data.data.id,
+                full_name: data.data.full_name,
+                email: data.data.email,
+                profile_image: data.data.profile_image,
+                stay_sign: data.data.stay_sign,
+            },
+            refresher: data.refresher,
+            access: data.access,
+        };
+
+        await updateAuthSession(newSession);
+
+        return redirect(`${process.env.NEXTAUTH_URL}/chats`);
+    } else {
+        console.log({ verifyReq });
+
+        return { isNotValid: true, message: verifyReq.statusText };
+    }
 }
