@@ -34,12 +34,10 @@ export async function getAuthSession() {
 export async function updateAuthSession(authSession: AuthSession) {
     const session = await getAuthSession();
 
-    console.log({ session2: session });
     session.user = authSession.user;
     session.refresher = authSession.refresher;
     session.access = authSession.access;
 
-    session.user = { full_name: "Ersapta Aristo" };
     await session.save();
 }
 
