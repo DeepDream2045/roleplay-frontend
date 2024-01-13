@@ -34,6 +34,10 @@ export async function magicLinkRequestService(state: any, payload: any) {
         };
     } catch (error) {
         console.log(error);
+        return {
+            formSubmitted: true,
+            emailSuccessSent: false,
+        };
     }
 }
 
