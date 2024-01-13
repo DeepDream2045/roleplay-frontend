@@ -34,7 +34,7 @@ const btnClass: ButtonClass = {
     size: {
         small: "text-xs h-8 px-4 w-fit rounded-lg font-semibold leading-normal",
         medium: "text-sm h-10 px-4 w-fit rounded-lg font-semibold leading-normal",
-        large: "text-base h-13 px-4 w-fit rounded-lg font-semibold leading-normal",
+        large: "text-base h-14 px-4 w-fit rounded-lg font-semibold leading-normal",
         fullWidth:
             "text-base h-10 px-4 w-full rounded-lg font-semibold leading-normal",
     },

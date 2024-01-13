@@ -65,7 +65,7 @@ export default function SidebarClient({ isLogin }: SidebarClientProps) {
                 />
                 {isLogin && (
                     <NavLink
-                        path="/api/auth/signout"
+                        path="/signout"
                         Icon={LogOut}
                         label="Logout"
                         iconOnly={pathName.includes("/chats")}
