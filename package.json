@@ -9,9 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "iron-session": "^8.0.1",
     "lucide-react": "^0.300.0",
     "next": "14.0.4",
-    "next-auth": "^5.0.0-beta.4",
     "react": "^18",
     "react-dom": "^18"
   },

@@ -1,15 +1,15 @@
 import { ReactElement } from "react";
 import DashboardLayout from "@/app/dashboard/layout";
 import NewCharacterForm from "./form";
-import { auth } from "@/lib/authConfig";
 import AskToLogin from "@/components/organism/AskToLogin/AskToLogin";
+import { getAuthSession } from "@/lib/authSession";
 
 interface NewCharacterProps {}
 
 async function NewCharacter(props: NewCharacterProps) {
-    const session = await auth();
+    const session = await getAuthSession();
 
-    if (!session) {
+    if (!session?.access) {
         return (
             <AskToLogin
                 title="Sign in to create new AI characters"

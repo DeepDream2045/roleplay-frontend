@@ -1,15 +1,15 @@
 import { ReactElement } from "react";
 import ChatsLayout from "@/app/chats/layout";
-import { auth } from "@/lib/authConfig";
 import Conversation from "./Conversation";
 import AskToLogin from "@/components/organism/AskToLogin/AskToLogin";
+import { getAuthSession } from "@/lib/authSession";
 
 interface ChatsProps {}
 
 async function Chats(props: ChatsProps) {
-    const session = await auth();
+    const session = await getAuthSession();
 
-    if (!session) {
+    if (!session?.access) {
         return (
             <AskToLogin
                 title={"Sign in to see your chats"}

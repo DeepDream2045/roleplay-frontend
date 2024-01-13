@@ -33,7 +33,17 @@ export async function magicLinkRequestService(state: any, payload: any) {
     }
 }
 
-export async function magicLinkVerifyService(prevState: any, formData: any) {
-    const title = formData.get("title"); // example to get data
-    // another code here
+export async function magicLinkVerifyService(token: string) {
+    await Sleep(1500);
+    const form = new FormData();
+
+    form.append("token", token);
+
+    const req = await fetch(`${MAIN_API_BASE_URL}/login_verify/`, {
+        method: "POST",
+        body: form,
+        mode: "cors",
+    });
+
+    return req;
 }
