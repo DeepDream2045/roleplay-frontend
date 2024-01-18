@@ -44,7 +44,7 @@ export async function createCharacterAction(state: any, payload: any) {
             headers: {
                 Authorization: `Bearer ${session.access}`,
                 "user-refresh-token": session.refresher,
-            },
+            } as HeadersInit,
             cache: "no-store",
         });
 
@@ -80,7 +80,7 @@ export async function getCharacterInfoAction() {
             headers: {
                 Authorization: `Bearer ${session.access}`,
                 "user-refresh-token": session.refresher,
-            },
+            } as HeadersInit,
             cache: "no-store",
         });
 
