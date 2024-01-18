@@ -7,14 +7,16 @@ import InputRadio from "./InputRadio";
 import InputText from "./InputText";
 import InputTextArea from "./InputTextArea";
 import InputEmail from "./InputEmail";
+import InputSelect from "./InputSelect";
 
 type OmitClassNames<T> = Pick<T, Exclude<keyof T, `${string}ClassName`>>;
-
-type TInputFormProps = OmitClassNames<TInputBaseProps> & {
-    type: "text" | "textarea" | "radio" | "email";
+type TInputAdditionalProps = {
+    isMulti?: boolean;
+    type: "text" | "textarea" | "radio" | "email" | "select";
     rows?: number;
     options?: TInputOption[];
 };
+type TInputFormProps = OmitClassNames<TInputBaseProps> & TInputAdditionalProps;
 
 export default function InputForm(props: TInputFormProps) {
     const labelClassName: LabelHTMLAttributes<HTMLElement>["className"] =
@@ -26,11 +28,8 @@ export default function InputForm(props: TInputFormProps) {
     let inputClassName =
         "w-full mt-2 p-2 border border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50";
 
-    const newProps: TInputBaseProps & {
-        type: "text" | "textarea" | "radio" | "email";
-        rows?: number;
-        options?: TInputOption[];
-    } = { ...props };
+    const newProps: TInputBaseProps & TInputAdditionalProps = { ...props };
+
     if (props.type === "textarea") {
         inputClassName += " min-h-[6rem] resize-none";
     } else {
@@ -57,6 +56,10 @@ export default function InputForm(props: TInputFormProps) {
 
             {props.type === "textarea" && (
                 <InputTextArea rows={newProps.rows!} {...newProps} />
+            )}
+
+            {props.type === "select" && (
+                <InputSelect options={newProps.options!} {...newProps} />
             )}
         </div>
     );

@@ -6,20 +6,31 @@ import Image from "next/image";
 import Toggle from "../components/Toggle";
 import { useFormState } from "react-dom";
 import { createCharacterAction } from "@/lib/characterInfoAction";
-import { ModelInfoType } from "@/lib/modelInfoAction";
+import { TInputOption } from "@/components/atoms/Input/InputType";
 
 type NewCharacterFormPropsType = {
-    models: ModelInfoType[];
+    models: TInputOption[];
 };
 
 export default function NewCharacterForm({
     models,
 }: NewCharacterFormPropsType): ReactElement {
     const [isShowPrompt, setIsShowPrompt] = useState<boolean>(true);
-    const [state, formAction] = useFormState<any, any>(createCharacterAction, {
-        hasError: false,
-        errorMsg: {},
-    });
+    const [isNSFW, setIsNSFW] = useState<boolean>(true);
+    const [visibility, setVisibility] = useState("unlisted");
+
+    const bindCreateCharacterAction = createCharacterAction.bind(
+        null,
+        isShowPrompt,
+        isNSFW
+    );
+    const [state, formAction] = useFormState<any, any>(
+        bindCreateCharacterAction,
+        {
+            hasError: false,
+            errorMsg: {},
+        }
+    );
 
     return (
         <div className="px-2 mt-8 flex flex-1 flex-col max-w-screen-md w-full pb-12">
@@ -52,8 +63,8 @@ export default function NewCharacterForm({
                         our docs.
                     </div>
                     <InputForm
-                        name="short_description"
-                        id="short-description"
+                        name="short_bio"
+                        id="short_bio"
                         label="Short description"
                         helperText="Describe the character. This will be displayed on the character page, but not used by the AI."
                         type="textarea"
@@ -61,7 +72,7 @@ export default function NewCharacterForm({
                         required
                     />
                     <InputForm
-                        id="name"
+                        id="character_name"
                         name="character_name"
                         label="Name"
                         type="text"
@@ -70,7 +81,7 @@ export default function NewCharacterForm({
                         footerFieldText="Generate using description"
                     />
                     <InputForm
-                        id="gender"
+                        id="character_gender"
                         name="character_gender"
                         label="Gender"
                         placeholder="Gender of the character: male, female, N/A, etc."
@@ -78,8 +89,15 @@ export default function NewCharacterForm({
                         type="text"
                     />
                     <InputForm
-                        id="character-prompt"
-                        name="character_prompt"
+                        id="model_id"
+                        label="Model Name"
+                        type="select"
+                        name="model_id"
+                        options={models}
+                    />
+                    <InputForm
+                        id="prompt"
+                        name="prompt"
                         label="Character prompt"
                         helperText="Provide the exact character description as you want it to be used by the AI to generate responses and messsages."
                         placeholder="Name:BulmaBody: Bulma is a 16-year-old girl with green hair  in a braided ponytail with a red ribbon and milky colored skin.
@@ -91,12 +109,16 @@ Mind: Bulma is a complex character, balancing tomboyish and girly traits alongsi
                     />
 
                     <InputForm
-                        id="visibility"
-                        name="visibility"
+                        id="prompt_visibility"
+                        name="prompt_visibility"
                         label="Visibility"
                         helperText="You can also change the visibility after the character is created."
                         type="radio"
                         required
+                        value={visibility}
+                        onChange={(val: string) => {
+                            setVisibility(val);
+                        }}
                         options={[
                             {
                                 label: "Private: Only you can chat",
@@ -112,19 +134,20 @@ Mind: Bulma is a complex character, balancing tomboyish and girly traits alongsi
                             },
                         ]}
                     />
-                    <div>
-                        <label>Tags</label>
-                        <div>Select up to 5 relevant tags or keywords.</div>
-                        <select>
-                            <option value="action">Action</option>
-                            <option value="animal">Animal</option>
-                            <option value="anime">Anime</option>
-                            <option value="assistant">Assistant</option>
-                            <option value="books">Books</option>
-                        </select>
-                    </div>
-
-                    <label htmlFor="model_id">Model Name</label>
+                    <InputForm
+                        type="select"
+                        name="tags"
+                        id="tags"
+                        label="Tags"
+                        helperText={`Select up to 5 relevant tags or keywords.`}
+                        options={[
+                            { label: "Action", value: "Action" },
+                            { label: "Animal", value: "Animal" },
+                            { label: "Anime", value: "Anime" },
+                            { label: "Assistant", value: "Assistant" },
+                            { label: "Books", value: "Books" },
+                        ]}
+                    />
 
                     <div className="flex flex-1 flex-row justify-between">
                         <div className="font-semibold text-xl">
@@ -132,14 +155,14 @@ Mind: Bulma is a complex character, balancing tomboyish and girly traits alongsi
                         </div>
                     </div>
                     <InputForm
-                        id="initial-message"
-                        name="character_initial_message"
+                        id="initial_message"
+                        name="initial_message"
                         label="Initial message"
                         helperText="This is the first message that the character will say for the conversation. If this is empty, we will use the name and the description to generate the initial message when creating the character."
                         type="textarea"
                         placeholder="Enter a short description of your character..."
                     />
-                    <InputForm
+                    {/* <InputForm
                         id="example-dialogues"
                         name="character_example_dialogues"
                         label="Example dialogues"
@@ -147,7 +170,26 @@ Mind: Bulma is a complex character, balancing tomboyish and girly traits alongsi
                         type="textarea"
                         placeholder="{{char}}: Hey {{user}}, ever tried ice skating or are you too busy tripping over flat surfaces?
 {{user}}: I haven't had the chance yet. It sounds like a fun activity though. Do you enjoy it?"
-                    />
+                    /> */}
+                    <div className="flex flex-row justify-between">
+                        <div>
+                            <div className="font-semibold text-sm">
+                                Nsfw (Not safe for work)
+                            </div>
+                            <div className="text-xs text-neutral-400">
+                                If this character is not safe for work, turn
+                                this on.
+                            </div>
+                        </div>
+
+                        <Toggle
+                            key={"isNSFW"}
+                            toggled={isNSFW}
+                            onChange={() => {
+                                setIsNSFW((prev) => !prev);
+                            }}
+                        />
+                    </div>
                     <div className="flex flex-row justify-between">
                         <div>
                             <div className="font-semibold text-sm">
@@ -158,7 +200,9 @@ Mind: Bulma is a complex character, balancing tomboyish and girly traits alongsi
                                 example dialogues private, turn this off.
                             </div>
                         </div>
+
                         <Toggle
+                            key={"prompt"}
                             toggled={isShowPrompt}
                             onChange={() => {
                                 setIsShowPrompt((prev) => !prev);

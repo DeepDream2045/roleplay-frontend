@@ -8,7 +8,10 @@ export type TInputBaseProps = TInputLabel & {
     inputClassName?: string;
     id?: string;
     value?: string;
-    onChange?: () => void;
+    onChange?:
+        | (() => void)
+        | ((value: string) => void)
+        | ((value: string[]) => void);
     onChangeText?: () => void;
     footerFieldText?: string;
     onFooterFieldClick?: () => void;

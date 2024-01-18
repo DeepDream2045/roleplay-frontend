@@ -43,7 +43,7 @@ export async function createModelAction(state: any, payload: any) {
             body: form,
             headers: {
                 Authorization: `Bearer ${session.access}`,
-                "user-refresh-token": session.refresher,
+                "user-refresh-token": session.refresh,
             } as HeadersInit,
             cache: "no-store",
         });
@@ -99,7 +99,7 @@ export async function getModelInfoListAction(): Promise<GetModelInfoListActionRe
             method: "GET",
             headers: {
                 Authorization: `Bearer ${session.access}`,
-                "user-refresh-token": session.refresher,
+                "user-refresh-token": session.refresh,
             } as HeadersInit,
             cache: "no-store",
         });

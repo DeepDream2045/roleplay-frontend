@@ -18,7 +18,7 @@ export type AccessSession = string | undefined;
 
 export type AuthSession = {
     user?: UserSession;
-    refresher?: RefresherSession;
+    refresh?: RefresherSession;
     access?: AccessSession;
 };
 
@@ -35,7 +35,7 @@ export async function updateAuthSession(authSession: AuthSession) {
     const session = await getAuthSession();
 
     session.user = authSession.user;
-    session.refresher = authSession.refresher;
+    session.refresh = authSession.refresh;
     session.access = authSession.access;
 
     await session.save();

@@ -4,6 +4,7 @@ import NewCharacterForm from "./form";
 import AskToLogin from "@/components/organism/AskToLogin/AskToLogin";
 import { getAuthSession } from "@/lib/authSession";
 import { getModelInfoListAction } from "@/lib/modelInfoAction";
+import { TInputOption } from "@/components/atoms/Input/InputType";
 
 interface NewCharacterProps {}
 
@@ -16,6 +17,10 @@ async function NewCharacter(props: NewCharacterProps) {
     }
 
     const models = modelData.models!;
+
+    const formattedModel: TInputOption[] = models.map((item) => {
+        return { label: item.model_name, value: String(item.id) };
+    });
 
     if (!session?.access) {
         return (
@@ -35,7 +40,7 @@ async function NewCharacter(props: NewCharacterProps) {
                 </div>
             </header>
             <main className="flex flex-1 max-w-full flex-col items-center">
-                <NewCharacterForm models={models} />
+                <NewCharacterForm models={formattedModel} />
             </main>
         </>
     );

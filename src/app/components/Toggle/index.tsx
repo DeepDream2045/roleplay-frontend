@@ -6,6 +6,7 @@ interface ToggleProps {
 export default function Toggle({ toggled, onChange }: ToggleProps) {
     return (
         <button
+            type="button"
             className={`relative inline-flex h-6 w-11 items-center rounded-full ${
                 toggled ? "bg-blue-500" : "bg-gray-300"
             }`}

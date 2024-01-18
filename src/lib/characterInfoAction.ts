@@ -5,8 +5,14 @@ import { Sleep } from "./sleep";
 
 const MAIN_API_BASE_URL = process.env.NEXT_PUBLIC_MAIN_API_BASE_URL!;
 
-export async function createCharacterAction(state: any, payload: any) {
+export async function createCharacterAction(
+    isShowPrompt: any,
+    isNSFW: any,
+    state: any,
+    payload: any
+) {
     try {
+        console.log("aiashdias");
         const character_name = payload.get("character_name");
         const short_bio = payload.get("short_bio");
         const character_gender = payload.get("character_gender");
@@ -14,8 +20,10 @@ export async function createCharacterAction(state: any, payload: any) {
         const model_id = payload.get("model_id");
         const prompt = payload.get("prompt");
         const prompt_visibility = payload.get("prompt_visibility");
+        // const prompt_visibility = isShowPrompt ? "private" : "public";
         const initial_message = payload.get("initial_message");
-        const NSFW = payload.get("NSFW");
+        // const NSFW = payload.get("NSFW");
+        const NSFW = isNSFW;
         const lorebook = payload.get("lorebook");
         const language = payload.get("language");
 
@@ -43,7 +51,7 @@ export async function createCharacterAction(state: any, payload: any) {
             body: form,
             headers: {
                 Authorization: `Bearer ${session.access}`,
-                "user-refresh-token": session.refresher,
+                "user-refresh-token": session.refresh,
             } as HeadersInit,
             cache: "no-store",
         });
@@ -79,7 +87,7 @@ export async function getCharacterInfoAction() {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${session.access}`,
-                "user-refresh-token": session.refresher,
+                "user-refresh-token": session.refresh,
             } as HeadersInit,
             cache: "no-store",
         });
