@@ -25,6 +25,7 @@ function MagicLinkLoginForm({ afterEmailSent }: MagicLinkLoginFormProps) {
         if (state.emailSuccessSent) {
             afterEmailSent(true);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state]);
 
     return (
