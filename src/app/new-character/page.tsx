@@ -3,11 +3,19 @@ import DashboardLayout from "@/app/dashboard/layout";
 import NewCharacterForm from "./form";
 import AskToLogin from "@/components/organism/AskToLogin/AskToLogin";
 import { getAuthSession } from "@/lib/authSession";
+import { getModelInfoListAction } from "@/lib/modelInfoAction";
 
 interface NewCharacterProps {}
 
 async function NewCharacter(props: NewCharacterProps) {
     const session = await getAuthSession();
+    const modelData = await getModelInfoListAction();
+
+    if (modelData.hasError) {
+        return <h1>Oppss something wrong</h1>;
+    }
+
+    const models = modelData.models!;
 
     if (!session?.access) {
         return (
@@ -27,7 +35,7 @@ async function NewCharacter(props: NewCharacterProps) {
                 </div>
             </header>
             <main className="flex flex-1 max-w-full flex-col items-center">
-                <NewCharacterForm />
+                <NewCharacterForm models={models} />
             </main>
         </>
     );
