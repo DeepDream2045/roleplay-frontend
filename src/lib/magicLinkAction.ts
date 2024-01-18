@@ -20,7 +20,7 @@ export async function magicLinkRequestService(state: any, payload: any) {
         const req = await fetch(`${MAIN_API_BASE_URL}/login_request/`, {
             method: "POST",
             body: form,
-            mode: "cors",
+            cache: "no-store",
         });
 
         // console.log(req);
