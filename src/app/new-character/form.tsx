@@ -7,6 +7,8 @@ import Toggle from "../components/Toggle";
 import { useFormState } from "react-dom";
 import { createCharacterAction } from "@/lib/characterInfoAction";
 import { TInputOption } from "@/components/atoms/Input/InputType";
+import InputText from "@/components/atoms/Input/InputText";
+import InputTextArea from "@/components/atoms/Input/InputTextArea";
 
 type NewCharacterFormPropsType = {
     models: TInputOption[];
@@ -62,32 +64,40 @@ export default function NewCharacterForm({
                         For more information about character creation, refer to
                         our docs.
                     </div>
-                    <InputForm
-                        name="short_bio"
+                    <InputTextArea
                         id="short_bio"
+                        name="short_bio"
                         label="Short description"
                         helperText="Describe the character. This will be displayed on the character page, but not used by the AI."
-                        type="textarea"
                         placeholder="Enter a short description of your character..."
                         required
                     />
-                    <InputForm
-                        id="character_name"
+                    <InputText
                         name="character_name"
+                        id="character_name"
                         label="Name"
-                        type="text"
                         placeholder="Bulma"
                         required
-                        footerFieldText="Generate using description"
+                        footer={
+                            <p
+                                className="text-inherit leading-inherit"
+                                onClick={(e) => {
+                                    console.log("generate clicked");
+                                }}
+                            >
+                                Generate using description
+                            </p>
+                        }
                     />
-                    <InputForm
+
+                    <InputText
                         id="character_gender"
                         name="character_gender"
                         label="Gender"
                         placeholder="Gender of the character: male, female, N/A, etc."
                         required
-                        type="text"
                     />
+
                     <InputForm
                         id="model_id"
                         label="Model Name"
@@ -95,7 +105,7 @@ export default function NewCharacterForm({
                         name="model_id"
                         options={models}
                     />
-                    <InputForm
+                    <InputTextArea
                         id="prompt"
                         name="prompt"
                         label="Character prompt"
@@ -103,9 +113,12 @@ export default function NewCharacterForm({
                         placeholder="Name:BulmaBody: Bulma is a 16-year-old girl with green hair  in a braided ponytail with a red ribbon and milky colored skin.
 Mind: Bulma is a complex character, balancing tomboyish and girly traits alongside a temperamental nature. She surprises with her friendliness and helpfulness, approaching major decisions rationally, displaying persistence in achieving her goals..."
                         required
-                        type="textarea"
                         rows={5}
-                        footerFieldText="Generate using description, name, gender"
+                        footer={
+                            <p className="text-inherit leading-inherit">
+                                Generate using description, name, gender
+                            </p>
+                        }
                     />
 
                     <InputForm
@@ -154,23 +167,15 @@ Mind: Bulma is a complex character, balancing tomboyish and girly traits alongsi
                             Advanced info (optional)
                         </div>
                     </div>
-                    <InputForm
+
+                    <InputTextArea
                         id="initial_message"
                         name="initial_message"
                         label="Initial message"
                         helperText="This is the first message that the character will say for the conversation. If this is empty, we will use the name and the description to generate the initial message when creating the character."
-                        type="textarea"
                         placeholder="Enter a short description of your character..."
                     />
-                    {/* <InputForm
-                        id="example-dialogues"
-                        name="character_example_dialogues"
-                        label="Example dialogues"
-                        helperText="Sample messages of the character and / or the user. Start the message with '{{char}}:' or '{{user}}:' to indicate who is speaking."
-                        type="textarea"
-                        placeholder="{{char}}: Hey {{user}}, ever tried ice skating or are you too busy tripping over flat surfaces?
-{{user}}: I haven't had the chance yet. It sounds like a fun activity though. Do you enjoy it?"
-                    /> */}
+
                     <div className="flex flex-row justify-between">
                         <div>
                             <div className="font-semibold text-sm">

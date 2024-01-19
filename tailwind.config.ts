@@ -10,6 +10,12 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      lineHeight: {
+        inherit: "inherit",
+      },
+      fontSize: {
+        inherit: "inherit",
+      },
       height: {
         "18": "4.5rem",
         "112": "28rem",
