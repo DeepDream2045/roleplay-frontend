@@ -9,6 +9,7 @@ import { createCharacterAction } from "@/lib/characterInfoAction";
 import { TInputOption } from "@/components/atoms/Input/InputType";
 import InputText from "@/components/atoms/Input/InputText";
 import InputTextArea from "@/components/atoms/Input/InputTextArea";
+import InputFile from "@/components/atoms/Input/InputFile";
 
 type NewCharacterFormPropsType = {
     models: TInputOption[];
@@ -38,19 +39,7 @@ export default function NewCharacterForm({
         <div className="px-2 mt-8 flex flex-1 flex-col max-w-screen-md w-full pb-12">
             {/* Image Form */}
             <form action={formAction}>
-                <div className="flex flex-col items-center gap-4">
-                    <Image
-                        src={"/images/default-image-placeholder.webp"}
-                        width={300}
-                        height={300}
-                        alt="Levi Ackerman profile picture"
-                        className="w-72 rounded-2xl aspect-square"
-                        priority
-                    />
-                    <div className="font-semibold flex flex-col text-blue-500">
-                        Add or Generate
-                    </div>
-                </div>
+                <InputFile name="image" id="image" label="Add or Generate" />
 
                 {/* Character Form */}
                 <div className="flex flex-col mt-8 gap-4">
