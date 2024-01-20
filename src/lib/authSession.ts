@@ -12,13 +12,13 @@ export type UserSession = {
     stay_sign?: boolean;
 };
 
-export type RefresherSession = string | undefined;
+export type RefreshSession = string | undefined;
 
 export type AccessSession = string | undefined;
 
 export type AuthSession = {
     user?: UserSession;
-    refresh?: RefresherSession;
+    refresh?: RefreshSession;
     access?: AccessSession;
 };
 

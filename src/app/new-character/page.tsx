@@ -10,18 +10,6 @@ interface NewCharacterProps {}
 
 async function NewCharacter(props: NewCharacterProps) {
     const session = await getAuthSession();
-    const modelData = await getModelInfoListAction();
-
-    if (modelData.hasError) {
-        return <h1>Oppss something wrong</h1>;
-    }
-
-    const models = modelData.models!;
-
-    const formattedModel: TInputOption[] = models.map((item) => {
-        return { label: item.model_name, value: String(item.id) };
-    });
-
     if (!session?.access) {
         return (
             <AskToLogin
@@ -30,6 +18,25 @@ async function NewCharacter(props: NewCharacterProps) {
             />
         );
     }
+
+    const modelData = await getModelInfoListAction();
+
+    if (modelData.hasError) {
+        return (
+            <>
+                <h1>{modelData.errorMsg[0]}</h1>
+                {modelData.errorMsg?.slice(1).map((val) => {
+                    return <p key={val}>{val}</p>;
+                })}
+            </>
+        );
+    }
+
+    const models = modelData.models!;
+
+    const formattedModel: TInputOption[] = models.map((item) => {
+        return { label: item.model_name, value: String(item.id) };
+    });
 
     return (
         <>

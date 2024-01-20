@@ -77,7 +77,7 @@ export async function magicLinkVerifyServiceAction(
                 profile_image: data.data.profile_image,
                 stay_sign: data.data.stay_sign,
             },
-            refresher: data.refresher,
+            refresh: data.refresh,
             access: data.access,
         };
 
