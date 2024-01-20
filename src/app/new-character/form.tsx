@@ -2,14 +2,13 @@
 
 import { ReactElement, useState } from "react";
 import InputForm from "@/components/atoms/Input/Input";
-import Image from "next/image";
-import Toggle from "../components/Toggle";
 import { useFormState } from "react-dom";
 import { createCharacterAction } from "@/lib/characterInfoAction";
 import { TInputOption } from "@/components/atoms/Input/InputType";
 import InputText from "@/components/atoms/Input/InputText";
 import InputTextArea from "@/components/atoms/Input/InputTextArea";
 import InputFile from "@/components/atoms/Input/InputFile";
+import InputToggle from "@/components/atoms/Input/InputToggle";
 
 type NewCharacterFormPropsType = {
     models: TInputOption[];
@@ -18,22 +17,13 @@ type NewCharacterFormPropsType = {
 export default function NewCharacterForm({
     models,
 }: NewCharacterFormPropsType): ReactElement {
-    const [isShowPrompt, setIsShowPrompt] = useState<boolean>(true);
-    const [isNSFW, setIsNSFW] = useState<boolean>(true);
+    const [isNSFW, setIsNSFW] = useState<boolean>(false);
     const [visibility, setVisibility] = useState("unlisted");
 
-    const bindCreateCharacterAction = createCharacterAction.bind(
-        null,
-        isShowPrompt,
-        isNSFW
-    );
-    const [state, formAction] = useFormState<any, any>(
-        bindCreateCharacterAction,
-        {
-            hasError: false,
-            errorMsg: {},
-        }
-    );
+    const [state, formAction] = useFormState<any, any>(createCharacterAction, {
+        hasError: false,
+        errorMsg: {},
+    });
 
     return (
         <div className="px-2 mt-8 flex flex-1 flex-col max-w-screen-md w-full pb-12">
@@ -165,44 +155,17 @@ Mind: Bulma is a complex character, balancing tomboyish and girly traits alongsi
                         placeholder="Enter a short description of your character..."
                     />
 
-                    <div className="flex flex-row justify-between">
-                        <div>
-                            <div className="font-semibold text-sm">
-                                Nsfw (Not safe for work)
-                            </div>
-                            <div className="text-xs text-neutral-400">
-                                If this character is not safe for work, turn
-                                this on.
-                            </div>
-                        </div>
-
-                        <Toggle
-                            key={"isNSFW"}
-                            toggled={isNSFW}
-                            onChange={() => {
-                                setIsNSFW((prev) => !prev);
-                            }}
-                        />
-                    </div>
-                    <div className="flex flex-row justify-between">
-                        <div>
-                            <div className="font-semibold text-sm">
-                                Show prompts to users
-                            </div>
-                            <div className="text-xs text-neutral-400">
-                                If you want to keep the character prompt and
-                                example dialogues private, turn this off.
-                            </div>
-                        </div>
-
-                        <Toggle
-                            key={"prompt"}
-                            toggled={isShowPrompt}
-                            onChange={() => {
-                                setIsShowPrompt((prev) => !prev);
-                            }}
-                        />
-                    </div>
+                    <InputToggle
+                        value={isNSFW}
+                        onChange={(e) => {
+                            setIsNSFW((prev) => !prev);
+                        }}
+                        key={"NSFW"}
+                        id="NSFW"
+                        name="NSFW"
+                        label="Nsfw (Not safe for work)"
+                        helperText="If this character is not safe for work, turn this on."
+                    />
                 </div>
                 <div className="mt-8">
                     <button className="w-full h-10 rounded-lg bg-blue-500 text-white font-semibold">
