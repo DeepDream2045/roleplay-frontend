@@ -17,6 +17,7 @@ export default function VerifyFormButtonSubmit({
         } else {
             setPendingStatus(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pending]);
 
     return <button ref={btnRef} />;

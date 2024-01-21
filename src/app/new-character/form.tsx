@@ -9,6 +9,7 @@ import InputText from "@/components/atoms/Input/InputText";
 import InputTextArea from "@/components/atoms/Input/InputTextArea";
 import InputFile from "@/components/atoms/Input/InputFile";
 import InputToggle from "@/components/atoms/Input/InputToggle";
+import InputSelect from "@/components/atoms/Input/InputSelect";
 
 type NewCharacterFormPropsType = {
     models: TInputOption[];
@@ -126,8 +127,8 @@ Mind: Bulma is a complex character, balancing tomboyish and girly traits alongsi
                             },
                         ]}
                     />
-                    <InputForm
-                        type="select"
+
+                    <InputSelect
                         name="tags"
                         id="tags"
                         label="Tags"

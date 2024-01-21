@@ -1,6 +1,6 @@
 import React, { HTMLAttributes } from "react";
 
-type TInputLabelProps = {
+export type TInputLabelProps = {
     notLabel?: boolean | false;
     label: string;
     required?: boolean | false;
