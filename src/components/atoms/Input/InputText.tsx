@@ -22,16 +22,29 @@ const InputText = (props: TInputTextProps) => {
             {props.helperText && (
                 <InputHelperText helperText={props.helperText} />
             )}
-            <input
-                id={props.id}
-                type="text"
-                placeholder={props.placeholder}
-                name={props.name}
-                className={defaultInputClassName}
-                value={props.value}
-                onChange={props.onChange}
-                defaultValue={""}
-            />
+
+            {props.value !== undefined ? (
+                <input
+                    id={props.id}
+                    type="text"
+                    placeholder={props.placeholder}
+                    name={props.name}
+                    className={defaultInputClassName}
+                    value={props.value}
+                    onChange={props.onChange}
+                />
+            ) : (
+                <input
+                    id={props.id}
+                    type="text"
+                    placeholder={props.placeholder}
+                    name={props.name}
+                    className={defaultInputClassName}
+                    onChange={props.onChange}
+                    defaultValue={""}
+                />
+            )}
+
             {props.footer && (
                 <InputFooter className={props.customFooterClassName}>
                     {props.footer}
