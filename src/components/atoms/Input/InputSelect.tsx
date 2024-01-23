@@ -140,20 +140,22 @@ const InputSelect = ({ multiple = false, ...props }: TInputSelectProps) => {
             />
 
             {props.errorMsg && <InputErrorMessage message={props.errorMsg} />}
-            <div className="flex flex-row flex-wrap max-w-full w-full gap-2 mt-2">
-                {props.value &&
-                    props.value.map((val) => {
-                        return (
-                            <div
-                                key={val.value}
-                                className="px-4 py-2 flex text-base flex-row gap-2 items-center border rounded-md"
-                            >
-                                {val.label}
-                                <X className="w-4 h-4 text-black cursor-pointer" />
-                            </div>
-                        );
-                    })}
-            </div>
+            {multiple && (
+                <div className="flex flex-row flex-wrap max-w-full w-full gap-2 mt-2">
+                    {props.value &&
+                        props.value.map((val) => {
+                            return (
+                                <div
+                                    key={val.value}
+                                    className="px-4 py-2 flex text-base flex-row gap-2 items-center border rounded-md"
+                                >
+                                    {val.label}
+                                    <X className="w-4 h-4 text-black cursor-pointer" />
+                                </div>
+                            );
+                        })}
+                </div>
+            )}
 
             <div
                 className={`flex flex-col w-full overflow-x-auto rounded-lg  ${

@@ -84,6 +84,7 @@ export default function NewCharacterForm({
                     />
 
                     <InputSelect
+                        key="model_id"
                         id="model_id"
                         label="Model Name"
                         placeholder="Select Model"
@@ -142,6 +143,7 @@ Mind: Bulma is a complex character, balancing tomboyish and girly traits alongsi
                     />
 
                     <InputSelect
+                        key="tags"
                         name="tags"
                         id="tags"
                         label="Tags"
