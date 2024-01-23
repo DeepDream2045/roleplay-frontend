@@ -14,7 +14,7 @@ async function Dashboard(props: DashboardProps) {
         return (
             <>
                 <h1>{characterData.errorMsg[0]}</h1>
-                {characterData.errorMsg?.slice(1).map((val) => {
+                {characterData.errorMsg?.slice(1).map((val: string) => {
                     return <p key={val}>{val}</p>;
                 })}
             </>
