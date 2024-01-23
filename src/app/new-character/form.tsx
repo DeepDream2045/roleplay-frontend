@@ -51,6 +51,7 @@ export default function NewCharacterForm({
                         helperText="Describe the character. This will be displayed on the character page, but not used by the AI."
                         placeholder="Enter a short description of your character..."
                         required
+                        errorMsg={state.errorMsg.short_bio}
                     />
                     <InputText
                         name="character_name"
@@ -68,6 +69,7 @@ export default function NewCharacterForm({
                                 Generate using description
                             </p>
                         }
+                        errorMsg={state.errorMsg.character_name}
                     />
 
                     <InputText
@@ -76,6 +78,7 @@ export default function NewCharacterForm({
                         label="Gender"
                         placeholder="Gender of the character: male, female, N/A, etc."
                         required
+                        errorMsg={state.errorMsg.character_gender}
                     />
 
                     <InputForm
@@ -84,6 +87,8 @@ export default function NewCharacterForm({
                         type="select"
                         name="model_id"
                         options={models}
+                        required
+                        errorMsg={state.errorMsg.model_id}
                     />
                     <InputTextArea
                         id="prompt"
@@ -99,6 +104,7 @@ Mind: Bulma is a complex character, balancing tomboyish and girly traits alongsi
                                 Generate using description, name, gender
                             </p>
                         }
+                        errorMsg={state.errorMsg.prompt}
                     />
 
                     <InputForm
@@ -126,6 +132,7 @@ Mind: Bulma is a complex character, balancing tomboyish and girly traits alongsi
                                 value: "public",
                             },
                         ]}
+                        errorMsg={state.errorMsg.prompt_visibility}
                     />
 
                     <InputSelect
@@ -140,6 +147,8 @@ Mind: Bulma is a complex character, balancing tomboyish and girly traits alongsi
                             { label: "Assistant", value: "Assistant" },
                             { label: "Books", value: "Books" },
                         ]}
+                        required
+                        errorMsg={state.errorMsg.tags}
                     />
 
                     <div className="flex flex-1 flex-row justify-between">

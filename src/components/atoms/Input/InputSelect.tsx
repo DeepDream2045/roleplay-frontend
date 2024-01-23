@@ -6,6 +6,7 @@ import type { TInputOption } from "@/components/atoms/Input/InputType";
 import { TInputProps, defaultInputClassName } from "./InputUtil";
 import InputLabel from "./InputLabel";
 import InputHelperText from "./InputHelperText";
+import InputErrorMessage from "./InputErrorMessage";
 
 type TInputSelectProps = Omit<TInputProps, "value"> & {
     options: TInputOption[];
@@ -86,6 +87,7 @@ const InputSelect = ({ multiple = false, ...props }: TInputSelectProps) => {
                     setInputActive(false);
                 }}
             />
+            {props.errorMsg && <InputErrorMessage message={props.errorMsg} />}
             <div className="flex flex-row flex-wrap max-w-full w-full">
                 {props.value &&
                     props.value.map((val) => {

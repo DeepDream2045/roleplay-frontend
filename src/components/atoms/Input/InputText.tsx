@@ -3,6 +3,7 @@ import InputLabel from "./InputLabel";
 import InputHelperText from "./InputHelperText";
 import { TInputProps, defaultInputClassName } from "./InputUtil";
 import InputFooter from "./InputFooter";
+import InputErrorMessage from "./InputErrorMessage";
 
 type TInputTextProps = TInputProps & {
     value?: InputHTMLAttributes<HTMLInputElement>["value"];
@@ -44,6 +45,8 @@ const InputText = (props: TInputTextProps) => {
                     defaultValue={""}
                 />
             )}
+
+            {props.errorMsg && <InputErrorMessage message={props.errorMsg} />}
 
             {props.footer && (
                 <InputFooter className={props.customFooterClassName}>

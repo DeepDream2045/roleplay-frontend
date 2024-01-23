@@ -3,6 +3,7 @@ import { TInputProps, defaultInputClassName } from "./InputUtil";
 import InputLabel from "./InputLabel";
 import InputHelperText from "./InputHelperText";
 import InputFooter from "./InputFooter";
+import InputErrorMessage from "./InputErrorMessage";
 
 type TInputTextAreaProps = TInputProps & {
     rows?: number;
@@ -36,6 +37,7 @@ const InputTextArea = (props: TInputTextAreaProps) => {
                 rows={actualRows}
                 name={props.name}
             />
+            {props.errorMsg && <InputErrorMessage message={props.errorMsg} />}
             {props.footer && (
                 <InputFooter className={props.customFooterClassName}>
                     {props.footer}

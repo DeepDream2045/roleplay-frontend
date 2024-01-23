@@ -13,7 +13,7 @@ type TInputProps = {
     value?: string;
     onChange?: ChangeEventHandler<HTMLInputElement> | undefined;
     helperText?: string;
-    errorMsg?: string;
+    errorMsg?: string[];
     footer?: ReactNode;
     customFooterClassName?: TInputFooterProps["className"];
 };
