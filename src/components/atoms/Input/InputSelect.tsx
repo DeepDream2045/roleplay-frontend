@@ -71,7 +71,7 @@ const InputSelect = ({ multiple = false, ...props }: TInputSelectProps) => {
                 ref={searchInputRef}
                 type="text"
                 value={searchKey}
-                placeholder="Search tags"
+                placeholder={props.placeholder}
                 className={defaultInputClassName}
                 onChange={onChangeSearch}
                 onMouseDown={(e) => {

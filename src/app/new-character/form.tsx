@@ -81,10 +81,10 @@ export default function NewCharacterForm({
                         errorMsg={state.errorMsg.character_gender}
                     />
 
-                    <InputForm
+                    <InputSelect
                         id="model_id"
                         label="Model Name"
-                        type="select"
+                        placeholder="Select Model"
                         name="model_id"
                         options={models}
                         required
@@ -139,6 +139,7 @@ Mind: Bulma is a complex character, balancing tomboyish and girly traits alongsi
                         name="tags"
                         id="tags"
                         label="Tags"
+                        placeholder="Search Tags"
                         helperText={`Select up to 5 relevant tags or keywords.`}
                         options={[
                             { label: "Action", value: "Action" },
