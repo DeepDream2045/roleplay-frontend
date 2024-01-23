@@ -64,7 +64,7 @@ const useChat = (userId: string | number, characterId: string | number) => {
             console.log(message);
             const newMessage: TMessage = {
                 messsage_from: "user",
-                message_id: `user-${messages.length}`,
+                message_id: `user-${Date.now()}`,
                 message: message as string,
                 sender_profile_pic: "",
             };
