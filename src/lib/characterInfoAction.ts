@@ -71,6 +71,42 @@ export async function createCharacterAction(state: any, payload: any) {
     }
 }
 
+export type CharacterInfoType = {
+    id: number;
+    character_name: string;
+    short_bio: string;
+    character_gender: string;
+    tags: string;
+    prompt: string;
+    character_visibility: string;
+    initial_message: string;
+    image: string | null;
+    NSFW: boolean;
+    lorebook: string | null;
+    language: string | null;
+    created_date: Date;
+    modified_date: Date;
+    model_id: number;
+    user: {
+        imageUrl: string;
+        name: string;
+    };
+};
+
+type TGetCharacterInfoListActionReturnOkay = {
+    hasError: false;
+    characters: CharacterInfoType[];
+};
+
+type TGetCharacterInfoListActionReturnError = {
+    hasError: true;
+    errorMsg: any[];
+};
+
+export type TGetCharacterInfoListActionReturn =
+    | TGetCharacterInfoListActionReturnOkay
+    | TGetCharacterInfoListActionReturnError;
+
 export async function getCharacterInfoAction() {
     try {
         const session = await getAuthSession();
@@ -89,6 +125,8 @@ export async function getCharacterInfoAction() {
         }
 
         const data = await req.json();
+
+        return { hasError: false, characters: data as CharacterInfoType[] };
     } catch (err) {
         const errors = await (err as Response).json();
         console.log(errors);

@@ -3,10 +3,24 @@ import DashboardLayout from "./layout";
 import RecentChatCard from "../components/dashboard/RecentChatCard";
 import Category from "../components/dashboard/Category";
 import CharacterCard from "../components/dashboard/CharacterCard";
+import { getCharacterInfoAction } from "@/lib/characterInfoAction";
 
 interface DashboardProps {}
 
-function Dashboard(props: DashboardProps): ReactElement {
+async function Dashboard(props: DashboardProps) {
+    const characterData = await getCharacterInfoAction();
+
+    if (characterData.hasError) {
+        return (
+            <>
+                <h1>{characterData.errorMsg[0]}</h1>
+                {characterData.errorMsg?.slice(1).map((val) => {
+                    return <p key={val}>{val}</p>;
+                })}
+            </>
+        );
+    }
+
     return (
         <div className="px-2 mt-8 flex flex-1 flex-col max-w-full pb-12">
             {/* Recent Chat */}
@@ -58,20 +72,21 @@ function Dashboard(props: DashboardProps): ReactElement {
 
             {/* All Character */}
             <div className="flex flex-wrap flex-row">
-                {Array(18)
-                    .fill("x")
-                    .map((val, index) => {
-                        return (
-                            <CharacterCard
-                                key={`char-${index + 1}`}
-                                imageSrc="/images/Sasuke Uchiha Profile Picture.webp"
-                                profileImageSrc="/images/default-character-placeholder-full.webp"
-                                name="Sasuke"
-                                profileName="lilianne"
-                                timeString="107.3K . 1 month ago"
-                            />
-                        );
-                    })}
+                {characterData.characters!.map((val, index) => {
+                    return (
+                        <CharacterCard
+                            key={`char-${index + 1}`}
+                            imageSrc={val.image || ""}
+                            profileImageSrc={
+                                val.user.imageUrl ||
+                                "/images/default-character-placeholder-full.webp"
+                            }
+                            name={val.character_name || "Sasuke"}
+                            profileName={val.user.name || "lilianne"}
+                            timeString="107.3K . 1 month ago"
+                        />
+                    );
+                })}
             </div>
         </div>
     );
