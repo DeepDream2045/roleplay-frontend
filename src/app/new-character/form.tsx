@@ -20,6 +20,8 @@ export default function NewCharacterForm({
 }: NewCharacterFormPropsType): ReactElement {
     const [isNSFW, setIsNSFW] = useState<boolean>(false);
     const [visibility, setVisibility] = useState("unlisted");
+    const [modelVal, setModelVal] = useState<TInputOption[]>([]);
+    const [tagsVal, setTagsVal] = useState<TInputOption[]>([]);
 
     const [state, formAction] = useFormState<any, any>(createCharacterAction, {
         hasError: false,
@@ -89,6 +91,10 @@ export default function NewCharacterForm({
                         options={models}
                         required
                         errorMsg={state.errorMsg.model_id}
+                        value={modelVal}
+                        onChange={(val) => {
+                            setModelVal(val);
+                        }}
                     />
                     <InputTextArea
                         id="prompt"
@@ -148,8 +154,13 @@ Mind: Bulma is a complex character, balancing tomboyish and girly traits alongsi
                             { label: "Assistant", value: "Assistant" },
                             { label: "Books", value: "Books" },
                         ]}
+                        multiple
                         required
                         errorMsg={state.errorMsg.tags}
+                        value={tagsVal}
+                        onChange={(val) => {
+                            setTagsVal(val);
+                        }}
                     />
 
                     <div className="flex flex-1 flex-row justify-between">

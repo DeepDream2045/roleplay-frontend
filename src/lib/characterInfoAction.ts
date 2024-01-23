@@ -10,7 +10,7 @@ export async function createCharacterAction(state: any, payload: any) {
         const character_name = payload.get("character_name");
         const short_bio = payload.get("short_bio");
         const character_gender = payload.get("character_gender");
-        const tags = payload.get("tags");
+        const tags = payload.getAll("tags");
         const model_id = payload.get("model_id");
         const prompt = payload.get("prompt");
         const prompt_visibility = payload.get("prompt_visibility");
@@ -27,7 +27,7 @@ export async function createCharacterAction(state: any, payload: any) {
         form.append("character_name", character_name);
         form.append("short_bio", short_bio);
         form.append("character_gender", character_gender);
-        form.append("tags", tags);
+        form.append("tags", tags.join(","));
         form.append("model_id", model_id);
         form.append("prompt", prompt);
         form.append("prompt_visibility", prompt_visibility);
