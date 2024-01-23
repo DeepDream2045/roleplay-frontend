@@ -103,19 +103,34 @@ const InputSelect = ({ multiple = false, ...props }: TInputSelectProps) => {
                 ))}
             </select>
 
-            {!inputActive && (
+            {!inputActive && !multiple && (
                 <div
                     className={`${defaultInputClassName} h-10 bg-white ${
                         props.value?.length ? "text-black" : "text-gray-400"
                     }`}
-                    onMouseDown={() => {
+                    onMouseDown={(e) => {
+                        e.preventDefault();
                         setInputActive(true);
-                        searchInputRef.current?.focus();
+                        searchInputRef.current!.focus();
                     }}
                 >
                     {props.value?.[0]?.label || props.placeholder}
                 </div>
             )}
+
+            {!inputActive && multiple && (
+                <div
+                    className={`${defaultInputClassName} h-10 bg-white text-gray-400`}
+                    onMouseDown={(e) => {
+                        e.preventDefault();
+                        setInputActive(true);
+                        searchInputRef.current!.focus();
+                    }}
+                >
+                    {props.placeholder}
+                </div>
+            )}
+
             <input
                 ref={searchInputRef}
                 type="text"
@@ -125,15 +140,6 @@ const InputSelect = ({ multiple = false, ...props }: TInputSelectProps) => {
                     inputActive ? "" : "hidden"
                 } `}
                 onChange={onChangeSearch}
-                onFocus={() => {
-                    setInputActive(true);
-                }}
-                onMouseDown={(e) => {
-                    if (inputActive) {
-                        e.preventDefault();
-                        searchInputRef.current?.blur();
-                    }
-                }}
                 onBlur={() => {
                     setInputActive(false);
                 }}
