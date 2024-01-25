@@ -1,5 +1,5 @@
-import NewCharacterLayout from "@/app/new-character/layout";
 import VerifyForm from "./VerifyForm";
+import DashboardLayout from "@/app/(dashboard)/layout";
 
 export default function LoginVerifyPage({
     params: { token },
@@ -7,10 +7,10 @@ export default function LoginVerifyPage({
     params: { token: string };
 }) {
     return (
-        <NewCharacterLayout>
+        <DashboardLayout>
             <div className="flex flex-1 flex-col">
                 <VerifyForm token={token} />
             </div>
-        </NewCharacterLayout>
+        </DashboardLayout>
     );
 }

@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import DashboardLayout from "@/app/dashboard/layout";
+import DashboardLayout from "@/app/(dashboard)/layout";
 import NewCharacterForm from "./form";
 import AskToLogin from "@/components/organism/AskToLogin/AskToLogin";
 import { getAuthSession } from "@/lib/authSession";

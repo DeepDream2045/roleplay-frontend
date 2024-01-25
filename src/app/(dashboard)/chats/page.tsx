@@ -1,5 +1,3 @@
-import { ReactElement } from "react";
-import ChatsLayout from "@/app/chats/layout";
 import Conversation from "./Conversation";
 import AskToLogin from "@/components/organism/AskToLogin/AskToLogin";
 import { getAuthSession } from "@/lib/authSession";
@@ -22,9 +20,5 @@ async function Chats(props: ChatsProps) {
 
     return <Conversation />;
 }
-
-Chats.getLayout = (page: ReactElement) => {
-    return <ChatsLayout>{page}</ChatsLayout>;
-};
 
 export default Chats;

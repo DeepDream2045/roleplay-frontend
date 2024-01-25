@@ -1,6 +1,6 @@
 import Button from "@/components/atoms/Button";
 import Image from "next/image";
-import CharacterCard from "../components/dashboard/CharacterCard";
+import CharacterCard from "../../components/dashboard/CharacterCard";
 
 function ProfilePage() {
     return (
