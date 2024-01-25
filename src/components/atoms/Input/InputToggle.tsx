@@ -5,6 +5,7 @@ import { TInputProps } from "./InputUtil";
 import InputLabel from "./InputLabel";
 import InputHelperText from "./InputHelperText";
 import InputErrorMessage from "./InputErrorMessage";
+import InputFooter from "./InputFooter";
 
 type TInputToggleProps = Omit<TInputProps, "value"> & {
     value?: boolean;
@@ -16,7 +17,14 @@ const InputToggle = (props: TInputToggleProps) => {
         <>
             <div className="flex flex-row justify-between">
                 <div>
-                    {props.label && <InputLabel label={props.label} />}
+                    {props.label && (
+                        <InputLabel
+                            label={props.label}
+                            required={props.required}
+                            labelClassName={props.customLabelClassName}
+                            requiredClassName={props.customRequiredClassName}
+                        />
+                    )}
                     {props.helperText && (
                         <InputHelperText helperText={props.helperText} />
                     )}
@@ -45,6 +53,11 @@ const InputToggle = (props: TInputToggleProps) => {
                 </button>
             </div>
             {props.errorMsg && <InputErrorMessage message={props.errorMsg} />}
+            {props.footer && (
+                <InputFooter className={props.customFooterClassName}>
+                    {props.footer}
+                </InputFooter>
+            )}
         </>
     );
 };

@@ -1,26 +1,30 @@
 import React from "react";
-import type {
-    TInputOption,
-    TInputBaseProps,
-} from "@/components/atoms/Input/InputType";
+import type { TInputOption } from "@/components/atoms/Input/InputType";
+import { TInputProps } from "./InputUtil";
+import InputLabel from "./InputLabel";
+import InputHelperText from "./InputHelperText";
+import InputErrorMessage from "./InputErrorMessage";
+import InputFooter from "./InputFooter";
 
-type TInputRadioProps = TInputBaseProps & {
+type TInputRadioProps = Omit<TInputProps, "onChange"> & {
     options: TInputOption[];
+    onChange: (val: TInputOption["value"]) => void;
 };
 
 const InputRadio = (props: TInputRadioProps) => {
     return (
         <>
-            <div className={props.labelClassName}>
-                {props.label}
-                {props.required && (
-                    <span className={props.requiredClassName}> *</span>
-                )}{" "}
-            </div>
+            {props.label && (
+                <InputLabel
+                    label={props.label}
+                    required={props.required}
+                    labelClassName={props.customLabelClassName}
+                    requiredClassName={props.customRequiredClassName}
+                    notLabel
+                />
+            )}
             {props.helperText && (
-                <div className={props.helperTextClassName}>
-                    {props.helperText}
-                </div>
+                <InputHelperText helperText={props.helperText} />
             )}
             <div className="flex flex-col gap-2 mt-2">
                 {props.options?.map((option) => (
@@ -49,6 +53,12 @@ const InputRadio = (props: TInputRadioProps) => {
                     </div>
                 ))}
             </div>
+            {props.errorMsg && <InputErrorMessage message={props.errorMsg} />}
+            {props.footer && (
+                <InputFooter className={props.customFooterClassName}>
+                    {props.footer}
+                </InputFooter>
+            )}
         </>
     );
 };

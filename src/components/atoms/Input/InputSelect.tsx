@@ -24,6 +24,10 @@ const InputSelect = ({ multiple = false, ...props }: TInputSelectProps) => {
     const [optionActive, setOptionActive] = useState<boolean>(false);
     const searchInputRef = useRef<HTMLInputElement>(null);
 
+    const values = props.value?.map((val) => val.value) ?? [];
+
+    const value = multiple ? values : values[0] || "";
+
     const optionContainerShowHandler = () => {
         setOptionShow((prev) => !prev);
     };
@@ -74,7 +78,14 @@ const InputSelect = ({ multiple = false, ...props }: TInputSelectProps) => {
 
     return (
         <div className="flex flex-col">
-            {props.label && <InputLabel label={props.label} />}
+            {props.label && (
+                <InputLabel
+                    label={props.label}
+                    required={props.required}
+                    labelClassName={props.customLabelClassName}
+                    requiredClassName={props.customRequiredClassName}
+                />
+            )}
             {props.helperText && (
                 <InputHelperText helperText={props.helperText} />
             )}
@@ -86,16 +97,13 @@ const InputSelect = ({ multiple = false, ...props }: TInputSelectProps) => {
                 className={`${defaultInputClassName} ${
                     props.customSelectClassName || ""
                 }`}
-                value={
-                    props.value
-                        ? multiple
-                            ? props.value.map((val) => val.value)
-                            : props.value[0]?.value || ""
-                        : ""
-                }
+                value={value}
                 hidden
                 onChange={() => {}}
             >
+                <option key={props.placeholder || props.name} value={""} hidden>
+                    {props.placeholder}
+                </option>
                 {props.options.map((option) => (
                     <option key={option.value} value={option.value}>
                         {option.label}

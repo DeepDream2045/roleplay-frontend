@@ -1,7 +1,6 @@
 "use client";
 
 import { ReactElement, useState } from "react";
-import InputForm from "@/components/atoms/Input/Input";
 import { useFormState } from "react-dom";
 import { createCharacterAction } from "@/lib/characterInfoAction";
 import { TInputOption } from "@/components/atoms/Input/InputType";
@@ -10,6 +9,7 @@ import InputTextArea from "@/components/atoms/Input/InputTextArea";
 import InputFile from "@/components/atoms/Input/InputFile";
 import InputToggle from "@/components/atoms/Input/InputToggle";
 import InputSelect from "@/components/atoms/Input/InputSelect";
+import InputRadio from "@/components/atoms/Input/InputRadio";
 
 type NewCharacterFormPropsType = {
     models: TInputOption[];
@@ -114,12 +114,11 @@ Mind: Bulma is a complex character, balancing tomboyish and girly traits alongsi
                         errorMsg={state.errorMsg.prompt}
                     />
 
-                    <InputForm
+                    <InputRadio
                         id="prompt_visibility"
                         name="prompt_visibility"
                         label="Visibility"
                         helperText="You can also change the visibility after the character is created."
-                        type="radio"
                         required
                         value={visibility}
                         onChange={(val: string) => {
