@@ -1,9 +1,8 @@
 "use server";
 
+import { MAIN_API_BASE_URL } from "@/constants/environtment";
 import { getAuthSession } from "./authSession";
 import { Sleep } from "./sleep";
-
-const MAIN_API_BASE_URL = process.env.NEXT_PUBLIC_MAIN_API_BASE_URL!;
 
 export async function createCharacterAction(state: any, payload: any) {
     try {
@@ -84,11 +83,22 @@ export type CharacterInfoType = {
     NSFW: boolean;
     lorebook: string | null;
     language: string | null;
-    created_date: Date;
-    modified_date: Date;
-    model_id: number;
+    created_date: string;
+    modified_date: string;
+    model: {
+        id: number;
+        name: string;
+        short_bio?: string;
+        model_location?: string;
+        prompt_template?: string;
+        temperature?: string;
+        repetition_penalty?: string;
+        top_p?: number;
+        top_k?: number;
+    };
     user: {
-        imageUrl: string;
+        id: number;
+        imageUrl: string | null;
         name: string;
     };
 };

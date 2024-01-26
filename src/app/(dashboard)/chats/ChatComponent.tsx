@@ -6,6 +6,7 @@ interface ChatComponentProps {
     message: string;
     time: string;
     active?: boolean;
+    onClick?: () => void;
 }
 
 export default function ChatComponent({
@@ -14,12 +15,14 @@ export default function ChatComponent({
     message,
     time,
     active = false,
+    onClick = () => {},
 }: ChatComponentProps) {
     return (
         <div
-            className={`px-4 h-18 flex flex-row items-center gap-4 ${
+            className={`px-4 h-18 flex flex-row items-center gap-4 cursor-pointer ${
                 active ? "bg-slate-200" : "bg-gray-200"
             }`}
+            onClick={onClick}
         >
             <div>
                 <Image

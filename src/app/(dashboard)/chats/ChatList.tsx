@@ -1,9 +1,19 @@
+"use client";
+
 import React from "react";
 import ChatComponent from "./ChatComponent";
+import { useParams, useRouter } from "next/navigation";
+import { TRoomInfo } from "@/lib/chatAction";
 
-type TChatListProps = {};
+type TChatListProps = {
+    rooms: TRoomInfo[];
+};
 
 const ChatList = (props: TChatListProps) => {
+    const params = useParams();
+    const router = useRouter();
+    const activeChatRoomId: string | null = (params?.roomId as string) || null;
+
     return (
         <div className="w-96 border-r min-h-full py-4 sticky top-0">
             <div className="h-16 flex">
@@ -11,19 +21,25 @@ const ChatList = (props: TChatListProps) => {
             </div>
             <div className="flex flex-col gap-2">
                 {/* Chat Component */}
-                <ChatComponent
-                    name="Levi Ackerman"
-                    imageSrc="/images/Levi Ackerman Profile Picture.webp"
-                    message="I may have a serious exterior, but deep down I just want someone to"
-                    time="Friday"
-                    active
-                />
-                <ChatComponent
-                    name="Sasuke Uchiha"
-                    imageSrc="/images/Sasuke Uchiha Profile Picture.webp"
-                    message="Welcome to our support chat! How may I assist you?"
-                    time="Tuesday"
-                />
+                {props.rooms.map((item) => {
+                    return (
+                        <ChatComponent
+                            key={item.room_id}
+                            name={item.group_name}
+                            imageSrc={"/images/default-image-placeholder.webp"}
+                            message={
+                                item.chatroom.length > 0
+                                    ? item.chatroom[0]
+                                    : "Let's do the chat"
+                            }
+                            time=""
+                            active={item.room_id === activeChatRoomId}
+                            onClick={() => {
+                                router.push(`/chats/${item.room_id}`, {});
+                            }}
+                        />
+                    );
+                })}
             </div>
         </div>
     );
