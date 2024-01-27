@@ -21,14 +21,6 @@ export default function Conversation({
     );
     const [waitForResponse, setWaitForResponse] = useState<boolean>(false);
 
-    useEffect(() => {
-        console.log({ messages });
-    }, [messages]);
-
-    useEffect(() => {
-        console.log(conversations);
-    }, [conversations]);
-
     return (
         <>
             <ConversationHeader />

@@ -20,8 +20,6 @@ function MagicLinkLoginForm({ afterEmailSent }: MagicLinkLoginFormProps) {
     );
 
     useEffect(() => {
-        console.log({ state });
-
         if (state.emailSuccessSent) {
             afterEmailSent(true);
         }

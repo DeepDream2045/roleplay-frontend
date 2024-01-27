@@ -1,8 +1,5 @@
-import {
-    AuthSession,
-    getAuthSession,
-    updateAuthSession,
-} from "@/lib/authSession";
+import { getAuthSession, updateAuthSession } from "@/lib/authSession";
+import { AuthSession } from "@/types/action";
 import { NextRequest, NextResponse } from "next/server";
 const MAIN_API_BASE_URL = process.env.NEXT_PUBLIC_MAIN_API_BASE_URL!;
 const DASHBOARD_BASE_URL = process.env.DASHBOARD_BASE_URL!;
@@ -10,9 +7,6 @@ const DASHBOARD_BASE_URL = process.env.DASHBOARD_BASE_URL!;
 export async function GET(request: NextRequest) {
     const session = await getAuthSession();
     const redirect = request.nextUrl.searchParams.get("redirect");
-
-    console.log({ sessionFromRefresh: session });
-    console.log({ redirectFromRefresh: redirect });
 
     const form = new FormData();
 

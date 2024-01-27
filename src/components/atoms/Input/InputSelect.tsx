@@ -143,11 +143,7 @@ const InputSelect = ({ multiple = false, ...props }: TInputSelectProps) => {
                     onMouseDown={(e) => {
                         e.preventDefault();
                         setInputActive(true);
-                        if (searchInputRef.current?.isConnected) {
-                            console.log("connected");
-                        } else {
-                            console.log("not connect");
-                        }
+
                         // this Sleep needed to wait inputActive state changed first,
                         // then ref can detected to gain the focus
                         Sleep(50).then(() => {
@@ -170,7 +166,6 @@ const InputSelect = ({ multiple = false, ...props }: TInputSelectProps) => {
                 onChange={onChangeSearch}
                 onBlur={(e) => {
                     e.preventDefault();
-                    console.log("halo");
                     setInputActive(false);
                 }}
             />

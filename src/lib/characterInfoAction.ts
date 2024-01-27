@@ -53,7 +53,6 @@ export async function createCharacterAction(
             cache: "no-store",
         });
 
-        // console.log(req);
         if (!req.ok) {
             throw req;
         }

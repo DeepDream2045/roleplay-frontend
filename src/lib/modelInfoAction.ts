@@ -48,13 +48,11 @@ export async function createModelAction(state: any, payload: any) {
             cache: "no-store",
         });
 
-        // console.log(req);
         if (!req.ok) {
             throw req;
         }
 
         const response = await req.json();
-        // console.log(response);
 
         return {
             hasError: false,

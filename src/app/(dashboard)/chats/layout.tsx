@@ -34,7 +34,6 @@ export default async function ProtectedPageLayout({
             </>
         );
     }
-    console.log(roomData.rooms);
 
     return (
         <div className="flex flex-1 flex-row w-full">

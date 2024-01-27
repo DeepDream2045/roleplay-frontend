@@ -73,8 +73,6 @@ const useChat = (
         };
 
         newSocket.onmessage = (event) => {
-            console.log("on message");
-            console.log(event);
             const response: TMessageResponse = JSON.parse(event.data);
             const newMessage: TMessage = {
                 messsage_from: "character",
@@ -93,8 +91,6 @@ const useChat = (
         const send = newSocket.send;
 
         newSocket.send = (message) => {
-            console.log("send message");
-            console.log(message);
             const newMessage: TMessage = {
                 messsage_from: "user",
                 message_id: `user-${Date.now()}`,

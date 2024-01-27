@@ -146,9 +146,7 @@ export async function createRoomInfoAction(
         const session = await getAuthSession();
         const form = new FormData();
 
-        console.log({ character_id });
         const userId = session.user!.id;
-        console.log({ userId });
 
         form.append("user", String(userId));
         form.append("character", character_id);
@@ -168,7 +166,7 @@ export async function createRoomInfoAction(
         }
 
         data = await req.json();
-        console.log({ data: data?.room_id });
+
         revalidatePath("/chats");
     } catch (err) {
         console.log(err);
