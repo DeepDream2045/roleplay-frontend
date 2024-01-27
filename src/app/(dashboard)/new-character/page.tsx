@@ -5,6 +5,7 @@ import AskToLogin from "@/components/organism/AskToLogin/AskToLogin";
 import { getAuthSession } from "@/lib/authSession";
 import { getModelInfoListAction } from "@/lib/modelInfoAction";
 import { TInputOption } from "@/components/atoms/Input/InputType";
+import { getTagInfoListAction } from "@/lib/tagAction";
 
 interface NewCharacterProps {}
 
@@ -38,6 +39,25 @@ async function NewCharacter(props: NewCharacterProps) {
         return { label: item.model_name, value: String(item.id) };
     });
 
+    const tagData = await getTagInfoListAction();
+
+    if (tagData.hasError) {
+        return (
+            <>
+                <h1>{tagData.errorMsg[0]}</h1>
+                {tagData.errorMsg?.slice(1).map((val: string) => {
+                    return <p key={val}>{val}</p>;
+                })}
+            </>
+        );
+    }
+
+    const tags = tagData.tags!;
+
+    const formattedTag: TInputOption[] = tags.map((item) => {
+        return { label: item.tag_name, value: String(item.id) };
+    });
+
     return (
         <>
             <header className="sticky top-0 flex flex-col flex-1 bg-neutral-50 py-2 items-center z-10">
@@ -47,7 +67,7 @@ async function NewCharacter(props: NewCharacterProps) {
                 </div>
             </header>
             <main className="flex flex-1 max-w-full flex-col items-center">
-                <NewCharacterForm models={formattedModel} />
+                <NewCharacterForm models={formattedModel} tags={formattedTag} />
             </main>
         </>
     );

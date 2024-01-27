@@ -2,13 +2,22 @@ import { MAIN_API_BASE_URL } from "@/constants/environtment";
 import { getAuthSession } from "./authSession";
 import { commonErrorHandler } from "./fetchRequest";
 
+export type TConversation = {
+    id: number;
+    created_date: string;
+    modified_date: string;
+    user_message: string;
+    character_message: string;
+    is_edited: boolean;
+    chat: number;
+};
 export type TRoomInfo = {
     room_id: string;
     type: number;
     group_name: string;
     user: number;
     character: number;
-    chatroom: string[];
+    chatroom: TConversation[];
 };
 
 type TGetRoomInfoActionResponse = {

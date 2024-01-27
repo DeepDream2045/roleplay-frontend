@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactElement, useState } from "react";
+import { ReactElement, Suspense, useState } from "react";
 import { useFormState } from "react-dom";
 import { createCharacterAction } from "@/lib/characterInfoAction";
 import { TInputOption } from "@/components/atoms/Input/InputType";
@@ -13,10 +13,12 @@ import InputRadio from "@/components/atoms/Input/InputRadio";
 
 type NewCharacterFormPropsType = {
     models: TInputOption[];
+    tags: TInputOption[];
 };
 
 export default function NewCharacterForm({
     models,
+    tags,
 }: NewCharacterFormPropsType): ReactElement {
     const [isNSFW, setIsNSFW] = useState<boolean>(false);
     const [visibility, setVisibility] = useState("unlisted");
@@ -148,13 +150,7 @@ Mind: Bulma is a complex character, balancing tomboyish and girly traits alongsi
                         label="Tags"
                         placeholder="Search Tags"
                         helperText={`Select up to 5 relevant tags or keywords.`}
-                        options={[
-                            { label: "Action", value: "Action" },
-                            { label: "Animal", value: "Animal" },
-                            { label: "Anime", value: "Anime" },
-                            { label: "Assistant", value: "Assistant" },
-                            { label: "Books", value: "Books" },
-                        ]}
+                        options={tags}
                         multiple
                         required
                         errorMsg={state.errorMsg.tags}

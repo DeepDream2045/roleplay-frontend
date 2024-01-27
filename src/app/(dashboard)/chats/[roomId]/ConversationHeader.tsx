@@ -6,7 +6,7 @@ type TConversationHeaderProps = {};
 
 const ConversationHeader = (props: TConversationHeaderProps) => {
     return (
-        <div className="flex flex-row justify-between px-4 py-4 h-16 border-b">
+        <div className="flex flex-row w-full justify-between px-4 py-4 h-16 border-b">
             <div className="flex flex-row items-center gap-4">
                 <Image
                     src="/images/Levi Ackerman Profile Picture.webp"

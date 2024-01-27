@@ -3,8 +3,18 @@
 import { MAIN_API_BASE_URL } from "@/constants/environtment";
 import { getAuthSession } from "./authSession";
 import { Sleep } from "./sleep";
+import {
+    CharacterInfoType,
+    TCreateCharacterActionPayload,
+    TCreateCharacterActionState,
+    createCharacterAPIResponseBody,
+} from "../types/action";
+import { redirect } from "next/navigation";
 
-export async function createCharacterAction(state: any, payload: any) {
+export async function createCharacterAction(
+    state: TCreateCharacterActionState,
+    payload: TCreateCharacterActionPayload
+) {
     try {
         const character_name = payload.get("character_name");
         const short_bio = payload.get("short_bio");
@@ -52,13 +62,12 @@ export async function createCharacterAction(state: any, payload: any) {
             throw req;
         }
 
-        const response = await req.json();
-        // console.log(response);
+        const response: createCharacterAPIResponseBody = await req.json();
 
-        return {
-            hasError: false,
-            errorMsg: {},
-        };
+        state.hasError = false;
+        state.errorMsg = null;
+
+        redirect(`${MAIN_API_BASE_URL}/character/${response.id}`);
     } catch (error: Response | unknown) {
         console.log(error);
         const errors = await (error as Response).json();
@@ -69,53 +78,6 @@ export async function createCharacterAction(state: any, payload: any) {
         };
     }
 }
-
-export type CharacterInfoType = {
-    id: number;
-    character_name: string;
-    short_bio: string;
-    character_gender: string;
-    tags: string;
-    prompt: string;
-    character_visibility: string;
-    initial_message: string;
-    image: string | null;
-    NSFW: boolean;
-    lorebook: string | null;
-    language: string | null;
-    created_date: string;
-    modified_date: string;
-    model: {
-        id: number;
-        name: string;
-        short_bio?: string;
-        model_location?: string;
-        prompt_template?: string;
-        temperature?: string;
-        repetition_penalty?: string;
-        top_p?: number;
-        top_k?: number;
-    };
-    user: {
-        id: number;
-        imageUrl: string | null;
-        name: string;
-    };
-};
-
-type TGetCharacterInfoListActionReturnOkay = {
-    hasError: false;
-    characters: CharacterInfoType[];
-};
-
-type TGetCharacterInfoListActionReturnError = {
-    hasError: true;
-    errorMsg: any[];
-};
-
-export type TGetCharacterInfoListActionReturn =
-    | TGetCharacterInfoListActionReturnOkay
-    | TGetCharacterInfoListActionReturnError;
 
 export async function getCharacterInfoAction() {
     try {
@@ -134,9 +96,9 @@ export async function getCharacterInfoAction() {
             throw req;
         }
 
-        const data = await req.json();
+        const data: CharacterInfoType[] = await req.json();
 
-        return { hasError: false, characters: data as CharacterInfoType[] };
+        return { hasError: false, characters: data };
     } catch (err) {
         let errors = [];
         if (err instanceof Response) {

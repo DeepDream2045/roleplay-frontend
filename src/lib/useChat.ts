@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { TConversation } from "./chatAction";
 
 const WEBSOCKET_API_BASE_URL = process.env.NEXT_PUBLIC_WEBSOCKET_API_BASE_URL;
 type TMessageResponse = {
@@ -22,9 +23,41 @@ type TMessage = {
     sender_profile_pic: string | null;
 };
 
-const useChat = (userId: string | number, characterId: string | number) => {
+const useChat = (
+    userId: string | number,
+    characterId: string | number,
+    historyConversation: TConversation[]
+) => {
     const [socket, setSocket] = useState<WebSocket>();
-    const [messages, setMessages] = useState<TMessage[]>([]);
+    let historyConversationFormatted: TMessage[] = [];
+    historyConversation.forEach((val) => {
+        const newMessageUser: TMessage = {
+            messsage_from: "user",
+            message_id: `user-${val.id}`,
+            message: val.user_message as string,
+            sender_profile_pic: null,
+        };
+
+        historyConversationFormatted = [
+            newMessageUser,
+            ...historyConversationFormatted,
+        ];
+
+        const newMessageCharacter: TMessage = {
+            messsage_from: "character",
+            message_id: `character-${val.id}`,
+            message: val.character_message as string,
+            sender_profile_pic: null,
+        };
+
+        historyConversationFormatted = [
+            newMessageCharacter,
+            ...historyConversationFormatted,
+        ];
+    });
+    const [messages, setMessages] = useState<TMessage[]>(
+        historyConversationFormatted
+    );
 
     useEffect(() => {
         const newSocket = new WebSocket(
@@ -80,6 +113,7 @@ const useChat = (userId: string | number, characterId: string | number) => {
 
         return () => {
             newSocket.close();
+            setMessages([]);
         };
     }, [userId, characterId]);
 

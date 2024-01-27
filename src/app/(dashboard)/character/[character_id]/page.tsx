@@ -1,11 +1,11 @@
 import Button from "@/components/atoms/Button";
 import Rating from "@/components/atoms/Rating/Rating";
 import { getAuthSession } from "@/lib/authSession";
-import { CharacterInfoType } from "@/lib/characterInfoAction";
 import { getRoomInfoAction } from "@/lib/chatAction";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { CharacterInfoType } from "@/types/action";
 
 type TCharacterPageProps = {
     params: { character_id: string };
@@ -16,14 +16,15 @@ const CharacterPage = async ({
 }: TCharacterPageProps) => {
     const session = await getAuthSession();
 
-    console.log(session);
-
     const character_info: CharacterInfoType = {
         id: 2,
         character_name: "Character Test Role",
         short_bio: "Character Test Role",
         character_gender: "Gender 2",
-        tags: "Anime, Assistant",
+        tags: [
+            { id: 1, tag_name: "Anime" },
+            { id: 3, tag_name: "Female" },
+        ],
         prompt: "Character test prompt",
         character_visibility: "unlisted",
         initial_message: "Character initial_message",
@@ -33,14 +34,21 @@ const CharacterPage = async ({
         language: "",
         created_date: "2024-01-25T03:42:51.904214Z",
         modified_date: "2024-01-25T03:42:51.904238Z",
-        model: {
+        model_id: {
             id: 1,
-            name: "llama2",
+            model_name: "llama2",
+            model_location: "model",
+            prompt_template: "template",
+            repetition_penalty: "",
+            short_bio: "",
+            temperature: "0.5",
+            top_k: 0.5,
+            top_p: 0.2,
         },
         user: {
             id: 1,
-            imageUrl: null,
-            name: "Ersapta Aristo",
+            profile_image: null,
+            full_name: "Ersapta Aristo",
         },
     };
     return (
@@ -68,7 +76,9 @@ const CharacterPage = async ({
                     className="text-blue-500"
                     target="_blank"
                 >
-                    <p className="font-medium">@{character_info.user.name}</p>
+                    <p className="font-medium">
+                        @{character_info.user.full_name}
+                    </p>
                 </Link>
             </div>
 
@@ -79,13 +89,13 @@ const CharacterPage = async ({
             </div>
 
             <div className="flex flex-row gap-2 items-center justify-center">
-                {character_info.tags.split(",").map((val) => {
+                {character_info.tags.map((val) => {
                     return (
                         <div
-                            key={val}
+                            key={val.id}
                             className="text-gray-400 font-semibold border border-gray-300 px-2 py-1 rounded-full"
                         >
-                            <p className="text-xs">{val}</p>
+                            <p className="text-xs">{val.tag_name}</p>
                         </div>
                     );
                 })}

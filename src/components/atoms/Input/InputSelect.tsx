@@ -7,7 +7,8 @@ import { TInputProps, defaultInputClassName } from "./InputUtil";
 import InputLabel from "./InputLabel";
 import InputHelperText from "./InputHelperText";
 import InputErrorMessage from "./InputErrorMessage";
-import { X } from "lucide-react";
+import { Check, X } from "lucide-react";
+import { Sleep } from "@/lib/sleep";
 
 type TInputSelectProps = Omit<TInputProps, "value" | "onChange"> & {
     options: TInputOption[];
@@ -76,6 +77,16 @@ const InputSelect = ({ multiple = false, ...props }: TInputSelectProps) => {
         setSearchKey(e.target.value);
     };
 
+    const removeValueHandler = (id: string) => {
+        const newValue = [...props.value!];
+
+        const optionIndex = newValue.findIndex((val) => val.value === id);
+
+        newValue.splice(optionIndex, 1);
+
+        props.onChange([...newValue]);
+    };
+
     return (
         <div className="flex flex-col">
             {props.label && (
@@ -132,7 +143,16 @@ const InputSelect = ({ multiple = false, ...props }: TInputSelectProps) => {
                     onMouseDown={(e) => {
                         e.preventDefault();
                         setInputActive(true);
-                        searchInputRef.current!.focus();
+                        if (searchInputRef.current?.isConnected) {
+                            console.log("connected");
+                        } else {
+                            console.log("not connect");
+                        }
+                        // this Sleep needed to wait inputActive state changed first,
+                        // then ref can detected to gain the focus
+                        Sleep(50).then(() => {
+                            searchInputRef.current!.focus();
+                        });
                     }}
                 >
                     {props.placeholder}
@@ -148,7 +168,9 @@ const InputSelect = ({ multiple = false, ...props }: TInputSelectProps) => {
                     inputActive ? "" : "hidden"
                 } `}
                 onChange={onChangeSearch}
-                onBlur={() => {
+                onBlur={(e) => {
+                    e.preventDefault();
+                    console.log("halo");
                     setInputActive(false);
                 }}
             />
@@ -164,7 +186,12 @@ const InputSelect = ({ multiple = false, ...props }: TInputSelectProps) => {
                                     className="px-4 py-2 flex text-base flex-row gap-2 items-center border rounded-md"
                                 >
                                     {val.label}
-                                    <X className="w-4 h-4 text-black cursor-pointer" />
+                                    <X
+                                        className="w-4 h-4 text-black cursor-pointer"
+                                        onClick={() => {
+                                            removeValueHandler(val.value);
+                                        }}
+                                    />
                                 </div>
                             );
                         })}
@@ -190,8 +217,13 @@ const InputSelect = ({ multiple = false, ...props }: TInputSelectProps) => {
                             data-value={JSON.stringify(option)}
                             data-type={`${props.name}-select-option`}
                             onMouseDown={handleInput}
-                            className="p-2 w-full cursor-pointer hover:bg-blue-100"
+                            className="p-2 w-full cursor-pointer hover:bg-blue-100 flex flex-row gap-4"
                         >
+                            <div className="w-6 h-6">
+                                {props.value?.some(
+                                    (item) => item.value === option.value
+                                ) && <Check className="w-6 h-6" />}
+                            </div>
                             {option.label}
                         </div>
                     ))}

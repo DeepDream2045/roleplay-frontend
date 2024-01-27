@@ -14,7 +14,11 @@ export default function Conversation({
     roomData: TRoomInfo;
     conversations?: any;
 }) {
-    const { socket, messages } = useChat(roomData.user, roomData.character);
+    const { socket, messages } = useChat(
+        roomData.user,
+        roomData.character,
+        roomData.chatroom
+    );
     const [waitForResponse, setWaitForResponse] = useState<boolean>(false);
 
     useEffect(() => {
@@ -24,10 +28,6 @@ export default function Conversation({
     useEffect(() => {
         console.log(conversations);
     }, [conversations]);
-
-    useEffect(() => {
-        if (!socket) return;
-    }, [socket]);
 
     return (
         <>

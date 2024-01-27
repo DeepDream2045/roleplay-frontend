@@ -29,7 +29,7 @@ const ChatList = (props: TChatListProps) => {
                             imageSrc={"/images/default-image-placeholder.webp"}
                             message={
                                 item.chatroom.length > 0
-                                    ? item.chatroom[0]
+                                    ? item.chatroom[0].character_message
                                     : "Let's do the chat"
                             }
                             time=""

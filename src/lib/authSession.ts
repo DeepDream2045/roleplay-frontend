@@ -3,24 +3,7 @@
 import { cookies } from "next/headers";
 
 import { getIronSession } from "iron-session";
-
-export type UserSession = {
-    id?: string;
-    full_name?: string;
-    email?: string;
-    profile_image?: string | null;
-    stay_sign?: boolean;
-};
-
-export type RefreshSession = string | undefined;
-
-export type AccessSession = string | undefined;
-
-export type AuthSession = {
-    user?: UserSession;
-    refresh?: RefreshSession;
-    access?: AccessSession;
-};
+import { AuthSession } from "../types/action";
 
 export async function getAuthSession() {
     const session = await getIronSession<AuthSession>(cookies(), {
