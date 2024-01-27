@@ -3,12 +3,13 @@ import DashboardLayout from "./layout";
 import RecentChatCard from "../components/dashboard/RecentChatCard";
 import Category from "../components/dashboard/Category";
 import CharacterCard from "../components/dashboard/CharacterCard";
-import { getCharacterInfoAction } from "@/lib/characterInfoAction";
+import { getPublicCharacterInfoAction } from "@/lib/characterInfoAction";
+import { getRoomInfoAction } from "@/lib/chatAction";
 
 interface DashboardProps {}
 
 async function Dashboard(props: DashboardProps) {
-    const characterData = await getCharacterInfoAction();
+    const characterData = await getPublicCharacterInfoAction();
 
     if (characterData.hasError) {
         return (
@@ -20,6 +21,21 @@ async function Dashboard(props: DashboardProps) {
             </div>
         );
     }
+
+    const roomData = await getRoomInfoAction();
+
+    if (roomData.hasError) {
+        return (
+            <>
+                <h1>{roomData.errorMsg[0]}</h1>
+                {roomData.errorMsg?.slice(1).map((val) => {
+                    return <p key={val}>{val}</p>;
+                })}
+            </>
+        );
+    }
+
+    const rooms = roomData.rooms;
 
     return (
         <main className="flex flex-1 max-w-full flex-col">
@@ -42,21 +58,25 @@ async function Dashboard(props: DashboardProps) {
                         </span>
                     </div>
                     <div className="mt-8 flex flex-row gap-8 flex-wrap max-h-[18rem] overflow-hidden flex-grow-0">
-                        {Array(6)
-                            .fill("x")
-                            .map((val, index) => {
-                                return (
-                                    <RecentChatCard
-                                        key={index + 1}
-                                        imageSrc="/images/Levi Ackerman Profile Picture.webp"
-                                        name="Levi Ackerman Character Chat"
-                                        message="I may have a serious exterior, but deep down I just
-                            want someone to share my cape with while slaying
-                            Titans."
-                                        time="11:42 PM"
-                                    />
-                                );
-                            })}
+                        {rooms.map((val, index) => {
+                            return (
+                                <RecentChatCard
+                                    roomId={val.room_id}
+                                    key={val.room_id}
+                                    imageSrc={
+                                        val.character?.image_url ||
+                                        "/images/default-image-placeholder.webp"
+                                    }
+                                    name={val.user?.full_name}
+                                    message={
+                                        val.chatroom.length > 0
+                                            ? val.chatroom[0].character_message
+                                            : "Let's do the chat"
+                                    }
+                                    time=""
+                                />
+                            );
+                        })}
                     </div>
                 </div>
                 {/* Tags */}
@@ -84,14 +104,15 @@ async function Dashboard(props: DashboardProps) {
                         return (
                             <CharacterCard
                                 key={`char-${index + 1}`}
+                                id={String(val.id)}
                                 imageSrc={val.image || ""}
                                 profileImageSrc={
-                                    val.user.imageUrl ||
+                                    val.user.profile_image ||
                                     "/images/default-character-placeholder-full.webp"
                                 }
-                                name={val.character_name || "Sasuke"}
-                                profileName={val.user.name || "lilianne"}
-                                timeString="107.3K . 1 month ago"
+                                name={val.character_name || "No Character Name"}
+                                profileName={val.user.full_name || "No Name"}
+                                timeString=""
                             />
                         );
                     })}

@@ -1,6 +1,10 @@
+"use client";
+
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface CharacterCardProps {
+    id: string;
     name: string;
     imageSrc: string;
     profileImageSrc: string;
@@ -9,14 +13,22 @@ interface CharacterCardProps {
 }
 
 export default function CharacterCard({
+    id,
     name,
     imageSrc,
     profileImageSrc,
     profileName,
     timeString,
 }: CharacterCardProps) {
+    const router = useRouter();
+
     return (
-        <div className="w-72 p-4 flex flex-col gap-4">
+        <div
+            className="w-72 p-4 flex flex-col gap-4 cursor-pointer"
+            onClick={() => {
+                router.push(`/character/${id}`, {});
+            }}
+        >
             <div className="flex flex-col">
                 <Image
                     src={imageSrc}

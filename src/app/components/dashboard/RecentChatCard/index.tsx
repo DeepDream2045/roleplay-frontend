@@ -1,6 +1,10 @@
+"use client";
+
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface RecentChatCardProps {
+    roomId: string;
     name: string;
     imageSrc: string;
     message: string;
@@ -8,13 +12,21 @@ interface RecentChatCardProps {
 }
 
 export default function RecentChatCard({
+    roomId,
     name,
     imageSrc,
     message,
     time,
 }: RecentChatCardProps) {
+    const router = useRouter();
+
     return (
-        <div className="w-48 flex flex-col p-4 gap-4 border rounded-lg">
+        <div
+            className="w-48 flex flex-col p-4 gap-4 border rounded-lg cursor-pointer"
+            onClick={() => {
+                router.push(`/chats/${roomId}`, {});
+            }}
+        >
             <div className="flex flex-col items-center">
                 <Image
                     src={imageSrc}
