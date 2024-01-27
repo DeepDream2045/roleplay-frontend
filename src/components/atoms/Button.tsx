@@ -1,4 +1,6 @@
+"use client";
 import { ButtonHTMLAttributes } from "react";
+import { useFormStatus } from "react-dom";
 
 type ButtonSize = "small" | "medium" | "large" | "fullWidth" | "custom";
 /* NOTES: only fill variant available right now */
@@ -78,6 +80,7 @@ export default function Button({
     onClick,
     type,
 }: ButtonProps) {
+    const { pending } = useFormStatus();
     let btnSizeClass: HTMLButtonElement["className"] = "";
     let btnVariantClass: ButtonHTMLAttributes<HTMLButtonElement>["className"] =
         "";
@@ -99,7 +102,7 @@ export default function Button({
             type={type}
             className={`${btnSizeClass} ${btnVariantClass} ${className}`}
             onClick={onClick}
-            disabled={disabled}
+            disabled={disabled || pending}
         >
             {children}
         </button>

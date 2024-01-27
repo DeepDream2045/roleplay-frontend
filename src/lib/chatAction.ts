@@ -1,6 +1,13 @@
-import { MAIN_API_BASE_URL } from "@/constants/environtment";
+"use server";
+
+import {
+    DASHBOARD_BASE_URL,
+    MAIN_API_BASE_URL,
+} from "@/constants/environtment";
 import { getAuthSession } from "./authSession";
 import { commonErrorHandler } from "./fetchRequest";
+import { RedirectType, redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 export type TConversation = {
     id: number;
@@ -116,13 +123,35 @@ type createRoomResponse = {
     character_image: string | null;
 };
 
-export async function createRoomInfoAction(state: any, payload: any) {
+export type TCreateRoomInfoActionState =
+    | {
+          hasError: boolean;
+          room: createRoomResponse;
+          errorMsg?: undefined;
+      }
+    | {
+          hasError: boolean;
+          errorMsg: any[];
+          room?: undefined;
+      }
+    | null;
+
+export async function createRoomInfoAction(
+    character_id: string,
+    state: TCreateRoomInfoActionState,
+    payload: FormData
+) {
+    let data: createRoomResponse | undefined;
     try {
         const session = await getAuthSession();
         const form = new FormData();
 
-        form.append("user", String(session.user!.id));
-        form.append("character", payload.get["character"]);
+        console.log({ character_id });
+        const userId = session.user!.id;
+        console.log({ userId });
+
+        form.append("user", String(userId));
+        form.append("character", character_id);
 
         const req = await fetch(`${MAIN_API_BASE_URL}/room_info/`, {
             method: "POST",
@@ -138,10 +167,11 @@ export async function createRoomInfoAction(state: any, payload: any) {
             throw req;
         }
 
-        const data: createRoomResponse = await req.json();
-
-        return { hasError: false, room: data };
+        data = await req.json();
+        console.log({ data: data?.room_id });
+        revalidatePath("/chats");
     } catch (err) {
+        console.log(err);
         let errors: any[] = [];
 
         const commonErr = await commonErrorHandler(err as Response | TypeError);
@@ -158,6 +188,13 @@ export async function createRoomInfoAction(state: any, payload: any) {
             hasError: true,
             errorMsg: errors,
         };
+    }
+
+    if (data) {
+        return redirect(
+            `${DASHBOARD_BASE_URL}/chats/${data.room_id}`,
+            RedirectType.push
+        );
     }
 }
 

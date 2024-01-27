@@ -1,0 +1,37 @@
+[
+    {
+        "id": 2,
+        "character_name": "Character Test Role",
+        "short_bio": "Character Test Role",
+        "character_gender": "Gender 2",
+        "tags": [
+            { "id": 1, "tag_name": "Anime" },
+            { "id": 3, "tag_name": "Female" }
+        ],
+        "prompt": "Character test prompt",
+        "character_visibility": "unlisted",
+        "initial_message": "Character initial_message",
+        "image": null,
+        "NSFW": false,
+        "lorebook": "",
+        "language": "",
+        "created_date": "2024-01-25T03:42:51.904214Z",
+        "modified_date": "2024-01-25T03:42:51.904238Z",
+        "model_id": {
+            "id": 1,
+            "model_name": "llama2",
+            "model_location": "model",
+            "prompt_template": "template",
+            "repetition_penalty": "",
+            "short_bio": "",
+            "temperature": "0.5",
+            "top_k": 0.5,
+            "top_p": 0.2
+        },
+        "user": {
+            "id": 1,
+            "profile_image": null,
+            "full_name": "Ersapta Aristo"
+        }
+    }
+]
