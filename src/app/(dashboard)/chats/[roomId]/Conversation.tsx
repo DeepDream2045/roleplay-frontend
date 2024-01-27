@@ -23,7 +23,7 @@ export default function Conversation({
 
     return (
         <>
-            <ConversationHeader />
+            <ConversationHeader characterName={roomData.group_name} />
             <div className="flex flex-1 flex-col-reverse pt-4 pb-8 px-4 gap-4">
                 {messages.map((item) => {
                     return (
