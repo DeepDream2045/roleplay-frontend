@@ -5,6 +5,7 @@ import Category from "../components/dashboard/Category";
 import CharacterCard from "../components/dashboard/CharacterCard";
 import { getPublicCharacterInfoAction } from "@/lib/characterInfoAction";
 import { getRoomInfoAction } from "@/lib/chatAction";
+import { getTagInfoListAction } from "@/lib/tagAction";
 
 interface DashboardProps {}
 
@@ -36,6 +37,21 @@ async function Dashboard(props: DashboardProps) {
     }
 
     const rooms = roomData.rooms;
+
+    const tagData = await getTagInfoListAction();
+
+    if (tagData.hasError) {
+        return (
+            <>
+                <h1>{tagData.errorMsg[0]}</h1>
+                {tagData.errorMsg?.slice(1).map((val: string) => {
+                    return <p key={val}>{val}</p>;
+                })}
+            </>
+        );
+    }
+
+    const tags = tagData.tags!;
 
     return (
         <main className="flex flex-1 max-w-full flex-col">
@@ -81,21 +97,18 @@ async function Dashboard(props: DashboardProps) {
                 </div>
                 {/* Tags */}
                 <div className="sticky top-14 bg-neutral-50 z-10 py-8 flex flex-row gap-2 overflow-x-auto overflow-hidden flex-grow-0 flex-shrink-0">
-                    <Category active>Featured</Category>
-                    <Category>Recommended</Category>
-                    <Category>All</Category>
-                    <Category>Recently Added</Category>
-                    <Category>Top</Category>
-                    <Category>Male</Category>
-                    <Category>Female</Category>
-                    <Category>Anime</Category>
-                    <Category>Game</Category>
-                    <Category>Books</Category>
-                    <Category>K-pop</Category>
-                    <Category>Celebrity</Category>
-                    <Category>Villain</Category>
-                    <Category>Hero</Category>
-                    <Category>Historical</Category>
+                    <Category key={"Featured"} active>
+                        Featured
+                    </Category>
+                    <Category key={"Recommended"}>Recommended</Category>
+                    <Category key={"All"}>All</Category>
+                    <Category key={"Recently Added"}>Recently Added</Category>
+                    <Category key={"Top"}>Top</Category>
+                    {tags.map((item) => {
+                        return (
+                            <Category key={item.id}>{item.tag_name}</Category>
+                        );
+                    })}
                 </div>
 
                 {/* All Character */}
