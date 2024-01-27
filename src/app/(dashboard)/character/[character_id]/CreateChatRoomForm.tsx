@@ -10,10 +10,7 @@ type TCreateChatRoomFormProps = {
 function CreateChatRoomForm({ character_id }: TCreateChatRoomFormProps) {
     const bindCharacterId = createRoomInfoAction.bind(null, character_id);
 
-    const [state, formAction] = useFormState(bindCharacterId, {
-        hasError: false,
-        errorMsg: [],
-    });
+    const [state, formAction] = useFormState(bindCharacterId, null);
 
     return (
         <form action={formAction}>

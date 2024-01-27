@@ -45,6 +45,7 @@ function ProfilePage() {
                         .map((val, index) => {
                             return (
                                 <CharacterCard
+                                    id={`char-${index + 1}`}
                                     key={`char-${index + 1}`}
                                     imageSrc="/images/Sasuke Uchiha Profile Picture.webp"
                                     profileImageSrc="/images/default-character-placeholder-full.webp"

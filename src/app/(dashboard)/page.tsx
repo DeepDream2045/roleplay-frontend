@@ -80,10 +80,10 @@ async function Dashboard(props: DashboardProps) {
                                     roomId={val.room_id}
                                     key={val.room_id}
                                     imageSrc={
-                                        val.character?.image_url ||
+                                        val.character_data?.image_url ||
                                         "/images/default-image-placeholder.webp"
                                     }
-                                    name={val.user?.full_name}
+                                    name={val.user_data?.full_name}
                                     message={
                                         val.chatroom.length > 0
                                             ? val.chatroom[0].character_message

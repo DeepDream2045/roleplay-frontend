@@ -22,8 +22,16 @@ export type TRoomInfo = {
     room_id: string;
     type: number;
     group_name: string;
+    user_data: {
+        id: number;
+        full_name: string;
+    };
     user: number;
     character: number;
+    character_data: {
+        image_url: string | null;
+        character_name: string;
+    };
     chatroom: TConversation[];
 };
 
@@ -124,22 +132,20 @@ type createRoomResponse = {
 };
 
 export type TCreateRoomInfoActionState =
+    | null
     | {
-          hasError: boolean;
-          room: createRoomResponse;
-          errorMsg?: undefined;
-      }
-    | {
-          hasError: boolean;
+          hasError: true;
           errorMsg: any[];
-          room?: undefined;
       }
-    | null;
+    | {
+          hasError: true;
+          errorMsg: undefined;
+      };
 
 export async function createRoomInfoAction(
     character_id: string,
-    state: TCreateRoomInfoActionState,
-    payload: FormData
+    state: any,
+    payload: any
 ) {
     let data: createRoomResponse | undefined;
     try {
