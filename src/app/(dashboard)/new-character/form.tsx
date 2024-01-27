@@ -117,8 +117,8 @@ Mind: Bulma is a complex character, balancing tomboyish and girly traits alongsi
                     />
 
                     <InputRadio
-                        id="prompt_visibility"
-                        name="prompt_visibility"
+                        id="character_visibility"
+                        name="character_visibility"
                         label="Visibility"
                         helperText="You can also change the visibility after the character is created."
                         required

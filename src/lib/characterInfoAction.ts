@@ -1,6 +1,9 @@
 "use server";
 
-import { MAIN_API_BASE_URL } from "@/constants/environtment";
+import {
+    DASHBOARD_BASE_URL,
+    MAIN_API_BASE_URL,
+} from "@/constants/environtment";
 import { getAuthSession } from "./authSession";
 import {
     CharacterInfoType,
@@ -14,14 +17,17 @@ export async function createCharacterAction(
     state: TCreateCharacterActionState,
     payload: TCreateCharacterActionPayload
 ) {
+    let data: undefined | createCharacterAPIResponseBody;
     try {
+        const image = payload.get("image");
         const character_name = payload.get("character_name");
         const short_bio = payload.get("short_bio");
         const character_gender = payload.get("character_gender");
         const tags = payload.getAll("tags");
         const model_id = payload.get("model_id");
         const prompt = payload.get("prompt");
-        const prompt_visibility = payload.get("prompt_visibility");
+        const character_visibility = payload.get("character_visibility");
+
         const initial_message = payload.get("initial_message");
         const NSFW = payload.get("NSFW") === "on" ? "true" : "false";
         const lorebook = payload.get("lorebook");
@@ -29,13 +35,16 @@ export async function createCharacterAction(
 
         const form = new FormData();
 
+        form.append("image", image);
         form.append("character_name", character_name);
         form.append("short_bio", short_bio);
         form.append("character_gender", character_gender);
-        form.append("tags", tags.join(","));
+        tags.forEach((item) => {
+            form.append("tags", item);
+        });
         form.append("model_id", model_id);
         form.append("prompt", prompt);
-        form.append("prompt_visibility", prompt_visibility);
+        form.append("character_visibility", character_visibility);
         form.append("initial_message", initial_message);
         form.append("NSFW", NSFW);
         form.append("lorebook", lorebook);
@@ -57,12 +66,7 @@ export async function createCharacterAction(
             throw req;
         }
 
-        const response: createCharacterAPIResponseBody = await req.json();
-
-        state.hasError = false;
-        state.errorMsg = null;
-
-        redirect(`${MAIN_API_BASE_URL}/character/${response.id}`);
+        data = await req.json();
     } catch (error: Response | unknown) {
         console.log(error);
         const errors = await (error as Response).json();
@@ -71,6 +75,9 @@ export async function createCharacterAction(
             hasError: true,
             errorMsg: errors,
         };
+    }
+    if (data) {
+        return redirect(`${DASHBOARD_BASE_URL}/character/${data.id}`);
     }
 }
 
