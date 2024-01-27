@@ -9,6 +9,9 @@ export async function getAuthSession() {
     const session = await getIronSession<AuthSession>(cookies(), {
         password: process!.env!.AUTH_COOKIES_PASSWORD!,
         cookieName: process!.env!.AUTH_COOKIES_NAME!,
+        cookieOptions: {
+            secure: false,
+        },
     });
 
     return session;
