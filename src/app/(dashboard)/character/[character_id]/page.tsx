@@ -5,8 +5,14 @@ import { getAuthSession } from "@/lib/authSession";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { getPublicCharacterInfoAction } from "@/lib/characterInfoAction";
+import {
+    getCharacterInfoAction,
+    getPublicCharacterInfoAction,
+} from "@/lib/characterInfoAction";
 import CreateChatRoomForm from "./CreateChatRoomForm";
+import { CharacterInfoType } from "@/types/action";
+import { MAIN_API_BASE_URL } from "@/constants/environtment";
+import { Pencil, Trash2 } from "lucide-react";
 
 type TCharacterPageProps = {
     params: { character_id: string };
@@ -16,6 +22,24 @@ async function CharacterPage({
     params: { character_id },
 }: TCharacterPageProps) {
     const session = await getAuthSession();
+    let characterShouldAuth: CharacterInfoType[] = [];
+    if (session?.access) {
+        const characterData = await getCharacterInfoAction();
+        if (characterData.hasError) {
+            return (
+                <>
+                    <h1>{characterData.errorMsg[0]}</h1>
+                    {characterData.errorMsg?.slice(1).map((val: string) => {
+                        return <p key={val}>{val}</p>;
+                    })}
+                </>
+            );
+        }
+
+        if (characterData.characters) {
+            characterShouldAuth = characterData.characters;
+        }
+    }
 
     const characterPublicData = await getPublicCharacterInfoAction();
 
@@ -34,7 +58,14 @@ async function CharacterPage({
         return String(char.id) === character_id;
     });
 
-    if (!characterInfo) {
+    const characterShouldAuthInfo = characterShouldAuth.find((char) => {
+        return (
+            String(char.id) === character_id &&
+            String(char.user.id) === String(session.user?.id)
+        );
+    });
+
+    if (!characterInfo && !characterShouldAuthInfo) {
         return (
             <>
                 <h1>Not Found</h1>
@@ -43,18 +74,25 @@ async function CharacterPage({
         );
     }
 
+    const userCharacter = characterShouldAuthInfo || characterInfo;
+
+    console.log({ userCharacter });
+
     return (
         <div className="flex flex-col mt-5 flex-1 min-h-full max-h-full items-center ">
             <div className="flex max-w-md flex-col items-center gap-8">
                 <div key="character_image_container" className="flex">
                     <Image
                         src={
-                            characterInfo.image ||
+                            `${MAIN_API_BASE_URL}${userCharacter?.image}` ||
                             "/images/default-image-placeholder.webp"
                         }
                         width={300}
                         height={300}
-                        alt={characterInfo.character_name}
+                        alt={
+                            userCharacter?.character_name ||
+                            "user-character-image"
+                        }
                         className="w-72 rounded-2xl aspect-square object-cover"
                         priority
                     />
@@ -65,15 +103,15 @@ async function CharacterPage({
                     className="flex flex-col gap-2 items-center"
                 >
                     <h3 className="font-semibold">
-                        {characterInfo.character_name}
+                        {userCharacter?.character_name}
                     </h3>
                     <Link
-                        href={`/profile/${characterInfo.id}`}
+                        href={`/profile/${userCharacter?.id}`}
                         className="text-blue-500"
                         target="_blank"
                     >
                         <p className="font-medium">
-                            @{characterInfo.user.full_name}
+                            @{userCharacter?.user.full_name}
                         </p>
                     </Link>
                 </div>
@@ -89,7 +127,7 @@ async function CharacterPage({
                     </div>
 
                     <div className="flex flex-row gap-2 items-center justify-center">
-                        {characterInfo.tags.map((val) => {
+                        {userCharacter?.tags?.map((val) => {
                             return (
                                 <div
                                     key={val.id}
@@ -99,6 +137,17 @@ async function CharacterPage({
                                 </div>
                             );
                         })}
+                    </div>
+
+                    <div className="flex flex-row gap-2 items-center justify-between">
+                        <div className="flex flex-col gap-2 justify-center items-center cursor-pointer">
+                            <Pencil className="w-6 h-6" />
+                            <p>Edit</p>
+                        </div>
+                        <div className="flex flex-col gap-2 justify-center items-center cursor-pointer">
+                            <Trash2 className="w-6 h-6" />
+                            <p>Delete</p>
+                        </div>
                     </div>
                 </div>
 
@@ -111,21 +160,21 @@ async function CharacterPage({
                         className="flex flex-col gap-2"
                     >
                         <h3>Short description</h3>
-                        <p>{characterInfo.short_bio}</p>
+                        <p>{userCharacter?.short_bio || ""}</p>
                     </div>
                     <div
                         key="character_initial_message_container"
                         className="flex flex-col gap-2"
                     >
                         <h3>Initial message</h3>
-                        <p>{characterInfo.initial_message}</p>
+                        <p>{userCharacter?.initial_message || ""}</p>
                     </div>
                     <div
                         key="character_character_prompt_container"
                         className="flex flex-col gap-2"
                     >
                         <h3>Character prompt</h3>
-                        <p>{characterInfo.prompt}</p>
+                        <p>{userCharacter?.prompt || ""}</p>
                     </div>
                 </div>
                 <CreateChatRoomForm character_id={character_id} />
