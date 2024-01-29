@@ -6,6 +6,7 @@ import { TInputProps } from "./InputUtil";
 import ModalWrapper from "@/app/components/ModalWrapper";
 import { ImageIcon, Wand2Icon, X } from "lucide-react";
 import { MAIN_API_BASE_URL } from "@/constants/environtment";
+import InputErrorMessage from "./InputErrorMessage";
 
 type TInputFileProps = Omit<TInputProps, "value"> & {
     value: InputHTMLAttributes<HTMLInputElement>["value"];
@@ -148,6 +149,9 @@ const InputFile = (props: TInputFileProps) => {
                 >
                     {props.label}
                 </div>
+                {props.errorMsg && (
+                    <InputErrorMessage message={props.errorMsg} />
+                )}
                 <input
                     type="file"
                     hidden

@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import CharacterEditModal from "./CharacterEditModal";
 import { TInputOption } from "@/components/atoms/Input/InputType";
 import { CharacterInfoType } from "@/types/action";
+import CharacterDeleteModal from "./CharacterDeleteModal";
 
 type Props = {
     characterId: number;
@@ -15,8 +16,7 @@ type Props = {
 
 const CharacterEditDeleteAction = (props: Props) => {
     const [editModalShow, setEditModalShow] = useState<boolean>(false);
-
-    const deleteHandler = () => {};
+    const [deleteModalShow, setDeleteModalShow] = useState<boolean>(false);
 
     return (
         <>
@@ -30,7 +30,12 @@ const CharacterEditDeleteAction = (props: Props) => {
                     <Pencil className="w-6 h-6" />
                     <p>Edit</p>
                 </div>
-                <div className="flex flex-col gap-2 justify-center items-center cursor-pointer">
+                <div
+                    className="flex flex-col gap-2 justify-center items-center cursor-pointer"
+                    onClick={() => {
+                        setDeleteModalShow(true);
+                    }}
+                >
                     <Trash2 className="w-6 h-6" />
                     <p>Delete</p>
                 </div>
@@ -42,6 +47,14 @@ const CharacterEditDeleteAction = (props: Props) => {
                     }}
                     models={props.models}
                     tags={props.tags}
+                    characterData={props.characterData}
+                />
+            )}
+            {deleteModalShow && (
+                <CharacterDeleteModal
+                    onClose={() => {
+                        setDeleteModalShow(false);
+                    }}
                     characterData={props.characterData}
                 />
             )}

@@ -91,6 +91,14 @@ export type TUpdateCharacterActionPayload = {
     get(key: "language"): string;
 };
 
+// deleteCharacterAction
+
+export type TDeleteCharacterActionState = {
+    character_id: string;
+    hasError: boolean;
+    errorMsg: ErrorMessage | null;
+};
+
 // getCharacterInfoAction
 export type Tag = {
     id: TagId;

@@ -6,10 +6,7 @@ import InputText from "@/components/atoms/Input/InputText";
 import InputTextArea from "@/components/atoms/Input/InputTextArea";
 import InputToggle from "@/components/atoms/Input/InputToggle";
 import { TInputOption } from "@/components/atoms/Input/InputType";
-import {
-    createCharacterAction,
-    updateCharacterAction,
-} from "@/lib/characterInfoAction";
+import { updateCharacterAction } from "@/lib/characterInfoAction";
 import { CharacterInfoType } from "@/types/action";
 import { X } from "lucide-react";
 import React, { useState } from "react";
@@ -66,7 +63,7 @@ const CharacterEditModal = ({
                 className="flex flex-col flex-1 justify-center items-center max-h-full p-8"
                 style={{ backgroundColor: "rgba(0, 0, 0, 0.48)" }}
             >
-                <div className="flex flex-1 flex-col bg-white max-w-md min-w-md rounded-lg">
+                <div className="flex flex-1 py-4 px-8 flex-col bg-white max-w-md min-w-md rounded-lg">
                     <header className=" py-4 px-6 ">
                         <div className="h-10 flex flex-row justify-between items-center">
                             <h2>Sign in</h2>
@@ -83,6 +80,7 @@ const CharacterEditModal = ({
                                 id="image"
                                 label="Add or Generate"
                                 value={characterData.image || undefined}
+                                errorMsg={state.errorMsg.image}
                             />
 
                             {/* Character Form */}
@@ -245,6 +243,11 @@ Mind: Bulma is a complex character, balancing tomboyish and girly traits alongsi
                                     helperText="If this character is not safe for work, turn this on."
                                 />
                             </div>
+                            {state.hasError && (
+                                <p className="text-red-500 mt-4">
+                                    Please check the input
+                                </p>
+                            )}
                             <div className="mt-8">
                                 <button className="w-full h-10 rounded-lg bg-blue-500 text-white font-semibold ">
                                     Update Character

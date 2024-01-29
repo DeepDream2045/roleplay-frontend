@@ -37,7 +37,7 @@ const InputTextArea = (props: TInputTextAreaProps) => {
                 className={`${defaultInputClassName} `}
                 placeholder={props.placeholder}
                 value={props.value}
-                defaultValue={props.defaultValue}
+                defaultValue={props.defaultValue || undefined}
                 rows={actualRows}
                 name={props.name}
             />

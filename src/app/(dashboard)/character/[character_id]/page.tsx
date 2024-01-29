@@ -124,7 +124,7 @@ async function CharacterPage({
 
     return (
         <div className="flex flex-col mt-5 flex-1 items-center overflow-scroll min-h-dvh min-w-full max-h-dvh max-w-full">
-            <div className="flex max-w-md flex-col items-center gap-8">
+            <div className="flex max-w-md flex-col items-center gap-8 pb-20">
                 <div key="character_image_container" className="flex">
                     <Image
                         src={`${
