@@ -9,7 +9,7 @@ import { MAIN_API_BASE_URL } from "@/constants/environtment";
 import InputErrorMessage from "./InputErrorMessage";
 
 type TInputFileProps = Omit<TInputProps, "value"> & {
-    value: InputHTMLAttributes<HTMLInputElement>["value"];
+    value?: InputHTMLAttributes<HTMLInputElement>["value"];
 };
 
 type TInputFileModalProps = {
