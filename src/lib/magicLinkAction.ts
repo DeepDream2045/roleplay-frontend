@@ -31,6 +31,8 @@ export async function magicLinkRequestService(
             emailSuccessSent: true,
         };
     } catch (error) {
+        console.log({ error });
+
         return {
             formSubmitted: true,
             emailSuccessSent: false,
