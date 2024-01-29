@@ -9,6 +9,7 @@ import {
     CharacterInfoType,
     TCreateCharacterActionPayload,
     TCreateCharacterActionState,
+    TUpdateCharacterActionState,
     createCharacterAPIResponseBody,
 } from "../types/action";
 import { redirect } from "next/navigation";
@@ -78,6 +79,76 @@ export async function createCharacterAction(
     }
     if (data) {
         return redirect(`${DASHBOARD_BASE_URL}/character/${data.id}`);
+    }
+}
+
+export async function updateCharacterAction(
+    character_id: string,
+    state: TUpdateCharacterActionState,
+    payload: TCreateCharacterActionPayload
+) {
+    let data: undefined | createCharacterAPIResponseBody;
+    try {
+        const image = payload.get("image");
+        const character_name = payload.get("character_name");
+        const short_bio = payload.get("short_bio");
+        const character_gender = payload.get("character_gender");
+        const tags = payload.getAll("tags");
+        const model_id = payload.get("model_id");
+        const prompt = payload.get("prompt");
+        const character_visibility = payload.get("character_visibility");
+
+        const initial_message = payload.get("initial_message");
+        const NSFW = payload.get("NSFW") === "on" ? "true" : "false";
+        const lorebook = payload.get("lorebook");
+        const language = payload.get("language");
+
+        const form = new FormData();
+
+        form.append("id", character_id);
+        form.append("image", image);
+        form.append("character_name", character_name);
+        form.append("short_bio", short_bio);
+        form.append("character_gender", character_gender);
+        tags.forEach((item) => {
+            form.append("tags", item);
+        });
+        form.append("model_id", model_id);
+        form.append("prompt", prompt);
+        form.append("character_visibility", character_visibility);
+        form.append("initial_message", initial_message);
+        form.append("NSFW", NSFW);
+        form.append("lorebook", lorebook);
+        form.append("language", language);
+
+        const session = await getAuthSession();
+
+        const req = await fetch(`${MAIN_API_BASE_URL}/character_info/`, {
+            method: "PUT",
+            body: form,
+            headers: {
+                Authorization: `Bearer ${session.access}`,
+                "user-refresh-token": session.refresh,
+            } as HeadersInit,
+            cache: "no-store",
+        });
+
+        if (!req.ok) {
+            throw req;
+        }
+
+        data = await req.json();
+    } catch (error: Response | unknown) {
+        console.log(error);
+        const errors = await (error as Response).json();
+        console.log(errors);
+        return {
+            hasError: true,
+            errorMsg: errors,
+        };
+    }
+    if (data) {
+        return redirect(`${DASHBOARD_BASE_URL}/character/${character_id}`);
     }
 }
 

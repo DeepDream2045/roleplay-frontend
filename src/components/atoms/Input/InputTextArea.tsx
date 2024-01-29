@@ -8,6 +8,9 @@ import InputErrorMessage from "./InputErrorMessage";
 type TInputTextAreaProps = TInputProps & {
     rows?: number;
     value?: TextareaHTMLAttributes<HTMLInputElement>["value"];
+    defaultValue?:
+        | TextareaHTMLAttributes<HTMLInputElement>["defaultValue"]
+        | null;
 };
 
 const defaultRows = 3;
@@ -34,6 +37,7 @@ const InputTextArea = (props: TInputTextAreaProps) => {
                 className={`${defaultInputClassName} `}
                 placeholder={props.placeholder}
                 value={props.value}
+                defaultValue={props.defaultValue}
                 rows={actualRows}
                 name={props.name}
             />

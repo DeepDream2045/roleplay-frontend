@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactElement, Suspense, useState } from "react";
+import { ReactElement, useState } from "react";
 import { useFormState } from "react-dom";
 import { createCharacterAction } from "@/lib/characterInfoAction";
 import { TInputOption } from "@/components/atoms/Input/InputType";

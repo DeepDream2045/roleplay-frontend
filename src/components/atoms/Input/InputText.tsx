@@ -7,6 +7,7 @@ import InputErrorMessage from "./InputErrorMessage";
 
 type TInputTextProps = TInputProps & {
     value?: InputHTMLAttributes<HTMLInputElement>["value"];
+    defaultValue?: InputHTMLAttributes<HTMLInputElement>["defaultValue"];
 };
 
 const InputText = (props: TInputTextProps) => {
@@ -42,7 +43,7 @@ const InputText = (props: TInputTextProps) => {
                     name={props.name}
                     className={defaultInputClassName}
                     onChange={props.onChange}
-                    defaultValue={""}
+                    defaultValue={props.defaultValue}
                 />
             )}
 

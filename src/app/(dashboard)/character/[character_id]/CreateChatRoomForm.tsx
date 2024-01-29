@@ -13,7 +13,7 @@ function CreateChatRoomForm({ character_id }: TCreateChatRoomFormProps) {
     const [state, formAction] = useFormState(bindCharacterId, null);
 
     return (
-        <form action={formAction}>
+        <form className="absolute bottom-0" action={formAction}>
             <button className="text-sm h-10 px-4 w-fit rounded-lg font-semibold leading-normal text-white bg-blue-500 min-w-72">
                 Start chat
             </button>

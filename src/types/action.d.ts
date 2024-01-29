@@ -68,6 +68,29 @@ export type createCharacterAPIResponseBody = {
     user: UserId;
 };
 
+// updateCharacterAction
+
+export type TUpdateCharacterActionState = {
+    character_id: string;
+    hasError: boolean;
+    errorMsg: ErrorMessage | null;
+};
+
+export type TUpdateCharacterActionPayload = {
+    get(key: "image"): Blob;
+    get(key: "character_name"): string;
+    get(key: "short_bio"): string;
+    get(key: "character_gender"): string;
+    getAll(key: "tags"): string[];
+    get(key: "model_id"): string;
+    get(key: "prompt"): string;
+    get(key: "character_visibility"): string;
+    get(key: "initial_message"): string;
+    get(key: "NSFW"): "on" | "off";
+    get(key: "lorebook"): string;
+    get(key: "language"): string;
+};
+
 // getCharacterInfoAction
 export type Tag = {
     id: TagId;

@@ -1,12 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import React, { useRef, useState } from "react";
+import React, { InputHTMLAttributes, useEffect, useRef, useState } from "react";
 import { TInputProps } from "./InputUtil";
 import ModalWrapper from "@/app/components/ModalWrapper";
 import { ImageIcon, Wand2Icon, X } from "lucide-react";
+import { MAIN_API_BASE_URL } from "@/constants/environtment";
 
-type TInputFileProps = TInputProps & {};
+type TInputFileProps = Omit<TInputProps, "value"> & {
+    value: InputHTMLAttributes<HTMLInputElement>["value"];
+};
 
 type TInputFileModalProps = {
     onClose: () => void;
@@ -89,6 +92,7 @@ const InputFileModal = (props: TInputFileModalProps) => {
 
 const InputFile = (props: TInputFileProps) => {
     const [value, setValue] = useState<string | undefined>(undefined);
+    const [inputValue, setInputValue] = useState<File | undefined>(undefined);
     const inputRef = useRef<HTMLInputElement>(null);
 
     const [showModal, setShowModal] = useState(false);
@@ -97,6 +101,36 @@ const InputFile = (props: TInputFileProps) => {
         setShowModal((prev) => !prev);
     };
 
+    useEffect(() => {
+        const getImage = async () => {
+            const blob = await new Promise((resolve) => {
+                const xhr = new XMLHttpRequest();
+                xhr.open("GET", `${MAIN_API_BASE_URL}${props.value}`);
+                xhr.responseType = "blob";
+                xhr.onload = () => {
+                    resolve(xhr.response);
+                };
+                xhr.onerror = () => {
+                    resolve(undefined);
+                };
+                xhr.send();
+            });
+
+            let file;
+            if (blob) {
+                file = new File([blob as BlobPart], props.value as string, {
+                    type: `image/${String(props.value).split(".")[-1]}`,
+                });
+            }
+
+            setInputValue(file);
+        };
+
+        if (props.value) {
+            getImage();
+        }
+    }, [props.value]);
+
     return (
         <>
             <div className="flex flex-col items-center gap-4">
@@ -104,7 +138,7 @@ const InputFile = (props: TInputFileProps) => {
                     src={value || "/images/default-image-placeholder.webp"}
                     width={300}
                     height={300}
-                    alt="Levi Ackerman profile picture"
+                    alt="character profile picture"
                     className="w-72 rounded-2xl aspect-square object-cover"
                     priority
                 />
@@ -127,6 +161,7 @@ const InputFile = (props: TInputFileProps) => {
                         }
                         handleModal();
                     }}
+                    defaultValue={inputValue?.name}
                     ref={inputRef}
                 />
             </div>

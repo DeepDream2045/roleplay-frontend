@@ -12,7 +12,10 @@ import {
 import CreateChatRoomForm from "./CreateChatRoomForm";
 import { CharacterInfoType } from "@/types/action";
 import { MAIN_API_BASE_URL } from "@/constants/environtment";
-import { Pencil, Trash2 } from "lucide-react";
+import CharacterEditDeleteAction from "./CharacterEditDeleteAction";
+import { TInputOption } from "@/components/atoms/Input/InputType";
+import { getTagInfoListAction } from "@/lib/tagAction";
+import { getModelInfoListAction } from "@/lib/modelInfoAction";
 
 type TCharacterPageProps = {
     params: { character_id: string };
@@ -23,6 +26,9 @@ async function CharacterPage({
 }: TCharacterPageProps) {
     const session = await getAuthSession();
     let characterShouldAuth: CharacterInfoType[] = [];
+    let formattedModel: TInputOption[] = [];
+    let formattedTag: TInputOption[] = [];
+
     if (session?.access) {
         const characterData = await getCharacterInfoAction();
         if (characterData.hasError) {
@@ -39,6 +45,44 @@ async function CharacterPage({
         if (characterData.characters) {
             characterShouldAuth = characterData.characters;
         }
+
+        const modelData = await getModelInfoListAction();
+
+        if (modelData.hasError) {
+            return (
+                <>
+                    <h1>{modelData.errorMsg[0]}</h1>
+                    {modelData.errorMsg?.slice(1).map((val) => {
+                        return <p key={val}>{val}</p>;
+                    })}
+                </>
+            );
+        }
+
+        const models = modelData.models!;
+
+        formattedModel = models.map((item) => {
+            return { label: item.model_name, value: String(item.id) };
+        });
+
+        const tagData = await getTagInfoListAction();
+
+        if (tagData.hasError) {
+            return (
+                <>
+                    <h1>{tagData.errorMsg[0]}</h1>
+                    {tagData.errorMsg?.slice(1).map((val: string) => {
+                        return <p key={val}>{val}</p>;
+                    })}
+                </>
+            );
+        }
+
+        const tags = tagData.tags!;
+
+        formattedTag = tags.map((item) => {
+            return { label: item.tag_name, value: String(item.id) };
+        });
     }
 
     const characterPublicData = await getPublicCharacterInfoAction();
@@ -79,14 +123,15 @@ async function CharacterPage({
     console.log({ userCharacter });
 
     return (
-        <div className="flex flex-col mt-5 flex-1 min-h-full max-h-full items-center ">
+        <div className="flex flex-col mt-5 flex-1 items-center overflow-scroll min-h-dvh min-w-full max-h-dvh max-w-full">
             <div className="flex max-w-md flex-col items-center gap-8">
                 <div key="character_image_container" className="flex">
                     <Image
-                        src={
-                            `${MAIN_API_BASE_URL}${userCharacter?.image}` ||
-                            "/images/default-image-placeholder.webp"
-                        }
+                        src={`${
+                            userCharacter?.image
+                                ? `${MAIN_API_BASE_URL}${userCharacter?.image}`
+                                : "/images/default-image-placeholder.webp"
+                        }`}
                         width={300}
                         height={300}
                         alt={
@@ -138,17 +183,15 @@ async function CharacterPage({
                             );
                         })}
                     </div>
-
-                    <div className="flex flex-row gap-2 items-center justify-between">
-                        <div className="flex flex-col gap-2 justify-center items-center cursor-pointer">
-                            <Pencil className="w-6 h-6" />
-                            <p>Edit</p>
-                        </div>
-                        <div className="flex flex-col gap-2 justify-center items-center cursor-pointer">
-                            <Trash2 className="w-6 h-6" />
-                            <p>Delete</p>
-                        </div>
-                    </div>
+                    {(userCharacter?.user === session.user?.id ||
+                        userCharacter?.user.id === session.user?.id) && (
+                        <CharacterEditDeleteAction
+                            characterId={userCharacter!.id}
+                            models={formattedModel}
+                            tags={formattedTag}
+                            characterData={userCharacter!}
+                        />
+                    )}
                 </div>
 
                 <div
