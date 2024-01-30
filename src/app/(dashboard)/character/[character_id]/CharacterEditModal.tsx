@@ -12,6 +12,7 @@ import { X } from "lucide-react";
 import React, { useState } from "react";
 import { useFormState } from "react-dom";
 import CharacterEditSubmitButton from "./CharacterEditSubmitButton";
+import Button from "@/components/atoms/Button";
 
 type Props = {
     onClose: () => void;
@@ -234,7 +235,14 @@ Mind: Bulma is a complex character, balancing tomboyish and girly traits alongsi
                                 </p>
                             )}
                             <div className="mt-8">
-                                <CharacterEditSubmitButton />
+                                <Button
+                                    variant="fill"
+                                    color="primary"
+                                    size="fullWidth"
+                                    type="submit"
+                                >
+                                    Update Character
+                                </Button>
                             </div>
                         </form>
                     </div>

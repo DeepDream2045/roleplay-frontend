@@ -107,7 +107,10 @@ export async function updateCharacterAction(
         const form = new FormData();
 
         form.append("id", character_id);
-        form.append("image", image);
+        if (image.size > 0) {
+            form.append("image", image);
+        }
+
         form.append("character_name", character_name);
         form.append("short_bio", short_bio);
         form.append("character_gender", character_gender);
