@@ -1,6 +1,7 @@
 "use client";
 
 import ModalWrapper from "@/app/components/ModalWrapper";
+import Button from "@/components/atoms/Button";
 import { deleteCharacterAction } from "@/lib/characterInfoAction";
 import { CharacterInfoType } from "@/types/action";
 import { X } from "lucide-react";
@@ -46,19 +47,26 @@ const CharacterDeleteModal = ({ onClose, characterData }: Props) => {
                         <h3>Are you sure you want delete the character?</h3>
                         <form action={formAction}>
                             <div className="mt-4 flex flex-row gap-4">
-                                <button
+                                <Button
+                                    variant="fill"
+                                    color="primary"
+                                    size="fullWidth"
                                     type="button"
+                                    className="flex-1"
                                     onClick={onClose}
-                                    className="flex-1 h-10 rounded-lg bg-blue-500 text-white font-semibold "
+                                    loadingText="Cancel"
                                 >
                                     Cancel
-                                </button>
-                                <button
+                                </Button>
+                                <Button
+                                    variant="fill"
+                                    color="primary"
+                                    size="fullWidth"
                                     type="submit"
-                                    className="flex-1 h-10 rounded-lg bg-blue-500 text-white font-semibold "
+                                    className="flex-1"
                                 >
                                     Delete
-                                </button>
+                                </Button>
                             </div>
                         </form>
                     </div>
