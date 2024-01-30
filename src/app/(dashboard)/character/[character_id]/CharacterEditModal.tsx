@@ -11,7 +11,6 @@ import { CharacterInfoType } from "@/types/action";
 import { X } from "lucide-react";
 import React, { useState } from "react";
 import { useFormState } from "react-dom";
-import CharacterEditSubmitButton from "./CharacterEditSubmitButton";
 import Button from "@/components/atoms/Button";
 
 type Props = {
