@@ -109,7 +109,7 @@ const useChat = (
 
         return () => {
             newSocket.close();
-            setMessages([]);
+            // setMessages([]);
         };
     }, [userId, characterId]);
 

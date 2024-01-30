@@ -12,8 +12,8 @@ export default function MessageComponent({
     rigth = false,
 }: MessageComponentProps) {
     const wrapperClass = rigth
-        ? "flex flex-row-reverse justify-start gap-4"
-        : "flex flex-row gap-4 pr-32 items-end";
+        ? "flex flex-row-reverse justify-start gap-4 w-full"
+        : "flex flex-row gap-4 pr-32 items-end w-full";
     return (
         <div className={wrapperClass}>
             {imageSrc && (

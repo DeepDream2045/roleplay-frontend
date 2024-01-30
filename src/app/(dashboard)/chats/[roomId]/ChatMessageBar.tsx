@@ -29,6 +29,11 @@ const ChatMessageBar = (props: TChatMessageBarProps) => {
                 onChange={(e) => {
                     setMessage(e.target.value);
                 }}
+                onKeyDown={(e) => {
+                    if (e.code === "Enter") {
+                        sendMessageHandler();
+                    }
+                }}
             />
             <SendHorizonal
                 className="w-6 h-6 ml-4"

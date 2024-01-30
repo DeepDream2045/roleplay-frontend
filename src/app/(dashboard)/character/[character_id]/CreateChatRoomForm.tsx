@@ -1,4 +1,5 @@
 "use client";
+import Button from "@/components/atoms/Button";
 import { createRoomInfoAction } from "@/lib/chatAction";
 import React from "react";
 import { useFormState } from "react-dom";
@@ -13,11 +14,8 @@ function CreateChatRoomForm({ character_id }: TCreateChatRoomFormProps) {
     const [state, formAction] = useFormState(bindCharacterId, null);
 
     return (
-        <form className="absolute bottom-0" action={formAction}>
-            <button className="text-sm h-10 px-4 w-fit rounded-lg font-semibold leading-normal text-white bg-blue-500 min-w-72">
-                Start chat
-            </button>
-            {/* <Button
+        <form className="absolute bottom-4" action={formAction}>
+            <Button
                 type="submit"
                 variant="fill"
                 color="primary"
@@ -25,7 +23,7 @@ function CreateChatRoomForm({ character_id }: TCreateChatRoomFormProps) {
                 className="min-w-72 sticky bottom-0"
             >
                 Start chat
-            </Button> */}
+            </Button>
         </form>
     );
 }

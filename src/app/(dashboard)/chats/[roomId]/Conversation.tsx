@@ -19,6 +19,7 @@ export default function Conversation({
         roomData.character,
         roomData.chatroom
     );
+
     const [waitForResponse, setWaitForResponse] = useState<boolean>(false);
 
     return (

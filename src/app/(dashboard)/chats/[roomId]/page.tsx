@@ -33,7 +33,11 @@ async function ConversationPage(props: TConversationPageProps) {
         );
     }
 
-    return <Conversation roomData={activeRoomData} />;
+    return (
+        <div className="flex flex-1 flex-col w-full">
+            <Conversation roomData={activeRoomData} />
+        </div>
+    );
 }
 
 export default ConversationPage;

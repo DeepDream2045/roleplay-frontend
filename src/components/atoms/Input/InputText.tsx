@@ -8,6 +8,7 @@ import InputErrorMessage from "./InputErrorMessage";
 type TInputTextProps = TInputProps & {
     value?: InputHTMLAttributes<HTMLInputElement>["value"];
     defaultValue?: InputHTMLAttributes<HTMLInputElement>["defaultValue"];
+    onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
 };
 
 const InputText = (props: TInputTextProps) => {
@@ -34,6 +35,7 @@ const InputText = (props: TInputTextProps) => {
                     className={defaultInputClassName}
                     value={props.value}
                     onChange={props.onChange}
+                    onKeyDown={props.onKeyDown}
                 />
             ) : (
                 <input

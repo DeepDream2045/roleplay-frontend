@@ -72,7 +72,7 @@ export async function getRoomInfoAction(): Promise<TGetRoomInfoActionListActionR
         }
 
         const data: TGetRoomInfoActionResponse = await req.json();
-
+        revalidatePath("/chat");
         return { hasError: false, rooms: data.data };
     } catch (err) {
         let errors = [];
