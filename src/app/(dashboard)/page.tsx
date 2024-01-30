@@ -83,7 +83,7 @@ async function Dashboard(props: DashboardProps) {
                                         val.character_data?.image_url ||
                                         "/images/default-image-placeholder.webp"
                                     }
-                                    name={val.user_data?.full_name}
+                                    name={val.group_name}
                                     message={
                                         val.chatroom.length > 0
                                             ? val.chatroom[0].character_message
