@@ -10,6 +10,7 @@ import InputFile from "@/components/atoms/Input/InputFile";
 import InputToggle from "@/components/atoms/Input/InputToggle";
 import InputSelect from "@/components/atoms/Input/InputSelect";
 import InputRadio from "@/components/atoms/Input/InputRadio";
+import Button from "@/components/atoms/Button";
 
 type NewCharacterFormPropsType = {
     models: TInputOption[];
@@ -34,7 +35,11 @@ export default function NewCharacterForm({
         <div className="px-2 mt-8 flex flex-1 flex-col max-w-screen-md w-full pb-12">
             {/* Image Form */}
             <form action={formAction}>
-                <InputFile name="image" id="image" label="Add or Generate" />
+                <InputFile
+                    name="image"
+                    id="image"
+                    label="Add Character Image"
+                />
 
                 {/* Character Form */}
                 <div className="flex flex-col mt-8 gap-4">
@@ -63,16 +68,6 @@ export default function NewCharacterForm({
                         label="Name"
                         placeholder="Bulma"
                         required
-                        footer={
-                            <p
-                                className="text-inherit leading-inherit"
-                                onClick={(e) => {
-                                    console.log("generate clicked");
-                                }}
-                            >
-                                Generate using description
-                            </p>
-                        }
                         errorMsg={state.errorMsg.character_name}
                     />
 
@@ -108,11 +103,6 @@ export default function NewCharacterForm({
 Mind: Bulma is a complex character, balancing tomboyish and girly traits alongside a temperamental nature. She surprises with her friendliness and helpfulness, approaching major decisions rationally, displaying persistence in achieving her goals..."
                         required
                         rows={5}
-                        footer={
-                            <p className="text-inherit leading-inherit">
-                                Generate using description, name, gender
-                            </p>
-                        }
                         errorMsg={state.errorMsg.prompt}
                     />
 
@@ -186,10 +176,18 @@ Mind: Bulma is a complex character, balancing tomboyish and girly traits alongsi
                         helperText="If this character is not safe for work, turn this on."
                     />
                 </div>
+                {state.hasError && (
+                    <p className="text-red-500 mt-4">Please check the input</p>
+                )}
                 <div className="mt-8">
-                    <button className="w-full h-10 rounded-lg bg-blue-500 text-white font-semibold">
+                    <Button
+                        type="submit"
+                        color="primary"
+                        size="fullWidth"
+                        variant="fill"
+                    >
                         Create Character
-                    </button>
+                    </Button>
                 </div>
             </form>
         </div>

@@ -19,6 +19,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     variant: ButtonVariant;
     size: ButtonSize;
     color: ButtonColor;
+    loadingText?: string;
 }
 
 type ButtonClass = {
@@ -79,8 +80,13 @@ export default function Button({
     disabled,
     onClick,
     type,
+    loadingText = "Loading...",
 }: ButtonProps) {
     const { pending } = useFormStatus();
+    if (pending) {
+        disabled = true;
+    }
+
     let btnSizeClass: HTMLButtonElement["className"] = "";
     let btnVariantClass: ButtonHTMLAttributes<HTMLButtonElement>["className"] =
         "";
@@ -104,7 +110,7 @@ export default function Button({
             onClick={onClick}
             disabled={disabled || pending}
         >
-            {children}
+            {pending ? loadingText : children}
         </button>
     );
 }

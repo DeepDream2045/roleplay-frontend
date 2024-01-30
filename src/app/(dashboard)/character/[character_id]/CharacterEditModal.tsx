@@ -11,6 +11,7 @@ import { CharacterInfoType } from "@/types/action";
 import { X } from "lucide-react";
 import React, { useState } from "react";
 import { useFormState } from "react-dom";
+import CharacterEditSubmitButton from "./CharacterEditSubmitButton";
 
 type Props = {
     onClose: () => void;
@@ -78,7 +79,7 @@ const CharacterEditModal = ({
                             <InputFile
                                 name="image"
                                 id="image"
-                                label="Add or Generate"
+                                label="Update Character Image"
                                 value={characterData.image || undefined}
                                 errorMsg={state.errorMsg.image}
                             />
@@ -114,16 +115,6 @@ const CharacterEditModal = ({
                                     placeholder="Bulma"
                                     required
                                     defaultValue={characterData.character_name}
-                                    footer={
-                                        <p
-                                            className="text-inherit leading-inherit"
-                                            onClick={(e) => {
-                                                console.log("generate clicked");
-                                            }}
-                                        >
-                                            Generate using description
-                                        </p>
-                                    }
                                     errorMsg={state.errorMsg.character_name}
                                 />
 
@@ -163,12 +154,6 @@ Mind: Bulma is a complex character, balancing tomboyish and girly traits alongsi
                                     required
                                     rows={5}
                                     defaultValue={characterData.prompt}
-                                    footer={
-                                        <p className="text-inherit leading-inherit">
-                                            Generate using description, name,
-                                            gender
-                                        </p>
-                                    }
                                     errorMsg={state.errorMsg.prompt}
                                 />
 
@@ -249,9 +234,7 @@ Mind: Bulma is a complex character, balancing tomboyish and girly traits alongsi
                                 </p>
                             )}
                             <div className="mt-8">
-                                <button className="w-full h-10 rounded-lg bg-blue-500 text-white font-semibold ">
-                                    Update Character
-                                </button>
+                                <CharacterEditSubmitButton />
                             </div>
                         </form>
                     </div>

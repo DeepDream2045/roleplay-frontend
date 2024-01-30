@@ -78,6 +78,7 @@ export async function magicLinkVerifyServiceAction(
 
         return redirect(`${process.env.NEXTAUTH_URL}/chats`);
     } else {
-        return { isNotValid: true, message: verifyReq.statusText };
+        const err = await verifyReq.json();
+        return { isNotValid: true, message: err.error };
     }
 }
