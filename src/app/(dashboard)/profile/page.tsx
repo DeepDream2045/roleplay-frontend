@@ -4,6 +4,7 @@ import CharacterCard from "../../components/dashboard/CharacterCard";
 import AskToLogin from "@/components/organism/AskToLogin/AskToLogin";
 import { getAuthSession } from "@/lib/authSession";
 import { getCharacterInfoAction } from "@/lib/characterInfoAction";
+import { MAIN_API_BASE_URL } from "@/constants/environtment";
 
 async function ProfilePage() {
     const session = await getAuthSession();
@@ -81,8 +82,9 @@ async function ProfilePage() {
                                 id={`${val.id}`}
                                 key={`${val.id}`}
                                 imageSrc={
-                                    val.image ||
-                                    "/images/default-image-placeholder.webp"
+                                    val.image
+                                        ? `${MAIN_API_BASE_URL}${val.image}`
+                                        : "/images/default-image-placeholder.webp"
                                 }
                                 profileImageSrc={
                                     val.user.profile_image ||

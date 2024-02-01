@@ -67,7 +67,7 @@ const CharacterEditModal = ({
                 <div className="flex flex-1 py-4 px-8 flex-col bg-white max-w-md min-w-md rounded-lg">
                     <header className=" py-4 px-6 ">
                         <div className="h-10 flex flex-row justify-between items-center">
-                            <h2>Sign in</h2>
+                            <h2>Update Character</h2>
                             <X
                                 className="w-6 h-6 cursor-pointer"
                                 onClick={onClose}

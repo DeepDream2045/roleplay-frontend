@@ -14,6 +14,7 @@ import {
     createCharacterAPIResponseBody,
 } from "../types/action";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 export async function createCharacterAction(
     state: TCreateCharacterActionState,
@@ -91,6 +92,8 @@ export async function updateCharacterAction(
     let data: undefined | createCharacterAPIResponseBody;
     try {
         const image = payload.get("image");
+        console.log({ image });
+
         const character_name = payload.get("character_name");
         const short_bio = payload.get("short_bio");
         const character_gender = payload.get("character_gender");
@@ -114,6 +117,8 @@ export async function updateCharacterAction(
         form.append("character_name", character_name);
         form.append("short_bio", short_bio);
         form.append("character_gender", character_gender);
+        console.log({ tags });
+
         tags.forEach((item) => {
             form.append("tags", item);
         });
@@ -142,8 +147,9 @@ export async function updateCharacterAction(
         }
 
         data = await req.json();
+        console.log({ data });
     } catch (error: Response | unknown) {
-        console.log(error);
+        // console.log(error);
         const errors = await (error as Response).json();
         console.log(errors);
         return {
@@ -251,7 +257,7 @@ export async function getCharacterInfoAction() {
         }
 
         const data: CharacterInfoType[] = await req.json();
-
+        revalidatePath("/character");
         return { hasError: false, characters: data };
     } catch (err) {
         let errors = [];

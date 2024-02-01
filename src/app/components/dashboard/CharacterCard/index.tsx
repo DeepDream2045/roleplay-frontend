@@ -35,7 +35,7 @@ export default function CharacterCard({
                     width={100}
                     height={100}
                     alt={`${name} profile picture`}
-                    className="w-72 aspect-square rounded-lg"
+                    className="w-72 aspect-square rounded-lg object-cover object-center"
                 />
             </div>
 

@@ -92,7 +92,9 @@ const InputFileModal = (props: TInputFileModalProps) => {
 };
 
 const InputFile = (props: TInputFileProps) => {
-    const [value, setValue] = useState<string | undefined>(undefined);
+    const [value, setValue] = useState<string | undefined>(
+        props.value ? `${MAIN_API_BASE_URL}${props.value}` : undefined
+    );
     const [inputValue, setInputValue] = useState<File | undefined>(undefined);
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -102,45 +104,19 @@ const InputFile = (props: TInputFileProps) => {
         setShowModal((prev) => !prev);
     };
 
-    useEffect(() => {
-        const getImage = async () => {
-            const blob = await new Promise((resolve) => {
-                const xhr = new XMLHttpRequest();
-                xhr.open("GET", `${MAIN_API_BASE_URL}${props.value}`);
-                xhr.responseType = "blob";
-                xhr.onload = () => {
-                    resolve(xhr.response);
-                };
-                xhr.onerror = () => {
-                    resolve(undefined);
-                };
-                xhr.send();
-            });
-
-            let file;
-            if (blob) {
-                file = new File([blob as BlobPart], props.value as string, {
-                    type: `image/${String(props.value).split(".")[-1]}`,
-                });
-            }
-
-            setInputValue(file);
-        };
-
-        if (props.value) {
-            getImage();
-        }
-    }, [props.value]);
-
     return (
         <>
             <div className="flex flex-col items-center gap-4">
                 <Image
-                    src={value || "/images/default-image-placeholder.webp"}
+                    src={
+                        value
+                            ? `${value}`
+                            : "/images/default-image-placeholder.webp"
+                    }
                     width={300}
                     height={300}
                     alt="character profile picture"
-                    className="w-72 rounded-2xl aspect-square object-cover"
+                    className="w-72 rounded-2xl aspect-square object-cover object-center"
                     priority
                 />
                 <div
@@ -166,6 +142,7 @@ const InputFile = (props: TInputFileProps) => {
                         handleModal();
                     }}
                     defaultValue={inputValue?.name}
+                    // value={value}
                     ref={inputRef}
                 />
             </div>

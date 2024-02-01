@@ -4,6 +4,7 @@ import React from "react";
 import ChatComponent from "./ChatComponent";
 import { useParams, useRouter } from "next/navigation";
 import { TRoomInfo } from "@/lib/chatAction";
+import { MAIN_API_BASE_URL } from "@/constants/environtment";
 
 type TChatListProps = {
     rooms: TRoomInfo[];
@@ -26,7 +27,11 @@ const ChatList = (props: TChatListProps) => {
                         <ChatComponent
                             key={item.room_id}
                             name={item.group_name}
-                            imageSrc={"/images/default-image-placeholder.webp"}
+                            imageSrc={
+                                item.character.image
+                                    ? `${item.character.image}`
+                                    : "/images/default-image-placeholder.webp"
+                            }
                             message={
                                 item.chatroom.length > 0
                                     ? item.chatroom[0].character_message

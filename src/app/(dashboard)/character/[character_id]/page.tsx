@@ -120,7 +120,7 @@ async function CharacterPage({
 
     const userCharacter = characterShouldAuthInfo || characterInfo;
 
-    console.log({ userCharacter });
+    // console.log({ userCharacter });
 
     return (
         <div className="flex flex-col mt-5 flex-1 items-center overflow-scroll min-h-dvh min-w-full max-h-dvh max-w-full">

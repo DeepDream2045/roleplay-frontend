@@ -15,8 +15,8 @@ export default function Conversation({
     conversations?: any;
 }) {
     const { socket, messages } = useChat(
-        roomData.user,
-        roomData.character,
+        roomData.user.id,
+        roomData.character.id,
         roomData.chatroom
     );
 
@@ -24,7 +24,10 @@ export default function Conversation({
 
     return (
         <>
-            <ConversationHeader characterName={roomData.group_name} />
+            <ConversationHeader
+                characterName={roomData.group_name}
+                characterImage={roomData.character.image}
+            />
             <div className="flex flex-1 flex-col-reverse pt-4 pb-8 px-4 gap-4">
                 {messages.map((item) => {
                     return (

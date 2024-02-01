@@ -6,6 +6,7 @@ import CharacterCard from "../components/dashboard/CharacterCard";
 import { getPublicCharacterInfoAction } from "@/lib/characterInfoAction";
 import { getRoomInfoAction } from "@/lib/chatAction";
 import { getTagInfoListAction } from "@/lib/tagAction";
+import { MAIN_API_BASE_URL } from "@/constants/environtment";
 
 interface DashboardProps {}
 
@@ -80,8 +81,9 @@ async function Dashboard(props: DashboardProps) {
                                     roomId={val.room_id}
                                     key={val.room_id}
                                     imageSrc={
-                                        val.character_data?.image_url ||
-                                        "/images/default-image-placeholder.webp"
+                                        val.character?.image
+                                            ? `${val.character?.image}`
+                                            : "/images/default-image-placeholder.webp"
                                     }
                                     name={val.group_name}
                                     message={
@@ -118,10 +120,15 @@ async function Dashboard(props: DashboardProps) {
                             <CharacterCard
                                 key={`char-${index + 1}`}
                                 id={String(val.id)}
-                                imageSrc={val.image || ""}
+                                imageSrc={
+                                    val.image
+                                        ? `${MAIN_API_BASE_URL}${val.image}`
+                                        : "/images/default-image-placeholder.webp"
+                                }
                                 profileImageSrc={
-                                    val.user.profile_image ||
-                                    "/images/default-character-placeholder-full.webp"
+                                    val.user.profile_image
+                                        ? `${MAIN_API_BASE_URL}${val.user.profile_image}`
+                                        : "/images/default-character-placeholder-full.webp"
                                 }
                                 name={val.character_name || "No Character Name"}
                                 profileName={val.user.full_name || "No Name"}

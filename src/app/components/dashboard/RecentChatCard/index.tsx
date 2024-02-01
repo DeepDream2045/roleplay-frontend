@@ -33,7 +33,7 @@ export default function RecentChatCard({
                     width={100}
                     height={100}
                     alt={`${name} profile picture`}
-                    className="rounded-full w-24 aspect-square"
+                    className="rounded-full w-24 aspect-square object-cover object-center"
                 />
             </div>
 

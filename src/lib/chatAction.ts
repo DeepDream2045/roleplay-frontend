@@ -22,15 +22,21 @@ export type TRoomInfo = {
     room_id: string;
     type: number;
     group_name: string;
-    user_data: {
+    user: {
         id: number;
         full_name: string;
+        profile_image: string | null;
     };
-    user: number;
-    character: number;
-    character_data: {
-        image_url: string | null;
+    character: {
+        id: number;
         character_name: string;
+        short_bio: string;
+        character_gender: string;
+        prompt: string;
+        character_visibility: string;
+        initial_message: string;
+        image: string | null;
+        NSFW: boolean;
     };
     chatroom: TConversation[];
 };
@@ -73,6 +79,7 @@ export async function getRoomInfoAction(): Promise<TGetRoomInfoActionListActionR
 
         const data: TGetRoomInfoActionResponse = await req.json();
         revalidatePath("/chat");
+        revalidatePath("/");
         return { hasError: false, rooms: data.data };
     } catch (err) {
         let errors = [];
@@ -171,7 +178,7 @@ export async function createRoomInfoAction(
             throw req;
         }
 
-        data = await req.json();
+        data = (await req.json()).data;
 
         revalidatePath("/chats");
     } catch (err) {
