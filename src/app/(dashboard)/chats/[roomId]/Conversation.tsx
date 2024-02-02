@@ -30,11 +30,17 @@ export default function Conversation({
             />
             <div className="flex flex-1 flex-col-reverse pt-4 pb-8 px-4 gap-4">
                 {messages.map((item) => {
+                    const image =
+                        item.messsage_from === "user"
+                            ? ""
+                            : roomData.character.image
+                            ? `${roomData.character.image}`
+                            : "/images/default-image-placeholder.webp";
                     return (
                         <MessageComponent
                             key={`user-${item.message_id}`}
                             message={item.message}
-                            imageSrc={item.sender_profile_pic || ""}
+                            imageSrc={image}
                             rigth={item.messsage_from === "user"}
                         />
                     );
