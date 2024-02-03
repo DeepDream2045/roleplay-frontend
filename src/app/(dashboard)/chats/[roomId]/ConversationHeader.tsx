@@ -22,7 +22,7 @@ const ConversationHeader = (props: TConversationHeaderProps) => {
                     height={100}
                     className="w-12 h-12 aspect-square rounded-full"
                 />
-                <div className="text-lg font-medium line-clamp-1">
+                <div className="text-lg font-medium line-clamp-1 cursor-default">
                     {props.characterName}
                 </div>
             </div>

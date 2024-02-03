@@ -34,7 +34,7 @@ async function ConversationPage(props: TConversationPageProps) {
     }
 
     return (
-        <div className="flex flex-1 flex-col w-full max-h-full">
+        <div className="flex flex-1 flex-col w-full max-h-full pb-3">
             <Conversation roomData={activeRoomData} />
         </div>
     );
