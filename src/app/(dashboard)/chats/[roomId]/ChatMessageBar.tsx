@@ -36,7 +36,7 @@ const ChatMessageBar = (props: TChatMessageBarProps) => {
                 }}
             />
             <SendHorizonal
-                className="w-6 h-6 ml-4"
+                className="w-6 h-6 ml-4 cursor-pointer"
                 onClick={sendMessageHandler}
             />
         </div>
