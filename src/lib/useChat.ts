@@ -55,9 +55,12 @@ const useChat = (
             ...historyConversationFormatted,
         ];
     });
+
     const [messages, setMessages] = useState<TMessage[]>(
         historyConversationFormatted
     );
+
+    const [waitForCharacterChat, setWaitForCharacterChat] = useState(false);
 
     useEffect(() => {
         const newSocket = new WebSocket(
@@ -82,10 +85,12 @@ const useChat = (
             };
 
             setMessages((prev) => [newMessage, ...prev]);
+            setWaitForCharacterChat(false);
         };
 
         newSocket.onclose = () => {
             console.info(`${new Date()} - socket close`);
+            setWaitForCharacterChat(false);
         };
 
         const send = newSocket.send;
@@ -105,6 +110,8 @@ const useChat = (
                     text: message,
                 })
             );
+
+            setWaitForCharacterChat(true);
         };
 
         return () => {
@@ -113,7 +120,7 @@ const useChat = (
         };
     }, [userId, characterId]);
 
-    return { socket, messages };
+    return { socket, messages, waitForCharacterChat };
 };
 
 export default useChat;

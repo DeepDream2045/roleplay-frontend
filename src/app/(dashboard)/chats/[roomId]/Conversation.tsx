@@ -14,13 +14,11 @@ export default function Conversation({
     roomData: TRoomInfo;
     conversations?: any;
 }) {
-    const { socket, messages } = useChat(
+    const { socket, messages, waitForCharacterChat } = useChat(
         roomData.user.id,
         roomData.character.id,
         roomData.chatroom
     );
-
-    const [waitForResponse, setWaitForResponse] = useState<boolean>(false);
 
     return (
         <>
@@ -46,7 +44,10 @@ export default function Conversation({
                     );
                 })}
             </div>
-            <ChatMessageBar socket={socket} />
+            <ChatMessageBar
+                socket={socket}
+                waitForCharacterChat={waitForCharacterChat}
+            />
         </>
     );
 }
