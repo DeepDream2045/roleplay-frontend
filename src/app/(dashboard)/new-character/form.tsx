@@ -45,9 +45,7 @@ export default function NewCharacterForm({
                 <div className="flex flex-col mt-8 gap-4">
                     <div className="flex flex-1 flex-row justify-between">
                         <div className="font-semibold text-xl">Basic Info</div>
-                        <div className="font-medium text-sm">
-                            Import Character
-                        </div>
+                        <div className="font-medium text-sm">{""}</div>
                     </div>
                     <div className="text-base">
                         For more information about character creation, refer to

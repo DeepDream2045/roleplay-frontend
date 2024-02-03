@@ -14,7 +14,10 @@ function CreateChatRoomForm({ character_id }: TCreateChatRoomFormProps) {
     const [state, formAction] = useFormState(bindCharacterId, null);
 
     return (
-        <form className="absolute bottom-4" action={formAction}>
+        <form
+            className="bg-white flex flex-row w-full left-0 items-center justify-center ml-[-1.75rem]"
+            action={formAction}
+        >
             <Button
                 type="submit"
                 variant="fill"

@@ -22,6 +22,10 @@ const config: Config = {
       },
       minWidth: {
         md: "28rem",
+        lg: "32rem",
+        xl: "36rem",
+        "2xl": "42rem",
+        "3xl": "48rem",
       },
       maxWidth: {
         vw: "100vw",

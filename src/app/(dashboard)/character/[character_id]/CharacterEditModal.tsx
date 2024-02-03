@@ -64,10 +64,12 @@ const CharacterEditModal = ({
                 className="flex flex-col flex-1 justify-center items-center max-h-full p-8"
                 style={{ backgroundColor: "rgba(0, 0, 0, 0.48)" }}
             >
-                <div className="flex flex-1 py-4 px-8 flex-col bg-white max-w-md min-w-md rounded-lg">
+                <div className="flex flex-1 py-4 px-8 flex-col bg-white min-w-2xl max-w-2xl rounded-lg">
                     <header className=" py-4 px-6 ">
                         <div className="h-10 flex flex-row justify-between items-center">
-                            <h2>Update Character</h2>
+                            <h2 className="flex flex-1 justify-center">
+                                Update Character
+                            </h2>
                             <X
                                 className="w-6 h-6 cursor-pointer"
                                 onClick={onClose}
@@ -91,7 +93,7 @@ const CharacterEditModal = ({
                                         Basic Info
                                     </div>
                                     <div className="font-medium text-sm">
-                                        Import Character
+                                        {""}
                                     </div>
                                 </div>
                                 <div className="text-base">

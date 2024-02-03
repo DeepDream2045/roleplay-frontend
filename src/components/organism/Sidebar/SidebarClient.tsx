@@ -25,7 +25,7 @@ export default function SidebarClient({ isLogin }: SidebarClientProps) {
     useEffect(() => {
         document.documentElement.style.setProperty(
             "--dynamic-rem",
-            pathName.includes("/chats") ? "4rem" : "16rem"
+            pathName.includes("/chats") ? "4rem" : "13rem"
         );
     }, [pathName]); // Dependency array ensures this runs only when pathName changes
 
