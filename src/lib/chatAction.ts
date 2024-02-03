@@ -157,9 +157,8 @@ export async function createRoomInfoAction(
     let data: createRoomResponse | undefined;
     try {
         const session = await getAuthSession();
-        const form = new FormData();
-
         const userId = session.user!.id;
+        const form = new FormData();
 
         form.append("user", String(userId));
         form.append("character", character_id);
