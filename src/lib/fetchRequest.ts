@@ -14,7 +14,12 @@ export async function commonErrorHandler(
             errors = errorResponse.map((val: any) => val);
         } else {
             const errorResponse = await err.json();
-            errors = errorResponse.messages.map((val: any) => val.message);
+            console.log(errorResponse);
+            if (Array.isArray(errorResponse)) {
+                errors = errorResponse.map((val: any) => val.message);
+            } else {
+                errors = [errorResponse.error];
+            }
         }
 
         return errors;

@@ -35,7 +35,9 @@ export default function ChatComponent({
             </div>
 
             <div>
-                <h3 className="text-base font-semibold line-clamp-1">{name}</h3>
+                <h3 className="text-base font-semibold line-clamp-1 cursor-pointer">
+                    {name}
+                </h3>
 
                 <div className="flex flex-row gap-4">
                     <p className="text-xs line-clamp-1">{message}</p>

@@ -8,6 +8,7 @@ import {
     User,
     LogOut,
 } from "lucide-react";
+import { useEffect } from "react";
 
 interface SidebarClientProps {
     isLogin: boolean;
@@ -19,6 +20,14 @@ export default function SidebarClient({ isLogin }: SidebarClientProps) {
     const sidebarSize = pathName.includes("/chats")
         ? "min-w-16 max-w-16"
         : "min-w-52 max-w-52";
+
+    // Set the CSS variable inside useEffect
+    useEffect(() => {
+        document.documentElement.style.setProperty(
+            "--dynamic-rem",
+            pathName.includes("/chats") ? "4rem" : "16rem"
+        );
+    }, [pathName]); // Dependency array ensures this runs only when pathName changes
 
     const sidebarHeader = pathName.includes("/chats") ? (
         <div className="h-10 flex flex-row items-center px-4">

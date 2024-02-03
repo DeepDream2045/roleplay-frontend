@@ -36,7 +36,7 @@ export default async function ProtectedPageLayout({
     }
 
     return (
-        <div className="flex flex-1 flex-row w-full">
+        <div className="flex flex-1 flex-row w-full max-h-dvh">
             <ChatList rooms={roomData.rooms} />
             <div className="flex flex-1 flex-col justify-center items-center">
                 {children}

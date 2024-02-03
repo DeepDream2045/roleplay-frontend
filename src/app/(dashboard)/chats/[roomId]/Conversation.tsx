@@ -28,7 +28,7 @@ export default function Conversation({
                 characterName={roomData.group_name}
                 characterImage={roomData.character.image}
             />
-            <div className="flex flex-1 flex-col-reverse pt-4 pb-8 px-4 gap-4">
+            <div className="flex flex-1 flex-col-reverse pt-4 pb-8 px-4 gap-4 overflow-y-scroll">
                 {messages.map((item) => {
                     const image =
                         item.messsage_from === "user"

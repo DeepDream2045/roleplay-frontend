@@ -20,7 +20,7 @@ const ChatMessageBar = (props: TChatMessageBarProps) => {
     };
 
     return (
-        <div className="flex flex-row w-full py-2 px-4 items-center">
+        <div className="flex flex-row w-full h-10 px-4 items-center">
             <InputText
                 placeholder="Type a message..."
                 id="message"
