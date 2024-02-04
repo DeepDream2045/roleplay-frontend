@@ -9,6 +9,7 @@ export type UserSession = {
     email?: string;
     profile_image?: string | null;
     stay_sign?: boolean;
+    username?: string;
 };
 
 export type AuthSession = {
@@ -165,3 +166,27 @@ export type TMagicLinkRequestServicePayload = {
 
 // magicLinkVerifyServiceAction function
 // TODO: Refactoring magicLinkVerifyServiceAction
+
+// updateProfileAction function
+export type TUpdateProfileActionPayload = {
+    get(key: "profile_image"): Blob;
+    get(key: "full_name"): string;
+    get(key: "username"): string;
+};
+
+export type updateProfileAPIResponseBody = {
+    message: string;
+};
+
+export type getProfileAPIResponseBody = {
+    message: string;
+    data: {
+        id: number;
+        full_name: string;
+        username: string;
+        email: string;
+        phone: string;
+        profile_image: string;
+        stay_sign: boolean;
+    }[];
+};

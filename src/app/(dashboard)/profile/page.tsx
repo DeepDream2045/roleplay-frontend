@@ -5,6 +5,7 @@ import AskToLogin from "@/components/organism/AskToLogin/AskToLogin";
 import { getAuthSession } from "@/lib/authSession";
 import { getCharacterInfoAction } from "@/lib/characterInfoAction";
 import { MAIN_API_BASE_URL } from "@/constants/environtment";
+import ProfileEditButton from "./ProfileEditButton";
 
 async function ProfilePage() {
     const session = await getAuthSession();
@@ -48,8 +49,10 @@ async function ProfilePage() {
                         width={150}
                         height={150}
                         alt="User profile picture"
-                        className="w-44 rounded-2xl aspect-square"
+                        className="w-44 rounded-2xl aspect-square object-cover object-center"
                         priority
+                        objectFit="cover"
+                        objectPosition="center"
                     />
                 </div>
                 <div className="flex flex-col justify-between">
@@ -58,12 +61,10 @@ async function ProfilePage() {
                         <p className="text-base">{`No biography provided. Set one by clicking 'Account'.`}</p>
                     </div>
                     <div className="flex flex-row gap-4">
-                        <Button size="medium" color="primary" variant="fill">
-                            Edit Profile
-                        </Button>
-                        <Button size="medium" color="secondary" variant="fill">
+                        <ProfileEditButton profileData={session.user} />
+                        {/* <Button size="medium" color="secondary" variant="fill">
                             Setting
-                        </Button>
+                        </Button> */}
                     </div>
                 </div>
             </div>
@@ -87,7 +88,7 @@ async function ProfilePage() {
                                         : "/images/default-image-placeholder.webp"
                                 }
                                 profileImageSrc={
-                                    val.user.profile_image ||
+                                    `${MAIN_API_BASE_URL}${val.user.profile_image}` ||
                                     "/images/default-image-placeholder.webp"
                                 }
                                 name={val.character_name}
