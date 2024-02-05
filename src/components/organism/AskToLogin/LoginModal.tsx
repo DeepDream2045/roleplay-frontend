@@ -37,7 +37,7 @@ function LoginModal({ onClose }: LoginModalProps) {
                             </header>
                             <div className="flex flex-col py-2 px-6">
                                 <GoogleLoginForm />
-                                <hr className="border-t" />
+                                <hr className="border-1 mt-4" />
                                 <MagicLinkLoginForm
                                     afterEmailSent={setShowEmailSent}
                                 />
