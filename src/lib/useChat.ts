@@ -65,21 +65,26 @@ const useChat = (
 
     const [waitForCharacterChat, setWaitForCharacterChat] = useState(false);
 
+    const [connectionState, setConnectionState] = useState<
+        "Connecting" | "Connected" | "Error"
+    >("Connecting");
+
     useEffect(() => {
         const newSocket = new WebSocket(
             `${WEBSOCKET_API_BASE_URL}/${userId}/${characterId}`
         );
 
-        setSocket(newSocket);
+        setConnectionState("Connecting");
 
         newSocket.onerror = (err) => {
             console.error(err);
-            setSocket(newSocket);
+            setConnectionState("Error");
         };
 
         newSocket.onopen = () => {
             console.log("connected");
             setSocket(newSocket);
+            setConnectionState("Connected");
         };
 
         newSocket.onmessage = (event) => {
@@ -126,11 +131,12 @@ const useChat = (
         return () => {
             newSocket.close();
             setSocket(undefined);
+            setConnectionState("Connecting");
             // setMessages([]);
         };
     }, [userId, characterId]);
 
-    return { socket, messages, waitForCharacterChat };
+    return { socket, messages, waitForCharacterChat, connectionState };
 };
 
 export default useChat;

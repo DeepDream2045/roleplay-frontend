@@ -4,7 +4,6 @@ import MessageComponent from "./MessageComponent";
 import useChat from "@/lib/useChat";
 import ChatMessageBar from "./ChatMessageBar";
 import ConversationHeader from "./ConversationHeader";
-import { useEffect, useState } from "react";
 import { TRoomInfo } from "@/lib/chatAction";
 
 export default function Conversation({
@@ -14,7 +13,7 @@ export default function Conversation({
     roomData: TRoomInfo;
     conversations?: any;
 }) {
-    const { socket, messages, waitForCharacterChat } = useChat(
+    const { socket, messages, waitForCharacterChat, connectionState } = useChat(
         roomData.user.id,
         roomData.character.id,
         roomData.chatroom
@@ -26,6 +25,7 @@ export default function Conversation({
                 characterName={roomData.group_name}
                 characterImage={roomData.character.image}
                 socket={socket}
+                connectionState={connectionState}
             />
             <div className="flex flex-1 flex-col-reverse pt-4 pb-8 px-4 gap-4 overflow-y-scroll">
                 {messages.map((item) => {

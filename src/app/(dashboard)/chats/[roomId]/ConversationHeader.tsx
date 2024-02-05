@@ -8,21 +8,22 @@ type TConversationHeaderProps = {
     characterName: string;
     characterImage: string | undefined | null;
     socket: WebSocket | undefined;
+    connectionState: "Connecting" | "Connected" | "Error";
 };
 
 const ConversationHeader = (props: TConversationHeaderProps) => {
     const [message, setMessage] = useState("");
 
     useEffect(() => {
-        console.log({ socket: props.socket, state: props.socket?.readyState });
-        if (props.socket?.readyState === WebSocket.OPEN) {
+        console.log({ state: props.connectionState });
+        if (props.connectionState === "Connected") {
             setMessage("");
-        } else if (props.socket?.readyState === WebSocket.CLOSED) {
+        } else if (props.connectionState === "Error") {
             setMessage("Unexpected Error, please refresh the page");
         } else {
             setMessage("Connecting to server...");
         }
-    }, [props.socket]);
+    }, [props.connectionState]);
     return (
         <div className="flex flex-row w-full justify-between px-4 py-4 h-16 border-b">
             <div className="flex flex-row items-center gap-4">
