@@ -9,6 +9,7 @@ import React from "react";
 import { useFormState } from "react-dom";
 import Button from "@/components/atoms/Button";
 import { updateProfileAction } from "@/lib/profileAction";
+import { MAIN_API_BASE_URL } from "@/constants/environtment";
 
 type Props = {
     onClose: () => void;
@@ -45,7 +46,14 @@ const ProfileEditModal = ({ onClose, profileData }: Props) => {
                                 name="profile_image"
                                 id="profile_image"
                                 label="Update Profile Image"
-                                value={profileData?.profile_image || undefined}
+                                value={
+                                    profileData?.profile_image
+                                        ? profileData.profile_image.replace(
+                                              MAIN_API_BASE_URL,
+                                              ""
+                                          )
+                                        : undefined
+                                }
                                 errorMsg={state.errorMsg.profile_image}
                             />
 
