@@ -88,7 +88,7 @@ const useChat = (
                 message_id: `character-${response.message_id}`,
                 message: [response.character_message],
                 sender_profile_pic: response.character_profile_pic,
-                typeSpeed: 50,
+                typeSpeed: 25,
             };
 
             setMessages((prev) => [newMessage, ...prev]);
