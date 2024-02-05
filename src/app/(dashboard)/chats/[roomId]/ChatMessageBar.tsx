@@ -13,6 +13,10 @@ const ChatMessageBar = (props: TChatMessageBarProps) => {
     const [message, setMessage] = useState<string>("");
     const sendMessageHandler = () => {
         if (props.socket?.OPEN) {
+            if (props.waitForCharacterChat) {
+                return;
+            }
+
             if (message) {
                 props.socket.send(message);
                 setMessage("");
