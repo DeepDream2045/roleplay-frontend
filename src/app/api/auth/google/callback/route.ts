@@ -43,5 +43,10 @@ export async function GET(request: NextRequest) {
                 { status: error.status }
             );
         }
+
+        return NextResponse.json(
+            { error: "Internal Server Error, Please Contact Admin" },
+            { status: 500 }
+        );
     }
 }
