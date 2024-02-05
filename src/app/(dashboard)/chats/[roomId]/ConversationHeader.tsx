@@ -28,7 +28,13 @@ const ConversationHeader = (props: TConversationHeaderProps) => {
                 </div>
             </div>
             <div>
-                <h3>{props.socket?.OPEN ? "" : "Connecting to server..."}</h3>
+                <h3>
+                    {props.socket?.OPEN
+                        ? ""
+                        : props.socket?.readyState === WebSocket.CLOSED
+                        ? "Unexpected Error, please refresh the page"
+                        : "Connecting to server..."}
+                </h3>
             </div>
             <div className="flex flex-row items-center">
                 <MoreHorizontal className="w-8 h-8" />
