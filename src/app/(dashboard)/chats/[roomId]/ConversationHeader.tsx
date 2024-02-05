@@ -9,6 +9,8 @@ type TConversationHeaderProps = {
 };
 
 const ConversationHeader = (props: TConversationHeaderProps) => {
+    console.log({ socket: props.socket, state: props.socket?.readyState });
+
     return (
         <div className="flex flex-row w-full justify-between px-4 py-4 h-16 border-b">
             <div className="flex flex-row items-center gap-4">
@@ -29,7 +31,7 @@ const ConversationHeader = (props: TConversationHeaderProps) => {
             </div>
             <div>
                 <h3>
-                    {props.socket?.OPEN
+                    {props.socket?.readyState === props.socket?.OPEN
                         ? ""
                         : props.socket?.readyState === WebSocket.CLOSED
                         ? "Unexpected Error, please refresh the page"
