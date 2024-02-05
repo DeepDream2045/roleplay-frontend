@@ -93,7 +93,7 @@ async function ProfilePage() {
                                 }
                                 name={val.character_name}
                                 profileName={val.user.full_name}
-                                timeString=""
+                                characterInformation={val}
                             />
                         );
                     })}

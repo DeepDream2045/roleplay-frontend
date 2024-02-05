@@ -114,7 +114,7 @@ async function Dashboard(props: DashboardProps) {
                 </div>
 
                 {/* All Character */}
-                <div className="flex flex-wrap flex-row">
+                <div className="flex flex-wrap flex-row gap-4">
                     {characterData.characters!.map((val, index) => {
                         return (
                             <CharacterCard
@@ -130,9 +130,9 @@ async function Dashboard(props: DashboardProps) {
                                         ? `${MAIN_API_BASE_URL}${val.user.profile_image}`
                                         : "/images/default-character-placeholder-full.webp"
                                 }
-                                name={val.character_name || "No Character Name"}
-                                profileName={val.user.full_name || "No Name"}
-                                timeString=""
+                                name={val.character_name}
+                                profileName={val.user.full_name}
+                                characterInformation={val}
                             />
                         );
                     })}

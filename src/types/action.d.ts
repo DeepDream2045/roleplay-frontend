@@ -122,6 +122,7 @@ export type CharacterInfoType = {
     user: {
         id: number;
         full_name: string;
+        username: string;
         profile_image: string | null;
     };
     tags: Tag[];
