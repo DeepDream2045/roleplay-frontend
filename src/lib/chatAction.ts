@@ -157,19 +157,24 @@ export async function createRoomInfoAction(
     let data: createRoomResponse | undefined;
     try {
         const session = await getAuthSession();
-        const userId = session.user!.id;
+        const userId = session.user!.id!;
         const form = new FormData();
 
         form.append("user", String(userId));
         form.append("character", character_id);
 
+        const body = {
+            user: parseInt(userId),
+            character: parseInt(character_id),
+        };
         const req = await fetch(`${MAIN_API_BASE_URL}/room_info/`, {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${session.access}`,
                 "user-refresh-token": session.refresh,
+                "Content-Type": "application/json",
             } as HeadersInit,
-            body: form,
+            body: JSON.stringify(body),
             cache: "no-store",
         });
 

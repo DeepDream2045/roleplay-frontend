@@ -217,7 +217,16 @@ async function CharacterPage({
                         className="flex flex-col gap-2"
                     >
                         <h3>Character prompt</h3>
-                        <p>{userCharacter?.prompt || ""}</p>
+                        <p
+                            dangerouslySetInnerHTML={{
+                                __html: userCharacter?.prompt
+                                    ? userCharacter.prompt.replace(
+                                          /\\n/g,
+                                          "<br />"
+                                      )
+                                    : "",
+                            }}
+                        ></p>
                     </div>
                 </div>
             </div>

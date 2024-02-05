@@ -15,8 +15,11 @@ function CreateChatRoomForm({ character_id }: TCreateChatRoomFormProps) {
 
     return (
         <form
-            className="bg-white flex flex-row w-full left-0 items-center justify-center ml-[-1.75rem]"
+            className="flex flex-row w-full left-0 items-center justify-center ml-[-1.75rem]"
             action={formAction}
+            style={{
+                backgroundColor: "rgb(250 250 250 / var(--tw-bg-opacity))",
+            }}
         >
             <Button
                 type="submit"
