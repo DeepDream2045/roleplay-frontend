@@ -14,7 +14,7 @@ export default function Conversation({
     roomData: TRoomInfo;
     conversations?: any;
 }) {
-    const { socket, messages, waitForCharacterChat } = useChat(
+    const { socket, messages, waitForCharacterChat, isConnected } = useChat(
         roomData.user.id,
         roomData.character.id,
         roomData.chatroom
@@ -25,6 +25,7 @@ export default function Conversation({
             <ConversationHeader
                 characterName={roomData.group_name}
                 characterImage={roomData.character.image}
+                socket={socket}
             />
             <div className="flex flex-1 flex-col-reverse pt-4 pb-8 px-4 gap-4 overflow-y-scroll">
                 {messages.map((item) => {
@@ -40,6 +41,7 @@ export default function Conversation({
                             message={item.message}
                             imageSrc={image}
                             rigth={item.messsage_from === "user"}
+                            typeSpeed={item.typeSpeed}
                         />
                     );
                 })}

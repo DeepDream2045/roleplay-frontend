@@ -5,6 +5,7 @@ import React from "react";
 type TConversationHeaderProps = {
     characterName: string;
     characterImage: string | undefined | null;
+    socket: WebSocket | undefined;
 };
 
 const ConversationHeader = (props: TConversationHeaderProps) => {
@@ -25,6 +26,9 @@ const ConversationHeader = (props: TConversationHeaderProps) => {
                 <div className="text-lg font-medium line-clamp-1 cursor-default">
                     {props.characterName}
                 </div>
+            </div>
+            <div>
+                <h3>{props.socket?.OPEN ? "" : "Connecting to server..."}</h3>
             </div>
             <div className="flex flex-row items-center">
                 <MoreHorizontal className="w-8 h-8" />

@@ -19,8 +19,9 @@ type TMessageResponse = {
 type TMessage = {
     messsage_from: "user" | "character";
     message_id: string;
-    message: string;
+    message: string[];
     sender_profile_pic: string | null;
+    typeSpeed: number;
 };
 
 const useChat = (
@@ -34,8 +35,9 @@ const useChat = (
         const newMessageUser: TMessage = {
             messsage_from: "user",
             message_id: `user-${val.id}`,
-            message: val.user_message as string,
+            message: [val.user_message] as string[],
             sender_profile_pic: null,
+            typeSpeed: 0,
         };
 
         historyConversationFormatted = [
@@ -46,8 +48,9 @@ const useChat = (
         const newMessageCharacter: TMessage = {
             messsage_from: "character",
             message_id: `character-${val.id}`,
-            message: val.character_message as string,
+            message: [val.character_message] as string[],
             sender_profile_pic: null,
+            typeSpeed: 0,
         };
 
         historyConversationFormatted = [
@@ -61,6 +64,7 @@ const useChat = (
     );
 
     const [waitForCharacterChat, setWaitForCharacterChat] = useState(false);
+    const [isConnected, setIsConnected] = useState(false);
 
     useEffect(() => {
         const newSocket = new WebSocket(
@@ -72,7 +76,9 @@ const useChat = (
         };
 
         newSocket.onopen = () => {
+            console.log("connected");
             setSocket(newSocket);
+            setIsConnected(true);
         };
 
         newSocket.onmessage = (event) => {
@@ -80,8 +86,9 @@ const useChat = (
             const newMessage: TMessage = {
                 messsage_from: "character",
                 message_id: `character-${response.message_id}`,
-                message: response.character_message,
+                message: [response.character_message],
                 sender_profile_pic: response.character_profile_pic,
+                typeSpeed: 50,
             };
 
             setMessages((prev) => [newMessage, ...prev]);
@@ -99,8 +106,9 @@ const useChat = (
             const newMessage: TMessage = {
                 messsage_from: "user",
                 message_id: `user-${Date.now()}`,
-                message: message as string,
+                message: [message] as string[],
                 sender_profile_pic: "",
+                typeSpeed: 0,
             };
 
             setMessages((prev) => [newMessage, ...prev]);
@@ -120,7 +128,7 @@ const useChat = (
         };
     }, [userId, characterId]);
 
-    return { socket, messages, waitForCharacterChat };
+    return { socket, messages, waitForCharacterChat, isConnected };
 };
 
 export default useChat;

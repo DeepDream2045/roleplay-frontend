@@ -1,15 +1,18 @@
 import Image from "next/image";
+import { Typewriter } from "react-simple-typewriter";
 
 interface MessageComponentProps {
     imageSrc?: string;
-    message: string;
+    message: string[];
     rigth?: boolean;
+    typeSpeed?: number;
 }
 
 export default function MessageComponent({
     imageSrc,
     message,
     rigth = false,
+    typeSpeed = 0,
 }: MessageComponentProps) {
     const wrapperClass = rigth
         ? "flex flex-row-reverse justify-start gap-4 w-full"
@@ -31,7 +34,7 @@ export default function MessageComponent({
                     rigth ? "bg-gray-200" : "bg-blue-50"
                 } p-2 rounded-lg`}
             >
-                {message}
+                <Typewriter words={message} loop={1} typeSpeed={typeSpeed} />
             </div>
         </div>
     );
