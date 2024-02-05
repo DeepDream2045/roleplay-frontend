@@ -151,12 +151,17 @@ async function CharacterPage({
                         {userCharacter?.character_name}
                     </h3>
                     <Link
-                        href={`/profile/${userCharacter?.id}`}
+                        href={
+                            String(userCharacter?.user.id) ===
+                            String(session.user?.id)
+                                ? `/profile`
+                                : `/profile/${userCharacter?.user.id}`
+                        }
                         className="text-blue-500"
                         target="_blank"
                     >
                         <p className="font-medium">
-                            @{userCharacter?.user.full_name}
+                            @{userCharacter?.user.username}
                         </p>
                     </Link>
                 </div>
@@ -184,7 +189,8 @@ async function CharacterPage({
                         })}
                     </div>
                     {(userCharacter?.user === session.user?.id ||
-                        userCharacter?.user.id === session.user?.id) && (
+                        String(userCharacter?.user.id) ===
+                            String(session.user?.id)) && (
                         <CharacterEditDeleteAction
                             characterId={userCharacter!.id}
                             models={formattedModel}

@@ -62,7 +62,9 @@ export default function CharacterCard({
 
                         <div className="flex flex-col gap-1 font-light">
                             <p className="text-sm">
-                                @{profileName || "No Name"}
+                                @
+                                {characterInformation.user.username ||
+                                    "No Name"}
                             </p>
 
                             <div>
