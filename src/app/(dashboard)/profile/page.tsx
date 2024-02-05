@@ -43,7 +43,9 @@ async function ProfilePage() {
                         src={
                             session.user?.profile_image &&
                             session.user.profile_image.length > 0
-                                ? session.user?.profile_image
+                                ? session.user.profile_image.includes("http")
+                                    ? session.user?.profile_image
+                                    : `${MAIN_API_BASE_URL}${session.user.profile_image}`
                                 : "/images/default-image-placeholder.webp"
                         }
                         width={150}
