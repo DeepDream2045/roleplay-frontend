@@ -16,11 +16,11 @@ const ChatList = (props: TChatListProps) => {
     const activeChatRoomId: string | null = (params?.roomId as string) || null;
 
     return (
-        <div className="w-96 border-r min-h-full py-4 sticky top-0">
+        <div className="w-96 border-r min-h-full max-h-full py-4 sticky top-0 flex flex-col">
             <div className="h-16 flex">
                 <h1 className="text-3xl font-semibold px-4">Chats</h1>
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-1 flex-col pt-4 pb-8 pr-3 gap-4 overflow-y-scroll">
                 {/* Chat Component */}
                 {props.rooms.map((item) => {
                     return (

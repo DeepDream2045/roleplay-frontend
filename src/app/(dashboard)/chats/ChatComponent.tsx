@@ -19,7 +19,7 @@ export default function ChatComponent({
 }: ChatComponentProps) {
     return (
         <div
-            className={`px-4 h-18 flex flex-row items-center gap-4 cursor-pointer ${
+            className={`flex flex-row px-4 py-2 rounded-md h-20 items-center gap-4 cursor-pointer ${
                 active ? "bg-slate-200" : "bg-gray-200"
             }`}
             onClick={onClick}

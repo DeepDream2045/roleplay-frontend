@@ -26,7 +26,7 @@ type TMessage = {
 
 const useChat = (
     userId: string | number,
-    characterId: string | number,
+    roomId: string | number,
     historyConversation: TConversation[]
 ) => {
     const [socket, setSocket] = useState<WebSocket>();
@@ -71,7 +71,7 @@ const useChat = (
 
     useEffect(() => {
         const newSocket = new WebSocket(
-            `${WEBSOCKET_API_BASE_URL}/${userId}/${characterId}`
+            `${WEBSOCKET_API_BASE_URL}/${userId}/${roomId}`
         );
 
         setConnectionState("Connecting");
@@ -134,7 +134,7 @@ const useChat = (
             setConnectionState("Connecting");
             // setMessages([]);
         };
-    }, [userId, characterId]);
+    }, [userId, roomId]);
 
     return { socket, messages, waitForCharacterChat, connectionState };
 };

@@ -10,10 +10,9 @@ export const getAuthURL = (): string => {
         ["access_type", "offline"], // This prompts users for consent to the requested scopes and returns a refresh token
         ["response_type", "code"],
         ["prompt", "consent"], // This ensures that the consent screen is displayed to users
-        [
-            "scope",
-            "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
-        ],
+        ["scope", "email profile"],
+        ["state", "some_state"],
+        ["nonce", "some_nonce"],
         // Include any other necessary parameters
     ];
 

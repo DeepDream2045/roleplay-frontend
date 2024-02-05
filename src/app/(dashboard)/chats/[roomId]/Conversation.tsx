@@ -15,7 +15,7 @@ export default function Conversation({
 }) {
     const { socket, messages, waitForCharacterChat, connectionState } = useChat(
         roomData.user.id,
-        roomData.character.id,
+        roomData.room_id,
         roomData.chatroom
     );
 
