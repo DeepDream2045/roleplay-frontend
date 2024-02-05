@@ -74,10 +74,12 @@ const useChat = (
 
         newSocket.onerror = (err) => {
             console.error(err);
+            setSocket(newSocket);
         };
 
         newSocket.onopen = () => {
             console.log("connected");
+            setSocket(newSocket);
         };
 
         newSocket.onmessage = (event) => {
@@ -123,6 +125,7 @@ const useChat = (
 
         return () => {
             newSocket.close();
+            setSocket(undefined);
             // setMessages([]);
         };
     }, [userId, characterId]);

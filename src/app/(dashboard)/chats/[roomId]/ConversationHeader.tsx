@@ -1,6 +1,8 @@
+"use client";
+
 import { MoreHorizontal } from "lucide-react";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 type TConversationHeaderProps = {
     characterName: string;
@@ -9,8 +11,18 @@ type TConversationHeaderProps = {
 };
 
 const ConversationHeader = (props: TConversationHeaderProps) => {
-    console.log({ socket: props.socket, state: props.socket?.readyState });
+    const [message, setMessage] = useState("");
 
+    useEffect(() => {
+        console.log({ socket: props.socket, state: props.socket?.readyState });
+        if (props.socket?.readyState === WebSocket.OPEN) {
+            setMessage("");
+        } else if (props.socket?.readyState === WebSocket.CLOSED) {
+            setMessage("Unexpected Error, please refresh the page");
+        } else {
+            setMessage("Connecting to server...");
+        }
+    }, [props.socket]);
     return (
         <div className="flex flex-row w-full justify-between px-4 py-4 h-16 border-b">
             <div className="flex flex-row items-center gap-4">
@@ -30,13 +42,7 @@ const ConversationHeader = (props: TConversationHeaderProps) => {
                 </div>
             </div>
             <div>
-                <h3>
-                    {props.socket?.readyState === props.socket?.OPEN
-                        ? ""
-                        : props.socket?.readyState === WebSocket.CLOSED
-                        ? "Unexpected Error, please refresh the page"
-                        : "Connecting to server..."}
-                </h3>
+                <h3>{message}</h3>
             </div>
             <div className="flex flex-row items-center">
                 <MoreHorizontal className="w-8 h-8" />
