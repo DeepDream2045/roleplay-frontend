@@ -125,7 +125,10 @@ export async function updateCharacterAction(
         //     form.append("tags", item);
         // });
         if (tags.length > 0) {
-            form.append("tags", JSON.stringify(tags));
+            const formattedTags = tags.map((val) => {
+                return parseInt(val);
+            });
+            form.append("tags", JSON.stringify(formattedTags));
         }
         form.append("model_id", model_id);
         form.append("prompt", prompt);
