@@ -5,7 +5,7 @@ import Category from "../components/dashboard/Category";
 import CharacterCard from "../components/dashboard/CharacterCard";
 import { getPublicCharacterInfoAction } from "@/lib/characterInfoAction";
 import { TRoomInfo, getRoomInfoAction } from "@/lib/chatAction";
-import { getTagInfoListAction } from "@/lib/tagAction";
+import { getPublicTagInfoListAction } from "@/lib/tagAction";
 import { MAIN_API_BASE_URL } from "@/constants/environtment";
 import { Tag } from "@/types/action";
 
@@ -32,7 +32,7 @@ async function Dashboard(props: DashboardProps) {
         rooms = roomData.rooms;
     }
 
-    const tagData = await getTagInfoListAction();
+    const tagData = await getPublicTagInfoListAction();
 
     let tags: Tag[] = [];
     if (!tagData.hasError) {
