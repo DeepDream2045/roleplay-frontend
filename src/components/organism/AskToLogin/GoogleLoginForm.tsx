@@ -10,7 +10,7 @@ function GoogleLoginForm() {
     const router = useRouter();
     return (
         <div>
-            <p className="text-base font-light">Sign in to use DreamTavern!</p>
+            <p className="text-base font-light">Sign in to use!</p>
             <form>
                 <Button
                     variant="custom"
