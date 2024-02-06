@@ -42,6 +42,7 @@ const ChatList = (props: TChatListProps) => {
                             onClick={() => {
                                 router.push(`/chats/${item.room_id}`, {});
                             }}
+                            roomData={item}
                         />
                     );
                 })}
