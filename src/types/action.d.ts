@@ -51,22 +51,25 @@ export type UserId = number;
 export type ModelId = number;
 
 export type createCharacterAPIResponseBody = {
-    id: CharacterInfoId;
-    character_name: string;
-    short_bio: string;
-    character_gender: string;
-    tags: TagId[];
-    prompt: string;
-    character_visibility: string;
-    initial_message: string;
-    image: string | null;
-    NSFW: boolean;
-    lorebook: string;
-    language: string;
-    created_date: string;
-    modified_date: string;
-    model_id: ModelId;
-    user: UserId;
+    message: string;
+    data: {
+        id: CharacterInfoId;
+        character_name: string;
+        short_bio: string;
+        character_gender: string;
+        tags: TagId[];
+        prompt: string;
+        character_visibility: string;
+        initial_message: string;
+        image: string | null;
+        NSFW: boolean;
+        lorebook: string;
+        language: string;
+        created_date: string;
+        modified_date: string;
+        model_id: ModelId;
+        user: UserId;
+    };
 };
 
 // updateCharacterAction

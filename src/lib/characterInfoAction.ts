@@ -84,7 +84,7 @@ export async function createCharacterAction(
         };
     }
     if (data) {
-        return redirect(`${DASHBOARD_BASE_URL}/character/${data.id}`);
+        return redirect(`${DASHBOARD_BASE_URL}/character/${data.data.id}`);
     }
 }
 
