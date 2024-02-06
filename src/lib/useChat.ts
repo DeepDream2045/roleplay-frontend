@@ -32,7 +32,7 @@ const useChat = (
     const [socket, setSocket] = useState<WebSocket>();
     let historyConversationFormatted: TMessage[] = [];
     historyConversation.forEach((val) => {
-        if (val.user_message.length > 0) {
+        if (val.user_message?.length > 0) {
             const newMessageUser: TMessage = {
                 messsage_from: "user",
                 message_id: `user-${val.id}`,
