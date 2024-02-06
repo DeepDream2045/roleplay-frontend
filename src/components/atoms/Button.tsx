@@ -106,7 +106,7 @@ export default function Button({
     return (
         <button
             type={type}
-            className={`${btnSizeClass} ${btnVariantClass} ${className}`}
+            className={`${className} ${btnSizeClass} ${btnVariantClass} `}
             onClick={onClick}
             disabled={disabled || pending}
         >

@@ -312,14 +312,8 @@ export async function getCharacterInfoAction() {
 
 export async function getPublicCharacterInfoAction() {
     try {
-        const session = await getAuthSession();
-
         const req = await fetch(`${MAIN_API_BASE_URL}/public_character_info/`, {
             method: "GET",
-            headers: {
-                Authorization: `Bearer ${session.access}`,
-                "user-refresh-token": session.refresh,
-            } as HeadersInit,
             cache: "no-store",
         });
 
