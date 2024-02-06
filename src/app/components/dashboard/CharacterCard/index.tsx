@@ -39,7 +39,12 @@ export default function CharacterCard({
                         src={imageSrc}
                         width={100}
                         height={100}
-                        alt={`${name} profile picture`}
+                        alt={`${name} character picture`}
+                        quality={100}
+                        priority
+                        objectPosition="center"
+                        objectFit="center"
+                        unoptimized
                         className="w-72 aspect-square rounded-lg object-cover object-center"
                     />
                 </div>
