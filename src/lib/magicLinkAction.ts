@@ -66,6 +66,7 @@ export async function magicLinkVerifyServiceAction(
             user: {
                 id: data.data.id,
                 full_name: data.data.full_name,
+                username: data.data.username,
                 email: data.data.email,
                 profile_image: data.data.profile_image,
                 stay_sign: data.data.stay_sign,
