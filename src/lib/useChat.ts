@@ -32,18 +32,20 @@ const useChat = (
     const [socket, setSocket] = useState<WebSocket>();
     let historyConversationFormatted: TMessage[] = [];
     historyConversation.forEach((val) => {
-        const newMessageUser: TMessage = {
-            messsage_from: "user",
-            message_id: `user-${val.id}`,
-            message: [val.user_message] as string[],
-            sender_profile_pic: null,
-            typeSpeed: 0,
-        };
+        if (val.user_message.length > 0) {
+            const newMessageUser: TMessage = {
+                messsage_from: "user",
+                message_id: `user-${val.id}`,
+                message: [val.user_message] as string[],
+                sender_profile_pic: null,
+                typeSpeed: 0,
+            };
 
-        historyConversationFormatted = [
-            newMessageUser,
-            ...historyConversationFormatted,
-        ];
+            historyConversationFormatted = [
+                newMessageUser,
+                ...historyConversationFormatted,
+            ];
+        }
 
         const newMessageCharacter: TMessage = {
             messsage_from: "character",
