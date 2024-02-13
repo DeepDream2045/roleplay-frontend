@@ -26,8 +26,8 @@ import { WagmiProvider } from "wagmi";
 const { wallets } = getDefaultWallets();
 
 const config = getDefaultConfig({
-    appName: "RainbowKit demo",
-    projectId: "YOUR_PROJECT_ID",
+    appName: "Roleplay Project",
+    projectId: process.env.RAINBOW_KIT_PROJECT_ID || "YOUR_PROJECT_ID",
     wallets: [
         ...wallets,
         {
