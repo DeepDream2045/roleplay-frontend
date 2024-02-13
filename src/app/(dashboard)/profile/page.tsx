@@ -6,6 +6,7 @@ import { getAuthSession } from "@/lib/authSession";
 import { getCharacterInfoAction } from "@/lib/characterInfoAction";
 import { MAIN_API_BASE_URL } from "@/constants/environtment";
 import ProfileEditButton from "./ProfileEditButton";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 async function ProfilePage() {
     const session = await getAuthSession();
@@ -53,14 +54,15 @@ async function ProfilePage() {
                         alt="User profile picture"
                         className="w-44 rounded-2xl aspect-square object-cover object-center"
                         priority
-                        objectFit="cover"
-                        objectPosition="center"
                     />
                 </div>
                 <div className="flex flex-col justify-between">
                     <div className="flex flex-col gap-1">
                         <h1>@{session.user?.username}</h1>
                         <p className="text-base">{`No biography provided. Set one by clicking 'Account'.`}</p>
+                    </div>
+                    <div className="flex flex-row justify-start">
+                        <ConnectButton />
                     </div>
                     <div className="flex flex-row gap-4">
                         <ProfileEditButton profileData={session.user} />

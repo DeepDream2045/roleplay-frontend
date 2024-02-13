@@ -51,8 +51,6 @@ async function ProfilePage({
                         alt="User profile picture"
                         className="w-44 rounded-2xl aspect-square object-cover object-center"
                         priority
-                        objectFit="cover"
-                        objectPosition="center"
                     />
                 </div>
                 <div className="flex flex-col justify-between">

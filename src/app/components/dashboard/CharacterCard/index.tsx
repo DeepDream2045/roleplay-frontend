@@ -42,8 +42,6 @@ export default function CharacterCard({
                         alt={`${name} character picture`}
                         quality={100}
                         priority
-                        objectPosition="center"
-                        objectFit="center"
                         unoptimized
                         className="w-72 aspect-square rounded-lg object-cover object-center"
                     />
