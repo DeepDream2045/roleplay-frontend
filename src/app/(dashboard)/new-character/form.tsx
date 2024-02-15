@@ -11,6 +11,7 @@ import InputToggle from "@/components/atoms/Input/InputToggle";
 import InputSelect from "@/components/atoms/Input/InputSelect";
 import InputRadio from "@/components/atoms/Input/InputRadio";
 import Button from "@/components/atoms/Button";
+import InputAdditionalInfo from "./InputAdditionalInfo";
 
 type NewCharacterFormPropsType = {
     models: TInputOption[];
@@ -173,6 +174,8 @@ Mind: Bulma is a complex character, balancing tomboyish and girly traits alongsi
                         label="Nsfw (Not safe for work)"
                         helperText="If this character is not safe for work, turn this on."
                     />
+
+                    <InputAdditionalInfo />
                 </div>
                 {state.hasError && (
                     <p className="text-red-500 mt-4">Please check the input</p>
