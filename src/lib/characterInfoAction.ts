@@ -270,6 +270,7 @@ export async function getCharacterInfoAction() {
 
         const data: CharacterInfoType[] = await req.json();
         revalidatePath("/character");
+        revalidatePath("/profile");
         return { hasError: false, characters: data };
     } catch (err) {
         let errors = [];

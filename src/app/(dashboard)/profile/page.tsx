@@ -7,6 +7,7 @@ import { getCharacterInfoAction } from "@/lib/characterInfoAction";
 import { MAIN_API_BASE_URL } from "@/constants/environtment";
 import ProfileEditButton from "./ProfileEditButton";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { CharacterInfoType } from "@/types/action";
 
 async function ProfilePage() {
     const session = await getAuthSession();
@@ -34,7 +35,10 @@ async function ProfilePage() {
         );
     }
 
-    const characters = characterData.characters!;
+    let characters: CharacterInfoType[] = [];
+    if (Array.isArray(characterData.characters)) {
+        characters = characterData.characters!;
+    }
 
     return (
         <div className="flex flex-1 flex-col px-10 py-6">
