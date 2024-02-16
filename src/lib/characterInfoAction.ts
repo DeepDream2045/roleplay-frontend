@@ -35,6 +35,7 @@ export async function createCharacterAction(
         const NSFW = payload.get("NSFW") === "on" ? "true" : "false";
         const lorebook = payload.get("lorebook");
         const language = payload.get("language");
+        const character_story = payload.get("character_story");
 
         const form = new FormData();
 
@@ -55,6 +56,7 @@ export async function createCharacterAction(
         form.append("NSFW", NSFW);
         form.append("lorebook", lorebook);
         form.append("language", language);
+        form.append("character_story", character_story);
 
         const session = await getAuthSession();
 
@@ -109,6 +111,7 @@ export async function updateCharacterAction(
         const NSFW = payload.get("NSFW") === "on" ? "true" : "false";
         const lorebook = payload.get("lorebook");
         const language = payload.get("language");
+        const character_story = payload.get("character_story");
 
         const form = new FormData();
 
@@ -137,6 +140,7 @@ export async function updateCharacterAction(
         form.append("NSFW", NSFW);
         form.append("lorebook", lorebook);
         form.append("language", language);
+        form.append("character_story", character_story);
 
         const session = await getAuthSession();
 

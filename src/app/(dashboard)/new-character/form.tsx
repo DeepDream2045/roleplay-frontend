@@ -175,7 +175,11 @@ Mind: Bulma is a complex character, balancing tomboyish and girly traits alongsi
                         helperText="If this character is not safe for work, turn this on."
                     />
 
-                    <InputAdditionalInfo />
+                    <InputAdditionalInfo
+                        label="Character Story"
+                        name="character_story"
+                        errorMsg={state.errorMsg.character_story}
+                    />
                 </div>
                 {state.hasError && (
                     <p className="text-red-500 mt-4">Please check the input</p>

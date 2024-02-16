@@ -12,6 +12,7 @@ import { X } from "lucide-react";
 import React, { useState } from "react";
 import { useFormState } from "react-dom";
 import Button from "@/components/atoms/Button";
+import InputAdditionalInfo from "../../new-character/InputAdditionalInfo";
 
 type Props = {
     onClose: () => void;
@@ -228,6 +229,11 @@ Mind: Bulma is a complex character, balancing tomboyish and girly traits alongsi
                                     name="NSFW"
                                     label="Nsfw (Not safe for work)"
                                     helperText="If this character is not safe for work, turn this on."
+                                />
+                                <InputAdditionalInfo
+                                    label="Character Story"
+                                    name="character_story"
+                                    errorMsg={state.errorMsg.character_story}
                                 />
                             </div>
                             {state.hasError && (

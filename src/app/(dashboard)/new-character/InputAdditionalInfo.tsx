@@ -1,6 +1,16 @@
+import InputErrorMessage from "@/components/atoms/Input/InputErrorMessage";
 import React, { useState, useRef } from "react";
 
-const InputAdditionalInfo: React.FC = () => {
+export type InputAdditionalInfoProps = {
+    label?: string;
+    name: string;
+    errorMsg?: string[];
+};
+const InputAdditionalInfo = ({
+    label,
+    name,
+    errorMsg,
+}: InputAdditionalInfoProps) => {
     const [text, setText] = useState("");
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -38,7 +48,9 @@ const InputAdditionalInfo: React.FC = () => {
     return (
         <div>
             <div className="flex justify-between items-center mb-4">
-                <span className="text-gray-700">Additional Info</span>
+                <span className="text-gray-700">
+                    {label || "Additional Info"}
+                </span>
                 <span
                     className="cursor-pointer text-blue-600 hover:text-blue-800"
                     onClick={handleFileUploadClick}
@@ -57,12 +69,13 @@ const InputAdditionalInfo: React.FC = () => {
             <div>
                 <textarea
                     className="w-full h-64 p-2 border border-gray-300"
-                    name="character_story"
+                    name={name}
                     value={text}
                     onChange={(e) => setText(e.target.value)}
                     placeholder="The text from uploaded files will appear here..."
                 ></textarea>
             </div>
+            {errorMsg && <InputErrorMessage message={errorMsg} />}
         </div>
     );
 };

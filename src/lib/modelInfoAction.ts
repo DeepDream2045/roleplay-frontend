@@ -119,6 +119,7 @@ export async function getModelInfoListAction(): Promise<TGetModelInfoListActionR
         return { hasError: false, models: data as ModelInfoType[] };
     } catch (err: Response | any) {
         let errors = [];
+        console.log({ err });
         if (err instanceof Response) {
             console.log(err.status);
             if (err.status === 401) {
@@ -126,6 +127,9 @@ export async function getModelInfoListAction(): Promise<TGetModelInfoListActionR
             } else if (err.status === 400) {
                 const errorResponse = await err.json();
                 errors = errorResponse.map((val: any) => val);
+            } else if (err.status === 403) {
+                const errorResponse = await err.json();
+                errors = ["Internal Server Error", errorResponse.detail];
             } else {
                 const errorResponse = await err.json();
                 errors = errorResponse.messages.map((val: any) => val.message);

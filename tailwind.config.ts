@@ -33,6 +33,9 @@ const config: Config = {
       width: {
         vw: "100vw",
       },
+      transitionDuration: {
+        3000: "3000ms",
+      },
       colors: {
         "neon-carrot": {
           "50": "#fff8ed",

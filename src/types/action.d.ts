@@ -43,6 +43,7 @@ export type TCreateCharacterActionPayload = {
     get(key: "NSFW"): "on" | "off";
     get(key: "lorebook"): string;
     get(key: "language"): string;
+    get(key: "character_story"): string;
 };
 
 export type CharacterInfoId = number;
@@ -69,6 +70,7 @@ export type createCharacterAPIResponseBody = {
         modified_date: string;
         model_id: ModelId;
         user: UserId;
+        character_story: string;
     };
 };
 
@@ -93,6 +95,7 @@ export type TUpdateCharacterActionPayload = {
     get(key: "NSFW"): "on" | "off";
     get(key: "lorebook"): string;
     get(key: "language"): string;
+    get(key: "character_story"): string;
 };
 
 // deleteCharacterAction
@@ -139,6 +142,7 @@ export type CharacterInfoType = {
     NSFW: boolean;
     lorebook: string | null;
     language: string | null;
+    character_story: string | null;
     created_date: string;
     modified_date: string;
 };
