@@ -233,6 +233,7 @@ Mind: Bulma is a complex character, balancing tomboyish and girly traits alongsi
                                 <InputAdditionalInfo
                                     label="Character Story"
                                     name="character_story"
+                                    defaultValue={characterData.character_story}
                                     errorMsg={state.errorMsg.character_story}
                                 />
                             </div>

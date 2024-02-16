@@ -5,13 +5,15 @@ export type InputAdditionalInfoProps = {
     label?: string;
     name: string;
     errorMsg?: string[];
+    defaultValue?: string | null;
 };
 const InputAdditionalInfo = ({
     label,
     name,
     errorMsg,
+    defaultValue,
 }: InputAdditionalInfoProps) => {
-    const [text, setText] = useState("");
+    const [text, setText] = useState(defaultValue || "");
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleFileUploadClick = () => {
@@ -35,7 +37,7 @@ const InputAdditionalInfo = ({
                     : "";
                 setText(
                     (currentText) =>
-                        currentText + (currentText ? "\n" : "") + newText
+                        `${currentText}${currentText ? "\n" : ""}${newText}`
                 );
             };
             reader.readAsText(file);
