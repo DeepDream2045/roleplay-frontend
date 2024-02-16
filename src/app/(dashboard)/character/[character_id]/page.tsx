@@ -121,11 +121,6 @@ async function CharacterPage({
 
     const userCharacter = characterShouldAuthInfo || characterInfo;
 
-    console.log({
-        userCharacter: userCharacter?.character_story,
-        changed: userCharacter?.character_story?.replace(/\\n/g, "<br />"),
-    });
-
     return (
         <div className="flex flex-col pt-5 flex-1 items-center min-h-dvh min-w-full max-h-dvh max-w-full">
             <div className="flex flex-1 max-h-full overflow-y-scroll max-w-full min-w-full flex-col items-center gap-8 pb-20">
@@ -231,7 +226,7 @@ async function CharacterPage({
                             dangerouslySetInnerHTML={{
                                 __html: userCharacter?.prompt
                                     ? userCharacter.prompt.replace(
-                                          /\\n/g,
+                                          /\n/g,
                                           "<br />"
                                       )
                                     : "",
@@ -247,7 +242,7 @@ async function CharacterPage({
                             dangerouslySetInnerHTML={{
                                 __html: userCharacter?.character_story
                                     ? userCharacter.character_story.replace(
-                                          /\\n/g,
+                                          /\n/g,
                                           "<br />"
                                       )
                                     : "",
