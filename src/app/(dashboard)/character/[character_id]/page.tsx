@@ -43,7 +43,7 @@ async function CharacterPage({
             );
         }
 
-        if (characterData.characters) {
+        if (Array.isArray(characterData.characters)) {
             characterShouldAuth = characterData.characters;
         }
 
