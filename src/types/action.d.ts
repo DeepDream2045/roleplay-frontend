@@ -1,3 +1,5 @@
+import { TRoomInfo } from "@/lib/chatAction";
+
 // Auth Session
 export type RefreshSession = string | undefined;
 
@@ -16,6 +18,13 @@ export type AuthSession = {
     user?: UserSession;
     refresh?: RefreshSession;
     access?: AccessSession;
+};
+
+export type AuthGuestSession = {
+    user?: UserSession;
+    refresh?: RefreshSession;
+    access?: AccessSession;
+    chatRooms?: TRoomInfo[];
 };
 
 export type ErrorMessage = {
