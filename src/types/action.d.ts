@@ -24,7 +24,6 @@ export type AuthGuestSession = {
     user?: UserSession;
     refresh?: RefreshSession;
     access?: AccessSession;
-    chatRooms?: TRoomInfo[];
 };
 
 export type ErrorMessage = {

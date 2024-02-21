@@ -251,10 +251,7 @@ async function CharacterPage({
                     </div>
                 </div>
             </div>
-            {session?.access && (
-                <CreateChatRoomForm character_id={character_id} />
-            )}
-            {!session?.access && <AskToLoginCreateChat />}
+            <CreateChatRoomForm character_id={character_id} />
         </div>
     );
 }

@@ -4,7 +4,6 @@ import React from "react";
 import ChatComponent from "./ChatComponent";
 import { useParams, useRouter } from "next/navigation";
 import { TRoomInfo } from "@/lib/chatAction";
-import { MAIN_API_BASE_URL } from "@/constants/environtment";
 
 type TChatListProps = {
     rooms: TRoomInfo[];

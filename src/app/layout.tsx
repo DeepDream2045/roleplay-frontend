@@ -3,8 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
 import Providers from "./providers";
-import { getAuthSession } from "@/lib/authSession";
-import { createGuestUser, getAuthGuestSession } from "@/lib/authGuestSession";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,12 +16,6 @@ export default async function RootLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const session = await getAuthSession();
-    const guestSession = await getAuthGuestSession();
-    if (!session.access && !guestSession?.user?.id) {
-        await createGuestUser();
-    }
-
     return (
         <html lang="en">
             <body className={`${inter.className} max-w-vw`}>

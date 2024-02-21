@@ -11,7 +11,11 @@ export async function commonErrorHandler(
             errors = ["Your session has expired", "Please login again"];
         } else if (err.status === 400) {
             const errorResponse = await err.json();
-            errors = errorResponse.map((val: any) => val);
+            if ("error" in errorResponse) {
+                errors = errorResponse.error.map((val: any) => val);
+            } else {
+                errors = errorResponse.map((val: any) => val);
+            }
         } else {
             const errorResponse = await err.json();
             console.log(errorResponse);

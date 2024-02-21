@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 import { getIronSession } from "iron-session";
 import { AuthGuestSession } from "../types/action";
 import { MAIN_API_BASE_URL } from "@/constants/environtment";
+import { revalidatePath } from "next/cache";
 
 export async function getAuthGuestSession() {
     const session = await getIronSession<AuthGuestSession>(cookies(), {
@@ -26,7 +27,6 @@ export async function updateAuthGuestSession(
     session.user = authGuestSession.user;
     session.refresh = authGuestSession.refresh;
     session.access = authGuestSession.access;
-    session.chatRooms = authGuestSession.chatRooms;
 
     await session.save();
 }
@@ -49,6 +49,9 @@ export async function createGuestUser() {
         const req = await fetch(`${MAIN_API_BASE_URL}/create_guest_user/`, {
             method: "POST",
             cache: "no-store",
+            headers: {
+                "Content-Type": "application/json",
+            },
             body: JSON.stringify({
                 username: username,
                 email: email,
@@ -56,9 +59,7 @@ export async function createGuestUser() {
         });
 
         if (!req.ok) {
-            throw new Error(
-                "Something went wrong while creating the guest user."
-            );
+            throw await req.json();
         }
 
         type CreateGuestUserResponse = {
@@ -68,6 +69,7 @@ export async function createGuestUser() {
             username: string;
             email: string;
         };
+
         const data: CreateGuestUserResponse = await req.json();
 
         const newSession: AuthGuestSession = {
@@ -79,12 +81,14 @@ export async function createGuestUser() {
             },
             refresh: undefined,
             access: undefined,
-            chatRooms: [],
         };
 
         await updateAuthGuestSession(newSession);
+        revalidatePath("/");
         return true;
     } catch (err) {
+        console.log({ err });
+
         return err;
     }
 }
