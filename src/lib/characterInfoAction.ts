@@ -341,6 +341,11 @@ export async function getPublicCharacterInfoAction() {
             } else if (err.status === 400) {
                 const errorResponse = await err.json();
                 errors = errorResponse.map((val: any) => val);
+            } else if (err.status === 502) {
+                errors = [
+                    "Internal Server Error",
+                    "Please contact our admin for this issue",
+                ];
             } else {
                 const errorResponse = await err.json();
                 errors = errorResponse.messages.map((val: any) => val.message);
