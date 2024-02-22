@@ -21,7 +21,7 @@ export default function Conversation(props: {
         useChat();
 
     useEffect(() => {
-        if (!roomData) {
+        if (props.isGuest) {
             const rooms: TRoomInfo[] = JSON.parse(
                 localStorage.getItem(GUEST_CHAT_ROOM_DATA_LOCAL_STORAGE_KEY)!
             );
@@ -36,8 +36,15 @@ export default function Conversation(props: {
             }
 
             setRoomData(activeRoomData);
+
+            setData({
+                userId: activeRoomData.user.id,
+                roomId: activeRoomData.room_id,
+                historyConversation: activeRoomData.chatroom,
+                isGuest: props.isGuest,
+            });
         } else {
-            if (!("hasError" in roomData) && !socket) {
+            if (roomData && !("hasError" in roomData)) {
                 setData({
                     userId: roomData.user.id,
                     roomId: roomData.room_id,
@@ -46,7 +53,8 @@ export default function Conversation(props: {
                 });
             }
         }
-    }, [roomData, setData, props.roomId, socket]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.isGuest, props.roomId]);
 
     if (!roomData) {
         return;
