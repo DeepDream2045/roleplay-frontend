@@ -49,7 +49,7 @@ const useChat = () => {
         setConnectionState("Connecting");
 
         newSocket.onerror = (err) => {
-            console.error(err);
+            console.error("Error on socket", err);
             setConnectionState("Error");
         };
 
