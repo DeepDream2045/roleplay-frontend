@@ -76,8 +76,14 @@ async function ProfilePage({
                                         : "/images/default-image-placeholder.webp"
                                 }
                                 profileImageSrc={
-                                    `${MAIN_API_BASE_URL}${val.user.profile_image}` ||
-                                    "/images/default-image-placeholder.webp"
+                                    val?.user?.profile_image &&
+                                    val.user.profile_image.length > 0
+                                        ? val.user.profile_image.includes(
+                                              "http"
+                                          )
+                                            ? val.user.profile_image
+                                            : `${MAIN_API_BASE_URL}${val.user.profile_image}`
+                                        : "/images/default-image-placeholder.webp"
                                 }
                                 name={val.character_name}
                                 profileName={val.user.full_name}
