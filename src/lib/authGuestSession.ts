@@ -79,16 +79,14 @@ export async function createGuestUser() {
                 username: data.username,
                 email: data.email,
             },
-            refresh: undefined,
-            access: undefined,
         };
 
         await updateAuthGuestSession(newSession);
         revalidatePath("/");
-        return true;
+        return { hasError: false, data: newSession };
     } catch (err) {
         console.log({ err });
 
-        return err;
+        return { hasError: true, error: err };
     }
 }

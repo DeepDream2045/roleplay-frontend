@@ -1,18 +1,32 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import ChatComponent from "./ChatComponent";
 import { useParams, useRouter } from "next/navigation";
 import { TRoomInfo } from "@/lib/chatAction";
+import { MAIN_API_BASE_URL } from "@/constants/environtment";
+import { GUEST_CHAT_ROOM_DATA_LOCAL_STORAGE_KEY } from "@/constants/constants";
 
 type TChatListProps = {
     rooms: TRoomInfo[];
+    isGuest: boolean;
 };
 
 const ChatList = (props: TChatListProps) => {
     const params = useParams();
     const router = useRouter();
+
     const activeChatRoomId: string | null = (params?.roomId as string) || null;
+
+    const [rooms, setRooms] = React.useState(props.rooms);
+
+    useEffect(() => {
+        const rooms = JSON.parse(
+            localStorage.getItem(GUEST_CHAT_ROOM_DATA_LOCAL_STORAGE_KEY)!
+        );
+
+        setRooms(rooms);
+    }, []);
 
     return (
         <div className="w-96 border-r min-h-full max-h-full py-4 sticky top-0 flex flex-col">
@@ -21,14 +35,18 @@ const ChatList = (props: TChatListProps) => {
             </div>
             <div className="flex flex-1 flex-col pt-4 pb-8 pr-3 gap-4 overflow-y-scroll">
                 {/* Chat Component */}
-                {props.rooms.map((item) => {
+                {rooms.map((item) => {
                     return (
                         <ChatComponent
                             key={item.room_id}
                             name={item.group_name}
                             imageSrc={
                                 item.character.image
-                                    ? `${item.character.image}`
+                                    ? `${
+                                          item.character.image.includes("http")
+                                              ? item.character.image
+                                              : `${MAIN_API_BASE_URL}${item.character.image}`
+                                      }`
                                     : "/images/default-image-placeholder.webp"
                             }
                             message={
@@ -42,6 +60,7 @@ const ChatList = (props: TChatListProps) => {
                                 router.push(`/chats/${item.room_id}`, {});
                             }}
                             roomData={item}
+                            isGuest={props.isGuest}
                         />
                     );
                 })}

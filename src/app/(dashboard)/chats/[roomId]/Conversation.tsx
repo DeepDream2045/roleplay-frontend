@@ -5,25 +5,67 @@ import useChat from "@/lib/useChat";
 import ChatMessageBar from "./ChatMessageBar";
 import ConversationHeader from "./ConversationHeader";
 import { TRoomInfo } from "@/lib/chatAction";
+import { useEffect, useState } from "react";
+import { GUEST_CHAT_ROOM_DATA_LOCAL_STORAGE_KEY } from "@/constants/constants";
 
-export default function Conversation({
-    roomData,
-    conversations,
-}: {
-    roomData: TRoomInfo;
+export default function Conversation(props: {
+    roomData?: TRoomInfo;
     conversations?: any;
+    roomId?: string;
+    isGuest: boolean;
 }) {
-    const { socket, messages, waitForCharacterChat, connectionState } = useChat(
-        roomData.user.id,
-        roomData.room_id,
-        roomData.chatroom
-    );
+    const [roomData, setRoomData] = useState<
+        TRoomInfo | undefined | { hasError: boolean }
+    >(props.roomData);
+    const { socket, messages, waitForCharacterChat, connectionState, setData } =
+        useChat();
+
+    useEffect(() => {
+        if (!roomData) {
+            const rooms: TRoomInfo[] = JSON.parse(
+                localStorage.getItem(GUEST_CHAT_ROOM_DATA_LOCAL_STORAGE_KEY)!
+            );
+
+            const activeRoomData = rooms.find(
+                (item) => item.room_id === props.roomId
+            );
+
+            if (!activeRoomData) {
+                setRoomData({ hasError: true });
+                return;
+            }
+
+            setRoomData(activeRoomData);
+        } else {
+            if (!("hasError" in roomData) && !socket) {
+                setData({
+                    userId: roomData.user.id,
+                    roomId: roomData.room_id,
+                    historyConversation: roomData.chatroom,
+                    isGuest: props.isGuest,
+                });
+            }
+        }
+    }, [roomData, setData, props.roomId, socket]);
+
+    if (!roomData) {
+        return;
+    }
+
+    if ("hasError" in roomData) {
+        return (
+            <>
+                <h1>Invalid Chat</h1>
+                <p>Conversation is not found</p>
+            </>
+        );
+    }
 
     return (
         <>
             <ConversationHeader
                 characterName={roomData.group_name}
-                characterImage={roomData.character.image}
+                characterImage={roomData?.character?.image}
                 socket={socket}
                 connectionState={connectionState}
             />
@@ -32,8 +74,8 @@ export default function Conversation({
                     const image =
                         item.messsage_from === "user"
                             ? ""
-                            : roomData.character.image
-                            ? `${roomData.character.image}`
+                            : roomData?.character?.image
+                            ? `${roomData?.character?.image}`
                             : "/images/default-image-placeholder.webp";
                     return (
                         <MessageComponent

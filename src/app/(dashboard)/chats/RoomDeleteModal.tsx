@@ -2,27 +2,61 @@
 
 import ModalWrapper from "@/app/components/ModalWrapper";
 import Button from "@/components/atoms/Button";
-import { deleteCharacterAction } from "@/lib/characterInfoAction";
+import { GUEST_CHAT_ROOM_DATA_LOCAL_STORAGE_KEY } from "@/constants/constants";
 import { TRoomInfo, deleteRoomAction } from "@/lib/chatAction";
+import { redirectToChatPath } from "@/lib/redirectToPath";
 import { X } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormState } from "react-dom";
 
 type Props = {
     onClose: () => void;
     roomData: TRoomInfo;
+    isGuest: boolean;
 };
 
-const RoomDeleteModal = ({ onClose, roomData }: Props) => {
+const RoomDeleteModal = ({ onClose, roomData, isGuest }: Props) => {
     const deleteRoomActionWithId = deleteRoomAction.bind(
         null,
         String(roomData.room_id)
     );
 
-    const [state, formAction] = useFormState<any, any>(deleteRoomActionWithId, {
-        hasError: false,
-        errorMsg: {},
-    });
+    const [state, formAction] = useFormState<any, any>(
+        deleteRoomActionWithId,
+        null
+    );
+
+    useEffect(() => {
+        async function handleDelete() {
+            // Get all room chat from local storage
+            const roomChats: TRoomInfo[] = JSON.parse(
+                localStorage.getItem(GUEST_CHAT_ROOM_DATA_LOCAL_STORAGE_KEY)!
+            );
+
+            // Find the room chat in local storage
+            const activeRoomChatIndex = roomChats.find(
+                (room) => room.room_id === roomData.room_id
+            );
+
+            if (!activeRoomChatIndex) return;
+
+            // remove the room chat from local storage
+            const newRoomChats = roomChats.filter(
+                (room) => room.room_id !== roomData.room_id
+            );
+
+            localStorage.setItem(
+                GUEST_CHAT_ROOM_DATA_LOCAL_STORAGE_KEY,
+                JSON.stringify(newRoomChats)
+            );
+            await redirectToChatPath();
+            onClose();
+        }
+        if (state && "hasError" in state && !state.hasError && isGuest) {
+            handleDelete();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [state, isGuest, roomData.room_id]);
 
     return (
         <ModalWrapper>

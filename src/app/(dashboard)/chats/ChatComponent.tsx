@@ -14,6 +14,7 @@ interface ChatComponentProps {
     active?: boolean;
     onClick?: () => void;
     roomData: TRoomInfo;
+    isGuest: boolean;
 }
 
 export default function ChatComponent({
@@ -24,6 +25,7 @@ export default function ChatComponent({
     active = false,
     onClick = () => {},
     roomData,
+    isGuest,
 }: ChatComponentProps) {
     const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
 
@@ -57,10 +59,10 @@ export default function ChatComponent({
                     </div>
                 </div>
             </div>
-            <div 
-                className="flex w-16 h-full flex-col gap-1 bg-red-600 items-center justify-center rounded-md cursor-pointer" 
+            <div
+                className="flex w-16 h-full flex-col gap-1 bg-red-600 items-center justify-center rounded-md cursor-pointer"
                 onClick={() => {
-                    setShowDeleteModal(true)
+                    setShowDeleteModal(true);
                 }}
             >
                 <Trash2 className="w-6 h-6 text-white" />
@@ -72,6 +74,7 @@ export default function ChatComponent({
                         setShowDeleteModal(false);
                     }}
                     roomData={roomData}
+                    isGuest={isGuest}
                 />
             )}
         </div>

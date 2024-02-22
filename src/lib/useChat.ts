@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { TConversation } from "./chatAction";
+import { TConversation, TRoomInfo } from "./chatAction";
+import { GUEST_CHAT_ROOM_DATA_LOCAL_STORAGE_KEY } from "@/constants/constants";
 
 const WEBSOCKET_API_BASE_URL = process.env.NEXT_PUBLIC_WEBSOCKET_API_BASE_URL;
 type TMessageResponse = {
@@ -24,46 +25,13 @@ type TMessage = {
     typeSpeed: number;
 };
 
-const useChat = (
-    userId: string | number,
-    roomId: string | number,
-    historyConversation: TConversation[]
-) => {
+const useChat = () => {
     const [socket, setSocket] = useState<WebSocket>();
-    let historyConversationFormatted: TMessage[] = [];
-    historyConversation.forEach((val) => {
-        if (val.user_message?.length > 0) {
-            const newMessageUser: TMessage = {
-                messsage_from: "user",
-                message_id: `user-${val.id}`,
-                message: [val.user_message] as string[],
-                sender_profile_pic: null,
-                typeSpeed: 0,
-            };
+    const [userId, setUserId] = useState<number | string>();
+    const [roomId, setRoomId] = useState<number | string>();
+    const [isGuest, setIsGuest] = useState<boolean>();
 
-            historyConversationFormatted = [
-                newMessageUser,
-                ...historyConversationFormatted,
-            ];
-        }
-
-        const newMessageCharacter: TMessage = {
-            messsage_from: "character",
-            message_id: `character-${val.id}`,
-            message: [val.character_message] as string[],
-            sender_profile_pic: null,
-            typeSpeed: 0,
-        };
-
-        historyConversationFormatted = [
-            newMessageCharacter,
-            ...historyConversationFormatted,
-        ];
-    });
-
-    const [messages, setMessages] = useState<TMessage[]>(
-        historyConversationFormatted
-    );
+    const [messages, setMessages] = useState<TMessage[]>([]);
 
     const [waitForCharacterChat, setWaitForCharacterChat] = useState(false);
 
@@ -72,6 +40,8 @@ const useChat = (
     >("Connecting");
 
     useEffect(() => {
+        if (!userId || !roomId) return;
+
         const newSocket = new WebSocket(
             `${WEBSOCKET_API_BASE_URL}/${userId}/${roomId}`
         );
@@ -101,6 +71,40 @@ const useChat = (
 
             setMessages((prev) => [newMessage, ...prev]);
             setWaitForCharacterChat(false);
+
+            if (isGuest) {
+                // Get all room chat from local storage
+                const roomChats: TRoomInfo[] = JSON.parse(
+                    localStorage.getItem(
+                        GUEST_CHAT_ROOM_DATA_LOCAL_STORAGE_KEY
+                    )!
+                );
+
+                // Find the room chat in local storage
+                const activeRoomChat = roomChats.find(
+                    (room) => room.room_id === roomId
+                );
+
+                if (!activeRoomChat) return;
+                // Push new message to room chat's chatroom
+                const newChatRoom: TConversation = {
+                    character_message: response.character_message,
+                    chat: 6,
+                    created_date: new Date().toISOString(),
+                    is_edited: false,
+                    modified_date: new Date().toISOString(),
+                    user_message: response.sender_user_message,
+                    id: parseInt(response.message_id),
+                };
+                activeRoomChat.chatroom.push(newChatRoom);
+
+                // Update the room chat in local storage
+
+                localStorage.setItem(
+                    GUEST_CHAT_ROOM_DATA_LOCAL_STORAGE_KEY,
+                    JSON.stringify(roomChats)
+                );
+            }
         };
 
         newSocket.onclose = () => {
@@ -138,7 +142,52 @@ const useChat = (
         };
     }, [userId, roomId]);
 
-    return { socket, messages, waitForCharacterChat, connectionState };
+    const setData = (roomInfo: {
+        userId: string | number;
+        roomId: string | number;
+        historyConversation: TConversation[];
+        isGuest: boolean;
+    }) => {
+        setUserId(roomInfo.userId);
+        setRoomId(roomInfo.roomId);
+        setIsGuest(roomInfo.isGuest);
+
+        let historyConversationFormatted: TMessage[] = [];
+
+        roomInfo.historyConversation.forEach((val) => {
+            if (val.user_message?.length > 0) {
+                const newMessageUser: TMessage = {
+                    messsage_from: "user",
+                    message_id: `user-${val.id}`,
+                    message: [val.user_message] as string[],
+                    sender_profile_pic: null,
+                    typeSpeed: 0,
+                };
+
+                historyConversationFormatted = [
+                    newMessageUser,
+                    ...historyConversationFormatted,
+                ];
+            }
+
+            const newMessageCharacter: TMessage = {
+                messsage_from: "character",
+                message_id: `character-${val.id}`,
+                message: [val.character_message] as string[],
+                sender_profile_pic: null,
+                typeSpeed: 0,
+            };
+
+            historyConversationFormatted = [
+                newMessageCharacter,
+                ...historyConversationFormatted,
+            ];
+        });
+
+        setMessages(historyConversationFormatted);
+    };
+
+    return { socket, messages, waitForCharacterChat, connectionState, setData };
 };
 
 export default useChat;

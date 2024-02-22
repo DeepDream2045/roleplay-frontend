@@ -1,7 +1,10 @@
 "use client";
+
 import Button from "@/components/atoms/Button";
+import { GUEST_CHAT_ROOM_DATA_LOCAL_STORAGE_KEY } from "@/constants/constants";
 import { createRoomInfoAction } from "@/lib/chatAction";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
 import { useFormState } from "react-dom";
 
 type TCreateChatRoomFormProps = {
@@ -9,10 +12,36 @@ type TCreateChatRoomFormProps = {
 };
 
 function CreateChatRoomForm({ character_id }: TCreateChatRoomFormProps) {
+    const router = useRouter();
     const bindCharacterId = createRoomInfoAction.bind(null, character_id);
 
     const [state, formAction] = useFormState(bindCharacterId, null);
 
+    useEffect(() => {
+        if (!state?.hasError && state?.data) {
+            const chatRooms = JSON.parse(
+                localStorage.getItem(GUEST_CHAT_ROOM_DATA_LOCAL_STORAGE_KEY)!
+            );
+
+            const data = state.data;
+
+            chatRooms.push({
+                user: data!.user,
+                character: data!.character,
+                room_id: data!.room_id,
+                group_name: data!.group_name,
+                type: data!.type,
+                chatroom: [],
+            });
+
+            localStorage.setItem(
+                GUEST_CHAT_ROOM_DATA_LOCAL_STORAGE_KEY,
+                JSON.stringify(chatRooms)
+            );
+
+            router.push(`/chats/${data.room_id}`);
+        }
+    }, [state, character_id]);
     return (
         <form
             className="flex flex-row w-full left-0 items-center justify-center ml-[-1.75rem]"

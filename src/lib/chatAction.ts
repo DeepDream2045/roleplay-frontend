@@ -219,10 +219,11 @@ export async function createRoomInfoAction(
     payload: any
 ) {
     let data: createRoomResponse | undefined;
-    try {
-        const session = await getAuthSession();
+    const session = await getAuthSession();
 
-        if (session?.access) {
+    // login user
+    if (session?.access) {
+        try {
             const body = {
                 character: parseInt(character_id),
             };
@@ -243,69 +244,60 @@ export async function createRoomInfoAction(
             }
 
             data = (await req.json()).data;
-        } else {
-            const guestSession = await getAuthGuestSession();
+        } catch (err) {
+            console.log(err);
+            let errors: any[] = [];
 
-            const body = {
-                character: parseInt(character_id),
-                user_id: guestSession.user?.id,
-            };
-
-            const req = await fetch(
-                `${MAIN_API_BASE_URL}/guest_create_room_info/`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    } as HeadersInit,
-                    body: JSON.stringify(body),
-                    cache: "no-store",
-                }
+            const commonErr = await commonErrorHandler(
+                err as Response | TypeError
             );
-
-            if (!req.ok) {
-                throw req;
+            if (!!commonErr) {
+                errors = commonErr;
+            } else {
+                errors = [
+                    "Internal Server Error",
+                    "Please contact our admin for this issue",
+                ];
             }
 
-            data = (await req.json()).data;
+            return {
+                hasError: true,
+                errorMsg: errors,
+            };
+        }
+    } else {
+        const guestSession = await getAuthGuestSession();
 
-            const chatRooms = JSON.parse(
-                localStorage.getItem("guest_chatRooms") || "[]"
-            );
+        const body = {
+            character: parseInt(character_id),
+            user_id: guestSession.user?.id,
+        };
 
-            chatRooms.push({
-                user: data!.user,
-                character: data!.character,
-                room_id: data!.room_id,
-                group_name: data!.group_name,
-                type: data!.type,
-                chatroom: [],
-            });
+        const req = await fetch(
+            `${MAIN_API_BASE_URL}/guest_create_room_info/`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                } as HeadersInit,
+                body: JSON.stringify(body),
+                cache: "no-store",
+            }
+        );
 
-            localStorage.setItem("guest_chatRooms", JSON.stringify(chatRooms));
+        if (!req.ok) {
+            throw req;
         }
 
-        revalidatePath("/chats");
-    } catch (err) {
-        console.log(err);
-        let errors: any[] = [];
-
-        const commonErr = await commonErrorHandler(err as Response | TypeError);
-        if (!!commonErr) {
-            errors = commonErr;
-        } else {
-            errors = [
-                "Internal Server Error",
-                "Please contact our admin for this issue",
-            ];
-        }
+        data = (await req.json()).data;
 
         return {
-            hasError: true,
-            errorMsg: errors,
+            hasError: false,
+            data: data,
         };
     }
 
+    revalidatePath("/chats");
     if (data) {
         return redirect(
             `${DASHBOARD_BASE_URL}/chats/${data.room_id}`,
@@ -323,6 +315,11 @@ export async function deleteRoomAction(
     try {
         const session = await getAuthSession();
 
+        if (!session?.access) {
+            return {
+                hasError: false,
+            };
+        }
         const form = new FormData();
         form.append("room_id", room_id);
 
