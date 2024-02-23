@@ -4,6 +4,7 @@ import { CharacterInfoType } from "@/types/action";
 import { timeAgo } from "@/util/dateUtil";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
 interface CharacterCardProps {
     id: string;
@@ -23,9 +24,37 @@ export default function CharacterCard({
     characterInformation,
 }: CharacterCardProps) {
     const router = useRouter();
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [hoverOnLeft, setHoverOnLeft] = useState(false);
+    useEffect(() => {
+        function updatePosition() {
+            if (!containerRef.current) return;
+
+            const cardRect = containerRef.current.getBoundingClientRect();
+            const windowWidth = window.innerWidth;
+
+            const sidebar = document.getElementById("sidebar");
+
+            const sidebarRect = sidebar!.getBoundingClientRect();
+
+            const isHoverOnLeft =
+                cardRect.right + cardRect.width >= windowWidth &&
+                cardRect.left >= sidebarRect.width + cardRect.width * 0.5;
+            if (isHoverOnLeft) {
+                setHoverOnLeft(true);
+            }
+        }
+
+        updatePosition(); // Call initially on render
+        window.addEventListener("resize", updatePosition);
+
+        // Cleanup function for the event listener
+        return () => window.removeEventListener("resize", updatePosition);
+    }, []);
 
     return (
         <div
+            ref={containerRef}
             className="w-72 p-4 flex flex-col cursor-pointer relative group"
             onClick={(e) => {
                 e.preventDefault();
@@ -82,7 +111,11 @@ export default function CharacterCard({
                 </div>
             </div>
             {/* Character Detail Information show on hover */}
-            <div className="absolute hidden group-hover:flex flex-col bg-white shadow-lg rounded-md border border-gray-200 z-10 left-full top-4 min-w-[18rem] p-4">
+            <div
+                className={`absolute hidden group-hover:flex flex-col bg-white shadow-lg rounded-md border border-gray-200 z-50 ${
+                    hoverOnLeft ? "right-full" : "left-full"
+                } top-4 min-w-[18rem] p-4`}
+            >
                 <div className="overflow-hidden flex flex-col gap-1">
                     <h3>{characterInformation.character_name}</h3>
                     <h4>Creator</h4>

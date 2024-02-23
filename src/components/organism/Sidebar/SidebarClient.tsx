@@ -40,6 +40,7 @@ export default function SidebarClient({ isLogin }: SidebarClientProps) {
     );
     return (
         <aside
+            id="sidebar"
             className={`flex flex-col h-screen sticky top-0 ${sidebarSize} py-4 border-r`}
         >
             {sidebarHeader}
