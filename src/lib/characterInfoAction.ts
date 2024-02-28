@@ -43,12 +43,11 @@ export async function createCharacterAction(
         form.append("character_name", character_name);
         form.append("short_bio", short_bio);
         form.append("character_gender", character_gender);
-        // tags.forEach((item) => {
-        //     form.append("tags", item);
-        // });
+
         if (tags.length > 0) {
             form.append("tags", JSON.stringify(tags));
         }
+
         form.append("model_id", model_id);
         form.append("prompt", prompt);
         form.append("character_visibility", character_visibility);
@@ -74,7 +73,6 @@ export async function createCharacterAction(
             throw req;
         }
 
-        console.log({ req });
         data = await req.json();
     } catch (error: Response | unknown) {
         console.log({ error });
