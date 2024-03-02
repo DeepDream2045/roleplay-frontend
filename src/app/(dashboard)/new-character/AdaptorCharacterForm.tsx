@@ -77,7 +77,7 @@ export default function AdaptorCharacterForm({
                             placeholder="Select Model"
                             name="lora_short_bio"
                             required
-                            errorMsg={state.errorMsg.lora_model_name}
+                            errorMsg={state.errorMsg.lora_short_bio}
                         />
                         <InputSelect
                             key="base_model_id"
@@ -89,7 +89,7 @@ export default function AdaptorCharacterForm({
                             value={baseModelVal}
                             onChange={(val) => setBaseModelVal(val)}
                             required
-                            errorMsg={state.errorMsg.lora_model_name}
+                            errorMsg={state.errorMsg.base_model_id}
                         />
                     </div>
 
@@ -280,6 +280,9 @@ export default function AdaptorCharacterForm({
                                         e.target.value
                                     );
                                 }}
+                                errorMsg={
+                                    state.errorMsg.gradient_accumulation_steps
+                                }
                             />
                         </div>
                     </div>
