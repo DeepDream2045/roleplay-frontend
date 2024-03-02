@@ -7,7 +7,7 @@ export const LORA_BIAS_CHOICES: TInputOption[] = [
     { label: "none", value: "none" },
     { label: "all", value: "all" },
     { label: "lora_only", value: "lora_only" },
-];
+] as const;
 
 export const LR_SCHEDULER_TYPE_CHOICES: TInputOption[] = [
     { label: "constant", value: "constant" },

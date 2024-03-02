@@ -17,12 +17,10 @@ import {
 
 type AdaptorCharacterFormPropsType = {
     models: TInputOption[];
-    tags: TInputOption[];
 };
 
 export default function AdaptorCharacterForm({
     models,
-    tags,
 }: AdaptorCharacterFormPropsType): ReactElement {
     const [baseModelVal, setBaseModelVal] = useState<TInputOption[]>([]);
     const [loraRVal, setLoraRVal] = useState("0");

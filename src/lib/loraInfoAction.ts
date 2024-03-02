@@ -5,8 +5,10 @@ import {
     TCreateLoraFormBody,
     TCreateLoraResponse,
     TDeleteLoraActionState,
+    TGetLoraInfoResponse,
     TLoraFormPayload,
     TUpdateLoraActionState,
+    TgetLoraInfoActionReturn,
 } from "@/types/loraInfoAction";
 import { fetchRequest } from "./fetchRequest";
 import {
@@ -102,6 +104,7 @@ export async function createLoraAction(
 }
 
 export async function updateLoraAction(
+    lodaAdaptorId: number,
     state: TUpdateLoraActionState,
     payload: TLoraFormPayload
 ) {
@@ -182,7 +185,7 @@ export async function updateLoraAction(
 }
 
 export async function deleteLoraAction(
-    lora_id: string,
+    loraAdaptorId: number,
     state: TDeleteLoraActionState,
     payload: any
 ) {
@@ -190,11 +193,11 @@ export async function deleteLoraAction(
     let isExpiredSession = false;
 
     try {
-        const res = await fetchRequest<{ id: string }, { message: string }>({
+        const res = await fetchRequest<{ id: number }, { message: string }>({
             method: "delete",
             url: `${MAIN_API_BASE_URL}/lora_modal_info/`,
             body: {
-                id: lora_id,
+                id: loraAdaptorId,
             },
         });
 
@@ -220,7 +223,33 @@ export async function deleteLoraAction(
     }
 }
 
-export async function getLoraInfoAction() {
+export async function getLoraInfoAction(): Promise<TgetLoraInfoActionReturn> {
+    let isExpiredSession = false;
+
     try {
-    } catch (err) {}
+        const res = await fetchRequest<undefined, TGetLoraInfoResponse>({
+            method: "get",
+            url: `${MAIN_API_BASE_URL}/lora_modal_info/`,
+        });
+
+        if (!res.isError) {
+            return res.responseData;
+        }
+    } catch (err: any) {
+        if ("isError" in err && err.isError) {
+            if ("isExpiredSession" in err && err.isExpiredSession) {
+                isExpiredSession = true;
+            } else {
+                console.log({ err });
+                return {
+                    hasError: true,
+                    errorMsg: err.errorData.errors,
+                };
+            }
+        }
+    }
+
+    if (isExpiredSession) {
+        return redirect(`${DASHBOARD_BASE_URL}/`);
+    }
 }

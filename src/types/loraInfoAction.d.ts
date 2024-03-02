@@ -1,3 +1,9 @@
+import {
+    LORA_BIAS_CHOICES,
+    LR_SCHEDULER_TYPE_CHOICES,
+    OPTIMIZER_CHOICES,
+} from "@/constants/constants";
+
 export type TCreateLoraActionState = {
     hasError: true;
     errorMsg: any[];
@@ -71,3 +77,53 @@ export type TCreateLoraResponse = {
     base_model_id: number;
     user: number;
 };
+
+type DatasetEntry = {
+    context: string;
+    response: string;
+};
+
+// Extract the 'value' type from LORA_BIAS_CHOICES
+type LoraBiasOption = (typeof LORA_BIAS_CHOICES)[number]["value"];
+
+// Extract the 'value' type from LR_SCHEDULER_TYPE_CHOICES
+type LRSchedulerTypeOption =
+    (typeof LR_SCHEDULER_TYPE_CHOICES)[number]["value"];
+
+// Extract the 'value' type from OPTIMIZER_CHOICES
+type OptimizerOption = (typeof OPTIMIZER_CHOICES)[number]["value"];
+
+type TLoraInfo = {
+    id: number;
+    created_date: string;
+    modified_date: string;
+    lora_model_name: string;
+    lora_short_bio: string;
+    dataset: string; // If you plan to parse this JSON string, you could use `DatasetEntry[]` instead
+    num_train_epochs: number;
+    per_device_train_batch_size: number;
+    learning_rate: number;
+    warmup_steps: number;
+    optimizer: OptimizerOption;
+    lr_scheduler_type: LRSchedulerTypeOption;
+    gradient_accumulation_steps: number;
+    lora_alpha: number;
+    lora_dropout: number;
+    lora_r: number;
+    lora_bias: LoraBiasOption;
+    base_model_id: number;
+    user: number;
+};
+
+export type TGetLoraInfoResponse = {
+    message: string;
+    data: TLoraInfo[];
+};
+
+export type TgetLoraInfoActionReturn =
+    | TGetLoraInfoResponse
+    | {
+          hasError: true;
+          errorMsg: any[];
+      }
+    | undefined;

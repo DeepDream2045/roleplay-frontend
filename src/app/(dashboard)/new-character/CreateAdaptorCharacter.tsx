@@ -17,10 +17,7 @@ const CreateAdaptorCharacter = (props: Props) => {
                 </div>
             </header>
             <main className="flex flex-1 max-w-full flex-col items-center">
-                <AdaptorCharacterForm
-                    models={props.formattedModel}
-                    tags={props.formattedTag}
-                />
+                <AdaptorCharacterForm models={props.formattedModel} />
             </main>
         </>
     );
