@@ -5,7 +5,7 @@ import { TInputProps, defaultInputClassName } from "./InputUtil";
 import InputFooter from "./InputFooter";
 import InputErrorMessage from "./InputErrorMessage";
 
-type TInputRangeProps = TInputProps & {
+type TInputRangeProps = Omit<TInputProps, "value" | "onChange"> & {
     value?: InputHTMLAttributes<HTMLInputElement>["value"];
     defaultValue?: InputHTMLAttributes<HTMLInputElement>["defaultValue"];
     min?: InputHTMLAttributes<HTMLInputElement>["min"];

@@ -1,3 +1,5 @@
+"use client";
+
 import ModalWrapper from "@/app/components/ModalWrapper";
 import InputSelect from "@/components/atoms/Input/InputSelect";
 import InputText from "@/components/atoms/Input/InputText";
@@ -23,22 +25,49 @@ type Props = {
 };
 
 const LoraAdaptorEditModal = ({ onClose, models, loraAdaptorData }: Props) => {
-    const [baseModelVal, setBaseModelVal] = useState<TInputOption[]>([]);
-    const [loraRVal, setLoraRVal] = useState("0");
-    const [loraAlphaVal, setLoraAlphaVal] = useState("0");
-    const [loraDropoutVal, setLoraDropoutVal] = useState("0");
-    const [loraBiasVal, setLoraBiasVal] = useState<TInputOption[]>([]);
-    const [epochsVal, setEpochsVal] = useState("0");
-    const [batchSizeVal, setBatchSizeVal] = useState("0");
-    const [learningRateVal, setLearningRateVal] = useState("0");
-    const [warmupStepsVal, setWarmupStepsVal] = useState("0");
-    const [optimizerVal, setOptimizerVal] = useState<TInputOption[]>([]);
+    const currentBaseModel = models.find((val) => {
+        return String(val.value) === String(loraAdaptorData.base_model_id);
+    });
+
+    const [baseModelVal, setBaseModelVal] = useState<TInputOption[]>(
+        currentBaseModel ? [currentBaseModel] : []
+    );
+    const [loraRVal, setLoraRVal] = useState(loraAdaptorData.lora_r);
+    const [loraAlphaVal, setLoraAlphaVal] = useState(
+        loraAdaptorData.lora_alpha
+    );
+    const [loraDropoutVal, setLoraDropoutVal] = useState(
+        loraAdaptorData.lora_dropout
+    );
+    const [loraBiasVal, setLoraBiasVal] = useState<TInputOption[]>([
+        { label: loraAdaptorData.lora_bias, value: loraAdaptorData.lora_bias },
+    ]);
+    const [epochsVal, setEpochsVal] = useState(
+        loraAdaptorData.num_train_epochs
+    );
+    const [batchSizeVal, setBatchSizeVal] = useState(
+        loraAdaptorData.per_device_train_batch_size
+    );
+    const [learningRateVal, setLearningRateVal] = useState(
+        loraAdaptorData.learning_rate
+    );
+    const [warmupStepsVal, setWarmupStepsVal] = useState(
+        loraAdaptorData.warmup_steps
+    );
+    const [optimizerVal, setOptimizerVal] = useState<TInputOption[]>([
+        { label: loraAdaptorData.optimizer, value: loraAdaptorData.optimizer },
+    ]);
     const [lRSchedulerTypeVal, setLRSchedulerTypeVal] = useState<
         TInputOption[]
-    >([]);
+    >([
+        {
+            label: loraAdaptorData.lr_scheduler_type,
+            value: loraAdaptorData.lr_scheduler_type,
+        },
+    ]);
 
     const [gradientAccumulationStepsVal, setGradientAccumulationStepsVal] =
-        useState("0");
+        useState(loraAdaptorData.gradient_accumulation_steps);
 
     const updateLoraAdaptorActionWithCharId = updateLoraAction.bind(
         null,
@@ -100,6 +129,9 @@ const LoraAdaptorEditModal = ({ onClose, models, loraAdaptorData }: Props) => {
                                         errorMsg={
                                             state.errorMsg.lora_model_name
                                         }
+                                        defaultValue={
+                                            loraAdaptorData.lora_model_name
+                                        }
                                     />
                                     <InputText
                                         key="lora_short_bio"
@@ -110,6 +142,9 @@ const LoraAdaptorEditModal = ({ onClose, models, loraAdaptorData }: Props) => {
                                         name="lora_short_bio"
                                         required
                                         errorMsg={state.errorMsg.lora_short_bio}
+                                        defaultValue={
+                                            loraAdaptorData.lora_short_bio
+                                        }
                                     />
                                     <InputSelect
                                         key="base_model_id"
@@ -143,7 +178,9 @@ const LoraAdaptorEditModal = ({ onClose, models, loraAdaptorData }: Props) => {
                                             label="lora_r"
                                             value={loraRVal}
                                             onChange={(e) => {
-                                                setLoraRVal(e.target.value);
+                                                setLoraRVal(
+                                                    parseInt(e.target.value)
+                                                );
                                             }}
                                             errorMsg={state.errorMsg.lora_r}
                                         />
@@ -157,7 +194,9 @@ const LoraAdaptorEditModal = ({ onClose, models, loraAdaptorData }: Props) => {
                                             label="lora_alpha"
                                             value={loraAlphaVal}
                                             onChange={(e) => {
-                                                setLoraAlphaVal(e.target.value);
+                                                setLoraAlphaVal(
+                                                    parseInt(e.target.value)
+                                                );
                                             }}
                                             errorMsg={state.errorMsg.lora_alpha}
                                         />
@@ -172,7 +211,7 @@ const LoraAdaptorEditModal = ({ onClose, models, loraAdaptorData }: Props) => {
                                             value={loraDropoutVal}
                                             onChange={(e) => {
                                                 setLoraDropoutVal(
-                                                    e.target.value
+                                                    parseInt(e.target.value)
                                                 );
                                             }}
                                             errorMsg={
@@ -208,6 +247,9 @@ const LoraAdaptorEditModal = ({ onClose, models, loraAdaptorData }: Props) => {
                                             name="dataset"
                                             label="Dataset"
                                             errorMsg={state.errorMsg.dataset}
+                                            defaultValue={
+                                                loraAdaptorData.dataset
+                                            }
                                         />
                                     </div>
                                 </div>
@@ -230,7 +272,9 @@ const LoraAdaptorEditModal = ({ onClose, models, loraAdaptorData }: Props) => {
                                             label="Number of Train Epochs"
                                             value={epochsVal}
                                             onChange={(e) => {
-                                                setEpochsVal(e.target.value);
+                                                setEpochsVal(
+                                                    parseInt(e.target.value)
+                                                );
                                             }}
                                             errorMsg={
                                                 state.errorMsg.num_train_epochs
@@ -246,7 +290,9 @@ const LoraAdaptorEditModal = ({ onClose, models, loraAdaptorData }: Props) => {
                                             label="Batch Size"
                                             value={batchSizeVal}
                                             onChange={(e) => {
-                                                setBatchSizeVal(e.target.value);
+                                                setBatchSizeVal(
+                                                    parseInt(e.target.value)
+                                                );
                                             }}
                                             errorMsg={
                                                 state.errorMsg
@@ -264,7 +310,7 @@ const LoraAdaptorEditModal = ({ onClose, models, loraAdaptorData }: Props) => {
                                             value={learningRateVal}
                                             onChange={(e) => {
                                                 setLearningRateVal(
-                                                    e.target.value
+                                                    parseInt(e.target.value)
                                                 );
                                             }}
                                             errorMsg={
@@ -282,7 +328,7 @@ const LoraAdaptorEditModal = ({ onClose, models, loraAdaptorData }: Props) => {
                                             value={warmupStepsVal}
                                             onChange={(e) => {
                                                 setWarmupStepsVal(
-                                                    e.target.value
+                                                    parseInt(e.target.value)
                                                 );
                                             }}
                                             errorMsg={
@@ -330,7 +376,7 @@ const LoraAdaptorEditModal = ({ onClose, models, loraAdaptorData }: Props) => {
                                             value={gradientAccumulationStepsVal}
                                             onChange={(e) => {
                                                 setGradientAccumulationStepsVal(
-                                                    e.target.value
+                                                    parseInt(e.target.value)
                                                 );
                                             }}
                                             errorMsg={
