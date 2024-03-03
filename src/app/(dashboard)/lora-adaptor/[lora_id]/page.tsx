@@ -7,8 +7,12 @@ import LoraAdaptorEditDeleteAction from "./LoraAdaptorEditDeleteAction";
 import { TInputOption } from "@/components/atoms/Input/InputType";
 import { getModelInfoListAction } from "@/lib/modelInfoAction";
 import { TLoraInfo } from "@/types/loraInfoAction";
-import { getLoraInfoAction } from "@/lib/loraInfoAction";
+import {
+    getLoraInfoAction,
+    getLoraTrainingInfoAction,
+} from "@/lib/loraInfoAction";
 import { snakeCaseToTitle } from "@/util/convertTextUtil";
+import LoraAdaptorTrainTrigger from "./LoraAdaptorTrainTrigger";
 
 type TLoraAdaptorPageProps = {
     params: { lora_id: string };
@@ -35,7 +39,6 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                 </>
             );
         }
-        console.log({ loraAdapatorData });
 
         if (
             !("hasError" in loraAdapatorData) &&
@@ -64,7 +67,12 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
         });
     }
 
-    const loraAdaptorShouldAuthInfo = loraAdaptorShouldAuth.find((lora) => {
+    const loraAdaptorShouldAuthInfo:
+        | (TLoraInfo & {
+              train_status?: "pending" | "error" | "completed";
+              train_error?: string;
+          })
+        | undefined = loraAdaptorShouldAuth.find((lora) => {
         return (
             String(lora.id) === String(lora_id) &&
             String(lora.user) === String(session.user?.id)
@@ -78,6 +86,38 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                 <p>Lora Adaptor is not found</p>
             </>
         );
+    }
+
+    const loraTrainingStatusData = await getLoraTrainingInfoAction();
+
+    if (!loraTrainingStatusData) {
+        return;
+    }
+
+    if (
+        "hasError" in loraTrainingStatusData &&
+        loraTrainingStatusData.hasError
+    ) {
+        console.log({ errorMsg: loraTrainingStatusData.errorMsg });
+
+        loraAdaptorShouldAuthInfo.train_status = undefined;
+    }
+
+    if (
+        !("hasError" in loraTrainingStatusData) &&
+        Array.isArray(loraTrainingStatusData.data)
+    ) {
+        console.log(loraTrainingStatusData);
+        const currentLoraTrainData = loraTrainingStatusData.data.find((val) => {
+            return String(val.id) === String(loraAdaptorShouldAuthInfo.id);
+        });
+
+        if (!currentLoraTrainData) {
+            loraAdaptorShouldAuthInfo.train_status = undefined;
+        } else {
+            loraAdaptorShouldAuthInfo.train_status =
+                currentLoraTrainData.current_status;
+        }
     }
 
     const loraAdaptorAccessed = loraAdaptorShouldAuthInfo;
@@ -102,6 +142,29 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                             <h3 className="font-semibold">Lora Name</h3>
                             <p>{loraAdaptorAccessed?.lora_model_name}</p>
                         </div>
+                        <div className="flex flex-row gap-4 items-center justify-center">
+                            <h3 className="font-semibold">
+                                Lora Training Status
+                            </h3>
+                            <p>
+                                {loraAdaptorAccessed?.train_status ||
+                                    "Not Trained"}
+                            </p>
+                        </div>
+                        {loraAdaptorAccessed?.train_status === "error" && (
+                            <p>{loraAdaptorAccessed?.train_error}</p>
+                        )}
+                        {loraAdaptorAccessed?.train_status === "pending" && (
+                            <p className="text-sm">
+                                Please refresh to get latest training status
+                            </p>
+                        )}
+                        {(loraAdaptorAccessed?.train_status === "completed" ||
+                            loraAdaptorAccessed.train_status === "error") && (
+                            <LoraAdaptorTrainTrigger
+                                loraAdaptorId={loraAdaptorAccessed.id}
+                            />
+                        )}
                         <div className="flex flex-row gap-4 items-center justify-center">
                             <h3 className="font-semibold">Lora Author</h3>
                             <Link

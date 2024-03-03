@@ -6,7 +6,10 @@ import {
     TCreateLoraResponse,
     TDeleteLoraActionState,
     TGetLoraInfoResponse,
+    TGetLoraTrainingInfoActionReturn,
+    TGetLoraTrainingInfoResponse,
     TLoraFormPayload,
+    TLoraTrainingInfo,
     TUpdateLoraActionState,
     TUpdateLoraFormBody,
     TgetLoraInfoActionReturn,
@@ -264,5 +267,85 @@ export async function getLoraInfoAction(): Promise<TgetLoraInfoActionReturn> {
 
     if (isExpiredSession) {
         return redirect(`${DASHBOARD_BASE_URL}/lora-adaptor`);
+    }
+}
+
+export async function getLoraTrainingInfoAction(): Promise<TGetLoraTrainingInfoActionReturn> {
+    let isExpiredSession = false;
+
+    try {
+        const res = await fetchRequest<undefined, TGetLoraTrainingInfoResponse>(
+            {
+                method: "get",
+                url: `${MAIN_API_BASE_URL}/get_lora_adapters_status/`,
+            }
+        );
+
+        if (!res.isError) {
+            console.log(res.responseData);
+
+            return res.responseData;
+        }
+    } catch (err: any) {
+        if ("isError" in err && err.isError) {
+            if ("isExpiredSession" in err && err.isExpiredSession) {
+                isExpiredSession = true;
+            } else {
+                console.log({ err });
+                return {
+                    hasError: true,
+                    errorMsg: err.errorData.errors,
+                };
+            }
+        }
+    }
+
+    if (isExpiredSession) {
+        return redirect(`${DASHBOARD_BASE_URL}/lora-adaptor`);
+    }
+}
+
+export async function triggerTrainingAction(
+    loraAdaptorId: number,
+    state: TDeleteLoraActionState,
+    payload: any
+) {
+    let isExpiredSession = false;
+    let data: any;
+
+    try {
+        const res = await fetchRequest<
+            { lora_model_id: number },
+            { message: string }
+        >({
+            method: "post",
+            url: `${MAIN_API_BASE_URL}/train_lora_adapters/`,
+            body: {
+                lora_model_id: loraAdaptorId,
+            },
+        });
+
+        if (!res.isError) {
+            revalidatePath("/lora-adaptor");
+            revalidatePath("/");
+            revalidatePath("/profile");
+            data = res.responseData;
+        }
+    } catch (err: any) {
+        if ("isError" in err && err.isError) {
+            if ("isExpiredSession" in err && err.isExpiredSession) {
+                isExpiredSession = true;
+            } else {
+                return err;
+            }
+        }
+    }
+
+    if (isExpiredSession) {
+        return redirect(`${DASHBOARD_BASE_URL}/lora-adaptor/${loraAdaptorId}`);
+    }
+
+    if (data) {
+        return redirect(`${DASHBOARD_BASE_URL}/lora-adaptor/${loraAdaptorId}`);
     }
 }

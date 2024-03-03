@@ -131,3 +131,26 @@ export type TgetLoraInfoActionReturn =
           errorMsg: any[];
       }
     | undefined;
+
+export type TLoraTrainingInfo = {
+    id: number;
+    created_date: string;
+    modified_date: string;
+    current_status: "pending" | "error" | "completed";
+    lora_training_error: string;
+    user: number;
+    lora_model_info: number;
+};
+
+export type TGetLoraTrainingInfoResponse = {
+    message: string;
+    data: TLoraTrainingInfo[];
+};
+
+export type TGetLoraTrainingInfoActionReturn =
+    | TGetLoraTrainingInfoResponse
+    | {
+          hasError: true;
+          errorMsg: any[];
+      }
+    | undefined;
