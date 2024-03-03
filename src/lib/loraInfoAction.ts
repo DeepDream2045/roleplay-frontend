@@ -8,6 +8,7 @@ import {
     TGetLoraInfoResponse,
     TLoraFormPayload,
     TUpdateLoraActionState,
+    TUpdateLoraFormBody,
     TgetLoraInfoActionReturn,
 } from "@/types/loraInfoAction";
 import { fetchRequest } from "./fetchRequest";
@@ -16,6 +17,7 @@ import {
     MAIN_API_BASE_URL,
 } from "@/constants/environtment";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 export async function createLoraAction(
     state: TCreateLoraActionState,
@@ -135,7 +137,8 @@ export async function updateLoraAction(
             "gradient_accumulation_steps"
         );
 
-        const body: TCreateLoraFormBody = {
+        const body: TUpdateLoraFormBody = {
+            id: lodaAdaptorId,
             lora_model_name,
             lora_short_bio,
             base_model_id,
@@ -154,7 +157,7 @@ export async function updateLoraAction(
         };
 
         const res = await fetchRequest<
-            TCreateLoraFormBody,
+            TUpdateLoraFormBody,
             TCreateLoraResponse
         >({
             method: "put",
@@ -164,13 +167,20 @@ export async function updateLoraAction(
 
         if (!res.isError) {
             data = res.responseData;
+            revalidatePath("/lora-adaptor");
+            revalidatePath("/");
+            revalidatePath("/profile");
         }
     } catch (err: any) {
         if ("isError" in err && err.isError) {
             if ("isExpiredSession" in err && err.isExpiredSession) {
                 isExpiredSession = true;
             } else {
-                return err;
+                console.log({ err });
+                return {
+                    hasError: true,
+                    errorMsg: err.errorData.errors,
+                };
             }
         }
     }
@@ -202,6 +212,9 @@ export async function deleteLoraAction(
         });
 
         if (!res.isError) {
+            revalidatePath("/lora-adaptor");
+            revalidatePath("/");
+            revalidatePath("/profile");
             data = res.responseData;
         }
     } catch (err: any) {
@@ -215,11 +228,11 @@ export async function deleteLoraAction(
     }
 
     if (isExpiredSession) {
-        return redirect(`${DASHBOARD_BASE_URL}/new-character`);
+        return redirect(`${DASHBOARD_BASE_URL}/lora-adaptor`);
     }
 
     if (data) {
-        return redirect(`${DASHBOARD_BASE_URL}/lora`);
+        return redirect(`${DASHBOARD_BASE_URL}/lora-adaptor`);
     }
 }
 
@@ -250,6 +263,6 @@ export async function getLoraInfoAction(): Promise<TgetLoraInfoActionReturn> {
     }
 
     if (isExpiredSession) {
-        return redirect(`${DASHBOARD_BASE_URL}/`);
+        return redirect(`${DASHBOARD_BASE_URL}/lora-adaptor`);
     }
 }

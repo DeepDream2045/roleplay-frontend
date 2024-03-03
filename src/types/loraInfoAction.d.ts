@@ -78,6 +78,10 @@ export type TCreateLoraResponse = {
     user: number;
 };
 
+export type TUpdateLoraFormBody = TCreateLoraFormBody & {
+    id: number;
+};
+
 type DatasetEntry = {
     context: string;
     response: string;
