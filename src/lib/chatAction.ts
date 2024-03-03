@@ -5,7 +5,7 @@ import {
     MAIN_API_BASE_URL,
 } from "@/constants/environtment";
 import { getAuthSession } from "./authSession";
-import { commonErrorHandler } from "./fetchRequest";
+import { fetchRequest } from "./fetchRequest";
 import { RedirectType, redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { getAuthGuestSession } from "./authGuestSession";
@@ -219,6 +219,8 @@ export async function createRoomInfoAction(
     payload: any
 ) {
     let data: createRoomResponse | undefined;
+    let isExpiredSession = false;
+
     const session = await getAuthSession();
 
     // login user
@@ -228,42 +230,34 @@ export async function createRoomInfoAction(
                 character: parseInt(character_id),
             };
 
-            const req = await fetch(`${MAIN_API_BASE_URL}/room_info/`, {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${session.access}`,
-                    "user-refresh-token": session.refresh,
-                    "Content-Type": "application/json",
-                } as HeadersInit,
-                body: JSON.stringify(body),
-                cache: "no-store",
+            const res = await fetchRequest<
+                { character: number },
+                { message: string; data: createRoomResponse }
+            >({
+                method: "get",
+                url: `${MAIN_API_BASE_URL}/room_info/`,
+                body: body,
             });
 
-            if (!req.ok) {
-                throw req;
+            if (!res.isError) {
+                data = res.responseData.data;
             }
-
-            data = (await req.json()).data;
-        } catch (err) {
-            console.log(err);
-            let errors: any[] = [];
-
-            const commonErr = await commonErrorHandler(
-                err as Response | TypeError
-            );
-            if (!!commonErr) {
-                errors = commonErr;
-            } else {
-                errors = [
-                    "Internal Server Error",
-                    "Please contact our admin for this issue",
-                ];
+        } catch (err: any) {
+            if ("isError" in err && err.isError) {
+                if ("isExpiredSession" in err && err.isExpiredSession) {
+                    isExpiredSession = true;
+                } else {
+                    console.log({ err });
+                    return {
+                        hasError: true,
+                        errorMsg: err.errorData.errors,
+                    };
+                }
             }
+        }
 
-            return {
-                hasError: true,
-                errorMsg: errors,
-            };
+        if (isExpiredSession) {
+            return redirect(`${DASHBOARD_BASE_URL}/character/${character_id}`);
         }
     } else {
         const guestSession = await getAuthGuestSession();
