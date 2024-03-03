@@ -21,11 +21,13 @@ const ChatList = (props: TChatListProps) => {
     const [rooms, setRooms] = React.useState(props.rooms);
 
     useEffect(() => {
-        const rooms = JSON.parse(
-            localStorage.getItem(GUEST_CHAT_ROOM_DATA_LOCAL_STORAGE_KEY)!
-        );
+        if (props.isGuest) {
+            const guestRooms = JSON.parse(
+                localStorage.getItem(GUEST_CHAT_ROOM_DATA_LOCAL_STORAGE_KEY)!
+            );
 
-        setRooms(rooms);
+            setRooms(guestRooms);
+        }
     }, []);
 
     return (

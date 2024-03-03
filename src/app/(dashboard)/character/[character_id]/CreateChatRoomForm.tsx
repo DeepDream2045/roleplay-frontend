@@ -9,9 +9,13 @@ import { useFormState } from "react-dom";
 
 type TCreateChatRoomFormProps = {
     character_id: string;
+    initialMessage?: string | null;
 };
 
-function CreateChatRoomForm({ character_id }: TCreateChatRoomFormProps) {
+function CreateChatRoomForm({
+    character_id,
+    initialMessage,
+}: TCreateChatRoomFormProps) {
     const router = useRouter();
     const bindCharacterId = createRoomInfoAction.bind(null, character_id);
 
@@ -31,7 +35,17 @@ function CreateChatRoomForm({ character_id }: TCreateChatRoomFormProps) {
                 room_id: data!.room_id,
                 group_name: data!.group_name,
                 type: data!.type,
-                chatroom: [],
+                chatroom: [
+                    {
+                        id: 100000,
+                        created_date: new Date().toISOString(),
+                        modified_date: new Date().toISOString(),
+                        user_message: null,
+                        character_message: initialMessage || "",
+                        is_edited: false,
+                        chat: 79,
+                    },
+                ],
             });
 
             localStorage.setItem(

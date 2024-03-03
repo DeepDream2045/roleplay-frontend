@@ -234,7 +234,7 @@ export async function createRoomInfoAction(
                 { character: number },
                 { message: string; data: createRoomResponse }
             >({
-                method: "get",
+                method: "post",
                 url: `${MAIN_API_BASE_URL}/room_info/`,
                 body: body,
             });
@@ -293,6 +293,8 @@ export async function createRoomInfoAction(
 
     revalidatePath("/chats");
     if (data) {
+        console.log({ data });
+
         return redirect(
             `${DASHBOARD_BASE_URL}/chats/${data.room_id}`,
             RedirectType.push

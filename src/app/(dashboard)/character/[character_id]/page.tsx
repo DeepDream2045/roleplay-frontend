@@ -16,7 +16,6 @@ import CharacterEditDeleteAction from "./CharacterEditDeleteAction";
 import { TInputOption } from "@/components/atoms/Input/InputType";
 import { getTagInfoListAction } from "@/lib/tagAction";
 import { getModelInfoListAction } from "@/lib/modelInfoAction";
-import AskToLoginCreateChat from "./AskToLoginCreateChat";
 
 type TCharacterPageProps = {
     params: { character_id: string };
@@ -251,7 +250,10 @@ async function CharacterPage({
                     </div>
                 </div>
             </div>
-            <CreateChatRoomForm character_id={character_id} />
+            <CreateChatRoomForm
+                character_id={character_id}
+                initialMessage={userCharacter?.initial_message}
+            />
         </div>
     );
 }
