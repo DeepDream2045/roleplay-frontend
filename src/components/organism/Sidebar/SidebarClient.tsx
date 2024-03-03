@@ -7,6 +7,7 @@ import {
     MessageCircleMore,
     User,
     LogOut,
+    PersonStanding,
 } from "lucide-react";
 import { useEffect } from "react";
 
@@ -50,6 +51,13 @@ export default function SidebarClient({ isLogin }: SidebarClientProps) {
                     Icon={Home}
                     label="Home"
                     active={pathName === "/"}
+                    iconOnly={pathName.includes("/chats")}
+                />
+                <NavLink
+                    path="/lora-adaptor"
+                    Icon={PersonStanding}
+                    label="Lora Adapator"
+                    active={pathName.includes("/lora-adaptor")}
                     iconOnly={pathName.includes("/chats")}
                 />
                 <NavLink

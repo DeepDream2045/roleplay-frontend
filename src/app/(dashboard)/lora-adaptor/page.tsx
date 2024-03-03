@@ -1,6 +1,8 @@
+import LoraAdaptorCard from "@/components/organism/LoraAdaptorCard/LoraAdaptorCard";
 import { getAuthSession } from "@/lib/authSession";
 import { getLoraInfoAction } from "@/lib/loraInfoAction";
 import { TLoraInfo } from "@/types/loraInfoAction";
+import { timeAgo } from "@/util/dateUtil";
 
 export type TLoraAdaptorListPageProps = {};
 
@@ -37,12 +39,8 @@ export default async function LoraAdaptorListPage({}: TLoraAdaptorListPageProps)
         <div className="flex flex-wrap flex-col gap-4">
             <h1>All Lora Adapator</h1>
             <div className="flex flex-wrap flex-col gap-4">
-                {loras.map((lora) => {
-                    return (
-                        <div key={`lora-card-${lora.id}`}>
-                            {lora.lora_model_name}
-                        </div>
-                    );
+                {loras.map((lora: TLoraInfo) => {
+                    return <LoraAdaptorCard key={lora.id} lora={lora} />;
                 })}
             </div>
         </div>
