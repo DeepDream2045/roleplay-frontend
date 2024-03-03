@@ -1,15 +1,14 @@
 "use server";
 
-import Rating from "@/components/atoms/Rating/Rating";
 import { getAuthSession } from "@/lib/authSession";
 import Link from "next/link";
 import React from "react";
-import CreateChatRoomForm from "./CreateChatRoomForm";
 import LoraAdaptorEditDeleteAction from "./LoraAdaptorEditDeleteAction";
 import { TInputOption } from "@/components/atoms/Input/InputType";
 import { getModelInfoListAction } from "@/lib/modelInfoAction";
 import { TLoraInfo } from "@/types/loraInfoAction";
 import { getLoraInfoAction } from "@/lib/loraInfoAction";
+import { snakeCaseToTitle } from "@/util/convertTextUtil";
 
 type TLoraAdaptorPageProps = {
     params: { lora_id: string };
@@ -85,61 +84,121 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
 
     return (
         <div className="flex flex-col pt-5 flex-1 items-center min-h-dvh min-w-full max-h-dvh max-w-full">
-            <div className="flex flex-1 max-h-full overflow-y-scroll max-w-full min-w-full flex-col items-center gap-8 pb-20">
+            <div className="flex flex-1 max-h-full overflow-y-scroll max-w-full min-w-full flex-col items-start gap-8 pb-20">
                 <div
                     key="character_basic_info_container"
-                    className="flex flex-col gap-2 items-center"
+                    className="flex flex-col gap-2 items-start"
                 >
-                    <h3 className="font-semibold">
-                        {loraAdaptorAccessed?.lora_model_name}
-                    </h3>
-                    <Link
-                        href={
-                            String(loraAdaptorAccessed?.user) ===
-                            String(session.user?.id)
-                                ? `/profile`
-                                : `/profile/${loraAdaptorAccessed?.user}`
-                        }
-                        className="text-blue-500"
-                        target="_blank"
+                    <header>
+                        <h1>Lora Information</h1>
+                    </header>
+                    <div
+                        className="flex flex-col gap-2 items-start"
+                        id="lora_basic_info"
+                        key="lora_basic_info"
                     >
-                        <p className="font-medium">@No Name </p>
-                    </Link>
-                </div>
-
-                <div
-                    key="character_additional_info_container"
-                    className="flex flex-col gap-4"
-                >
-                    <div className="flex flex-row gap-2 items-center justify-center">
-                        <p>{"5.0"}</p>
-                        <Rating rating={2.5} />
-                        <p>(2)</p>
+                        <h2>Lora Basic Information</h2>
+                        <div className="flex flex-row gap-4 items-center justify-center">
+                            <h3 className="font-semibold">Lora Name</h3>
+                            <p>{loraAdaptorAccessed?.lora_model_name}</p>
+                        </div>
+                        <div className="flex flex-row gap-4 items-center justify-center">
+                            <h3 className="font-semibold">Lora Author</h3>
+                            <Link
+                                href={
+                                    String(loraAdaptorAccessed?.user) ===
+                                    String(session.user?.id)
+                                        ? `/profile`
+                                        : `/profile/${loraAdaptorAccessed?.user}`
+                                }
+                                className="text-blue-500"
+                                target="_blank"
+                            >
+                                <p className="font-medium">@NoName </p>
+                            </Link>
+                        </div>
+                        <div
+                            key="character_additional_info_container"
+                            className="flex flex-col gap-4"
+                        >
+                            {String(loraAdaptorAccessed.user) ===
+                                String(session.user?.id) && (
+                                <LoraAdaptorEditDeleteAction
+                                    models={formattedModel}
+                                    loraAdaptorData={loraAdaptorAccessed!}
+                                />
+                            )}
+                        </div>
                     </div>
 
-                    {String(loraAdaptorAccessed.user) ===
-                        String(session.user?.id) && (
-                        <LoraAdaptorEditDeleteAction
-                            models={formattedModel}
-                            loraAdaptorData={loraAdaptorAccessed!}
-                        />
-                    )}
-                </div>
-
-                <div
-                    key="character_additional_basic_info_container"
-                    className="flex flex-col gap-4"
-                >
                     <div
-                        key="character_short_description_container"
-                        className="flex flex-col gap-2"
+                        className="flex flex-col gap-2 items-start"
+                        id="lora_config"
+                        key="lora_config"
                     >
-                        <h3>Short description</h3>
-                        <p>{loraAdaptorAccessed?.lora_short_bio || ""}</p>
+                        <h2>Lora Configuration</h2>
+                        {[
+                            "lora_r",
+                            "lora_alpha",
+                            "lora_dropout",
+                            "lora_bias",
+                        ].map((val: string) => {
+                            return (
+                                <div
+                                    className="flex flex-row gap-4 items-center justify-center"
+                                    key={val}
+                                >
+                                    <h3 className="font-semibold">
+                                        {snakeCaseToTitle(val)}
+                                    </h3>
+                                    <p>
+                                        {
+                                            loraAdaptorAccessed[
+                                                val as keyof TLoraInfo
+                                            ]
+                                        }
+                                    </p>
+                                </div>
+                            );
+                        })}
+                    </div>
+
+                    <div
+                        className="flex flex-col gap-2 items-start"
+                        id="lora_config"
+                        key="lora_config"
+                    >
+                        <h2>Lora Training Argument</h2>
+                        {[
+                            "num_train_epochs",
+                            "per_device_train_batch_size",
+                            "learning_rate",
+                            "warmup_steps",
+                            "optimizer",
+                            "lr_scheduler_type",
+                            "gradient_accumulation_steps",
+                        ].map((val: string) => {
+                            return (
+                                <div
+                                    className="flex flex-row gap-4 items-center justify-center"
+                                    key={val}
+                                >
+                                    <h3 className="font-semibold">
+                                        {snakeCaseToTitle(val)}
+                                    </h3>
+                                    <p>
+                                        {
+                                            loraAdaptorAccessed[
+                                                val as keyof TLoraInfo
+                                            ]
+                                        }
+                                    </p>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             </div>
-            {/* <CreateChatRoomForm lora_id={lora_id} /> */}
         </div>
     );
 }
