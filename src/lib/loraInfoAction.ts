@@ -29,6 +29,18 @@ export async function createLoraAction(
 ) {
     let data: undefined | TCreateLoraResponse;
     let isExpiredSession = false;
+    let dataset = "";
+    try {
+        dataset = payload.get("dataset");
+        dataset = JSON.stringify(JSON.parse(dataset), null, 4);
+    } catch (err) {
+        return {
+            hasError: true,
+            errorMsg: {
+                dataset: ["Invalid dataset, please input a valid JSON string"],
+            },
+        };
+    }
 
     try {
         const lora_model_name = payload.get("lora_model_name");
@@ -39,8 +51,6 @@ export async function createLoraAction(
         const lora_alpha = payload.get("lora_alpha");
         const lora_dropout = payload.get("lora_dropout");
         const lora_bias = payload.get("lora_bias");
-
-        const dataset = payload.get("dataset");
 
         const num_train_epochs = payload.get("num_train_epochs");
         const per_device_train_batch_size = payload.get(
@@ -62,7 +72,7 @@ export async function createLoraAction(
             lora_alpha: parseInt(lora_alpha as string),
             lora_dropout: parseFloat(lora_dropout as string),
             lora_bias,
-            dataset: JSON.stringify(JSON.parse(dataset), null, 4),
+            dataset,
             num_train_epochs,
             per_device_train_batch_size,
             learning_rate,
@@ -87,6 +97,8 @@ export async function createLoraAction(
             data = res.responseData;
         }
     } catch (err: any) {
+        console.log({ err });
+
         if ("isError" in err && err.isError) {
             if ("isExpiredSession" in err && err.isExpiredSession) {
                 isExpiredSession = true;
@@ -116,6 +128,19 @@ export async function updateLoraAction(
 ) {
     let data: undefined | TUpdateLoraResponse;
     let isExpiredSession = false;
+    let dataset = "";
+
+    try {
+        dataset = payload.get("dataset");
+        dataset = JSON.stringify(JSON.parse(dataset), null, 4);
+    } catch (err) {
+        return {
+            hasError: true,
+            errorMsg: {
+                dataset: ["Invalid dataset, please input a valid JSON string"],
+            },
+        };
+    }
 
     try {
         const lora_short_bio = payload.get("lora_short_bio");
@@ -124,8 +149,6 @@ export async function updateLoraAction(
         const lora_alpha = payload.get("lora_alpha");
         const lora_dropout = payload.get("lora_dropout");
         const lora_bias = payload.get("lora_bias");
-
-        const dataset = payload.get("dataset");
 
         const num_train_epochs = payload.get("num_train_epochs");
         const per_device_train_batch_size = payload.get(
