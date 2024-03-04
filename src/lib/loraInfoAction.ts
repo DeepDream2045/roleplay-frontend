@@ -61,7 +61,7 @@ export async function createLoraAction(
             lora_alpha: parseInt(lora_alpha as string),
             lora_dropout: parseInt(lora_dropout as string),
             lora_bias,
-            dataset,
+            dataset: JSON.stringify(JSON.parse(dataset), null, 4),
             num_train_epochs,
             per_device_train_batch_size,
             learning_rate,
@@ -104,7 +104,7 @@ export async function createLoraAction(
     }
 
     if (data) {
-        return redirect(`${DASHBOARD_BASE_URL}/lora/${data.id}`);
+        return redirect(`${DASHBOARD_BASE_URL}/lora-adaptor/${data.id}`);
     }
 }
 

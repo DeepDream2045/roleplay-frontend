@@ -109,7 +109,10 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
     ) {
         console.log(loraTrainingStatusData);
         const currentLoraTrainData = loraTrainingStatusData.data.find((val) => {
-            return String(val.id) === String(loraAdaptorShouldAuthInfo.id);
+            return (
+                String(val.lora_model_info) ===
+                String(loraAdaptorShouldAuthInfo.id)
+            );
         });
 
         if (!currentLoraTrainData) {
@@ -121,6 +124,10 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
     }
 
     const loraAdaptorAccessed = loraAdaptorShouldAuthInfo;
+
+    console.log({
+        loraAdaptorAccessedStatus: loraAdaptorAccessed.train_status,
+    });
 
     return (
         <div className="flex flex-col pt-5 flex-1 items-center min-h-dvh min-w-full max-h-dvh max-w-full">
@@ -159,8 +166,7 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                                 Please refresh to get latest training status
                             </p>
                         )}
-                        {(loraAdaptorAccessed?.train_status === "completed" ||
-                            loraAdaptorAccessed.train_status === "error") && (
+                        {loraAdaptorAccessed?.train_status === undefined && (
                             <LoraAdaptorTrainTrigger
                                 loraAdaptorId={loraAdaptorAccessed.id}
                             />
