@@ -1,4 +1,7 @@
+"use client";
+
 import InputErrorMessage from "@/components/atoms/Input/InputErrorMessage";
+import InputHelperText from "@/components/atoms/Input/InputHelperText";
 import React, { useState, useRef } from "react";
 
 export type InputAdditionalInfoProps = {
@@ -6,14 +9,21 @@ export type InputAdditionalInfoProps = {
     name: string;
     errorMsg?: string[];
     defaultValue?: string | null;
+    placeholder?: string;
+    helperText?: string;
+    acceptedFile?: ("text/plain" | "application/json")[];
 };
 const InputAdditionalInfo = ({
     label,
     name,
     errorMsg,
     defaultValue,
+    placeholder = "The text from uploaded files will appear here...",
+    helperText,
+    acceptedFile = ["text/plain"],
 }: InputAdditionalInfoProps) => {
     const [text, setText] = useState(defaultValue || "");
+
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleFileUploadClick = () => {
@@ -25,8 +35,12 @@ const InputAdditionalInfo = ({
         if (!files) return;
 
         Array.from(files).forEach((file) => {
-            if (file.type !== "text/plain") {
-                alert("Only TXT files are allowed.");
+            if (
+                !acceptedFile.includes(
+                    file.type as "text/plain" | "application/json"
+                )
+            ) {
+                alert("Please upload valid file");
                 return;
             }
 
@@ -61,20 +75,21 @@ const InputAdditionalInfo = ({
                 </span>
                 <input
                     type="file"
-                    accept=".txt"
+                    accept={acceptedFile.join(",")}
                     onChange={handleFileChange}
                     ref={fileInputRef}
                     className="hidden"
                     multiple
                 />
             </div>
+            {helperText && <InputHelperText helperText={helperText} />}
             <div>
                 <textarea
                     className="w-full h-64 p-2 border border-gray-300"
                     name={name}
                     value={text}
                     onChange={(e) => setText(e.target.value)}
-                    placeholder="The text from uploaded files will appear here..."
+                    placeholder={placeholder}
                 ></textarea>
             </div>
             {errorMsg && <InputErrorMessage message={errorMsg} />}

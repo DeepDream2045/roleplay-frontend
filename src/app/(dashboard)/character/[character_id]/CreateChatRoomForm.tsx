@@ -55,6 +55,7 @@ function CreateChatRoomForm({
 
             router.push(`/chats/${data.room_id}`);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state, character_id]);
     return (
         <form

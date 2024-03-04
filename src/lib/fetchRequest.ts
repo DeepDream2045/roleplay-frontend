@@ -98,13 +98,28 @@ export async function fetchRequest<TBody, TResponse>({
             const isExpiredSession = error.response?.status === 401;
             console.log(error.response);
 
+            let errors = [];
+
+            if (
+                typeof error.response?.data === "object" &&
+                !Array.isArray(error.response?.data) &&
+                "errors" in error.response.data
+            ) {
+                errors = error.response.data.errors;
+            }
+
+            if (
+                typeof error.response?.data === "object" &&
+                !Array.isArray(error.response.data) &&
+                !("errors" in error.response.data)
+            ) {
+                errors = error.response.data;
+            }
+
             const errorData: ErrorData = {
                 errorTitle: "Error",
                 errorSubtitle: "An error occurred",
-                errors:
-                    "errors" in error.response?.data
-                        ? error.response?.data.errors
-                        : error.response?.data || {},
+                errors: errors,
             };
 
             throw {

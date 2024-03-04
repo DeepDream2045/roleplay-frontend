@@ -11,6 +11,7 @@ import InputRange from "@/components/atoms/Input/InputRange";
 import { createLoraAction } from "@/lib/loraInfoAction";
 import {
     LORA_BIAS_CHOICES,
+    LORA_DATASET_PLACEHOLDER,
     LR_SCHEDULER_TYPE_CHOICES,
     OPTIMIZER_CHOICES,
 } from "@/constants/constants";
@@ -166,6 +167,9 @@ export default function AdaptorCharacterForm({
                                 name="dataset"
                                 label="Dataset"
                                 errorMsg={state.errorMsg.dataset}
+                                placeholder={LORA_DATASET_PLACEHOLDER}
+                                acceptedFile={["application/json"]}
+                                helperText={`File allowed to upload is .json file and should be contain minimum 50 data`}
                             />
                         </div>
                     </div>
@@ -190,6 +194,7 @@ export default function AdaptorCharacterForm({
                                 onChange={(e) => {
                                     setEpochsVal(e.target.value);
                                 }}
+                                helperText={`the value should be from xxx to xxx`}
                                 errorMsg={state.errorMsg.num_train_epochs}
                             />
                             <InputRange

@@ -41,3 +41,11 @@ export const OPTIMIZER_CHOICES: TInputOption[] = [
     { label: "paged_lion_8bit", value: "paged_lion_8bit" },
     { label: "rmsprop", value: "rmsprop" },
 ];
+
+export const LORA_DATASET_PLACEHOLDER = `[
+    {
+        "context":"What's your favorite hobby?",
+        "response":"I'm passionate about entrepreneurship, technology, and space exploration. How about you?
+    }
+]
+`;

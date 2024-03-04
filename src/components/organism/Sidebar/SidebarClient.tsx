@@ -63,7 +63,7 @@ export default function SidebarClient({ isLogin }: SidebarClientProps) {
                 <NavLink
                     path="/new-character"
                     Icon={PlusCircle}
-                    label="Create Character"
+                    label="Create"
                     active={pathName.includes("/new-character")}
                     iconOnly={pathName.includes("/chats")}
                 />

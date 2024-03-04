@@ -26,9 +26,14 @@ const InputRange = (props: TInputRangeProps) => {
                         requiredClassName={props.customRequiredClassName}
                     />
                 )}
-                <span className="w-24 flex justify-center py-1 border font-semibold text-sm rounded-lg border-blue-700">
-                    {props.value}
-                </span>
+                <input
+                    type="number"
+                    className="w-24 flex text-center py-1 border font-semibold text-sm rounded-lg border-blue-700"
+                    min={props.min}
+                    max={props.max}
+                    value={props.value}
+                    onChange={props.onChange}
+                />
             </div>
             {props.helperText && (
                 <InputHelperText helperText={props.helperText} />
@@ -39,7 +44,7 @@ const InputRange = (props: TInputRangeProps) => {
                     id={props.id}
                     type="range"
                     name={props.name}
-                    className={`${defaultInputClassName} cursor-pointer`}
+                    className={`px-0 ${defaultInputClassName}  cursor-pointer`}
                     value={props.value}
                     defaultValue={props.defaultValue}
                     min={props.min}

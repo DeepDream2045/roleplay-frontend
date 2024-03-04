@@ -14,6 +14,7 @@ import { updateLoraAction } from "@/lib/loraInfoAction";
 import InputRange from "@/components/atoms/Input/InputRange";
 import {
     LORA_BIAS_CHOICES,
+    LORA_DATASET_PLACEHOLDER,
     LR_SCHEDULER_TYPE_CHOICES,
     OPTIMIZER_CHOICES,
 } from "@/constants/constants";
@@ -250,6 +251,10 @@ const LoraAdaptorEditModal = ({ onClose, models, loraAdaptorData }: Props) => {
                                             defaultValue={
                                                 loraAdaptorData.dataset
                                             }
+                                            placeholder={
+                                                LORA_DATASET_PLACEHOLDER
+                                            }
+                                            acceptedFile={["application/json"]}
                                         />
                                     </div>
                                 </div>
