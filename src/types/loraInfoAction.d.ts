@@ -55,6 +55,23 @@ export type TCreateLoraFormBody = {
     gradient_accumulation_steps: number;
 };
 
+export type TUpdateLoraFormBody = {
+    id: number;
+    lora_short_bio: string;
+    lora_r: number;
+    lora_alpha: number;
+    lora_dropout: number;
+    lora_bias: string;
+    dataset: string;
+    num_train_epochs: number;
+    per_device_train_batch_size: number;
+    learning_rate: number;
+    warmup_steps: number;
+    optimizer: string;
+    lr_scheduler_type: string;
+    gradient_accumulation_steps: number;
+};
+
 export type TCreateLoraResponse = {
     id: number;
     created_date: string;
@@ -78,8 +95,8 @@ export type TCreateLoraResponse = {
     user: number;
 };
 
-export type TUpdateLoraFormBody = TCreateLoraFormBody & {
-    id: number;
+export type TUpdateLoraResponse = {
+    message: string;
 };
 
 type DatasetEntry = {

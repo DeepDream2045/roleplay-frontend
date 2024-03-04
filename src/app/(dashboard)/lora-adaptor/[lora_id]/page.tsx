@@ -69,7 +69,7 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
 
     const loraAdaptorShouldAuthInfo:
         | (TLoraInfo & {
-              train_status?: "pending" | "error" | "completed";
+              train_status?: "pending" | "running" | "error" | "completed";
               train_error?: string;
           })
         | undefined = loraAdaptorShouldAuth.find((lora) => {
@@ -161,7 +161,9 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                         {loraAdaptorAccessed?.train_status === "error" && (
                             <p>{loraAdaptorAccessed?.train_error}</p>
                         )}
-                        {loraAdaptorAccessed?.train_status === "pending" && (
+                        {(loraAdaptorAccessed?.train_status === "pending" ||
+                            loraAdaptorAccessed?.train_status ===
+                                "running") && (
                             <p className="text-sm">
                                 Please refresh to get latest training status
                             </p>

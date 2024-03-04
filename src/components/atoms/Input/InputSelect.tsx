@@ -16,6 +16,7 @@ type TInputSelectProps = Omit<TInputProps, "value" | "onChange"> & {
     multiple?: boolean;
     value?: TInputOption[];
     onChange: (value: TInputOption[]) => void;
+    disabled?: boolean;
 };
 
 const InputSelect = ({ multiple = false, ...props }: TInputSelectProps) => {
@@ -124,11 +125,16 @@ const InputSelect = ({ multiple = false, ...props }: TInputSelectProps) => {
 
             {!inputActive && !multiple && (
                 <div
-                    className={`${defaultInputClassName} h-10 bg-white ${
+                    className={`${defaultInputClassName} h-10 ${
+                        props.disabled ? "bg-[#b1aeae4d]" : ""
+                    } bg-white ${
                         props.value?.length ? "text-black" : "text-gray-400"
-                    }`}
+                    } cursor-default`}
                     onMouseDown={(e) => {
                         e.preventDefault();
+                        if (props.disabled) {
+                            return;
+                        }
                         setInputActive(true);
                         searchInputRef.current!.focus();
                     }}
@@ -139,9 +145,14 @@ const InputSelect = ({ multiple = false, ...props }: TInputSelectProps) => {
 
             {!inputActive && multiple && (
                 <div
-                    className={`${defaultInputClassName} h-10 bg-white text-gray-400`}
+                    className={`${defaultInputClassName} h-10 ${
+                        props.disabled ? "bg-[#b1aeae4d]" : ""
+                    } bg-white text-gray-400 `}
                     onMouseDown={(e) => {
                         e.preventDefault();
+                        if (props.disabled) {
+                            return;
+                        }
                         setInputActive(true);
 
                         // this Sleep needed to wait inputActive state changed first,

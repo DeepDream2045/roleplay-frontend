@@ -10,6 +10,7 @@ export const LORA_BIAS_CHOICES: TInputOption[] = [
 ] as const;
 
 export const LR_SCHEDULER_TYPE_CHOICES: TInputOption[] = [
+    { label: "none", value: "none" },
     { label: "constant", value: "constant" },
     { label: "linear", value: "linear" },
     { label: "cosine", value: "cosine" },

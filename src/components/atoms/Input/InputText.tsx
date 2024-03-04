@@ -9,6 +9,7 @@ type TInputTextProps = TInputProps & {
     value?: InputHTMLAttributes<HTMLInputElement>["value"];
     defaultValue?: InputHTMLAttributes<HTMLInputElement>["defaultValue"];
     onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
+    disabled?: boolean;
 };
 
 const InputText = (props: TInputTextProps) => {
@@ -32,10 +33,13 @@ const InputText = (props: TInputTextProps) => {
                     type="text"
                     placeholder={props.placeholder}
                     name={props.name}
-                    className={defaultInputClassName}
+                    className={`${
+                        props.disabled ? "bg-[#b1aeae4d]" : ""
+                    } ${defaultInputClassName}`}
                     value={props.value}
                     onChange={props.onChange}
                     onKeyDown={props.onKeyDown}
+                    disabled={props.disabled}
                 />
             ) : (
                 <input
@@ -43,9 +47,12 @@ const InputText = (props: TInputTextProps) => {
                     type="text"
                     placeholder={props.placeholder}
                     name={props.name}
-                    className={defaultInputClassName}
+                    className={`${
+                        props.disabled ? "bg-[#b1aeae4d]" : ""
+                    } ${defaultInputClassName}`}
                     onChange={props.onChange}
                     defaultValue={props.defaultValue}
+                    disabled={props.disabled}
                 />
             )}
 

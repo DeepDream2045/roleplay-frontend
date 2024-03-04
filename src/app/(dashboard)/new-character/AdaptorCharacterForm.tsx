@@ -24,21 +24,25 @@ export default function AdaptorCharacterForm({
     models,
 }: AdaptorCharacterFormPropsType): ReactElement {
     const [baseModelVal, setBaseModelVal] = useState<TInputOption[]>([]);
-    const [loraRVal, setLoraRVal] = useState("0");
-    const [loraAlphaVal, setLoraAlphaVal] = useState("0");
-    const [loraDropoutVal, setLoraDropoutVal] = useState("0");
-    const [loraBiasVal, setLoraBiasVal] = useState<TInputOption[]>([]);
-    const [epochsVal, setEpochsVal] = useState("0");
-    const [batchSizeVal, setBatchSizeVal] = useState("0");
-    const [learningRateVal, setLearningRateVal] = useState("0");
-    const [warmupStepsVal, setWarmupStepsVal] = useState("0");
-    const [optimizerVal, setOptimizerVal] = useState<TInputOption[]>([]);
+    const [loraRVal, setLoraRVal] = useState("8");
+    const [loraAlphaVal, setLoraAlphaVal] = useState("32");
+    const [loraDropoutVal, setLoraDropoutVal] = useState("0.05");
+    const [loraBiasVal, setLoraBiasVal] = useState<TInputOption[]>([
+        LORA_BIAS_CHOICES[0],
+    ]);
+    const [epochsVal, setEpochsVal] = useState("10");
+    const [batchSizeVal, setBatchSizeVal] = useState("1");
+    const [learningRateVal, setLearningRateVal] = useState("0.0002");
+    const [warmupStepsVal, setWarmupStepsVal] = useState("100");
+    const [optimizerVal, setOptimizerVal] = useState<TInputOption[]>([
+        OPTIMIZER_CHOICES[1],
+    ]);
     const [lRSchedulerTypeVal, setLRSchedulerTypeVal] = useState<
         TInputOption[]
-    >([]);
+    >([LR_SCHEDULER_TYPE_CHOICES[0]]);
 
     const [gradientAccumulationStepsVal, setGradientAccumulationStepsVal] =
-        useState("0");
+        useState("1");
 
     const [state, formAction] = useFormState<any, any>(createLoraAction, {
         hasError: false,
@@ -104,9 +108,9 @@ export default function AdaptorCharacterForm({
                                 key="lora_r"
                                 id="lora_r"
                                 name="lora_r"
-                                max={1000}
-                                min={0}
-                                steps={1}
+                                max={64}
+                                min={8}
+                                steps={8}
                                 label="lora_r"
                                 value={loraRVal}
                                 onChange={(e) => {
@@ -118,9 +122,9 @@ export default function AdaptorCharacterForm({
                                 key="lora_alpha"
                                 id="lora_alpha"
                                 name="lora_alpha"
-                                max={1000}
-                                min={0}
-                                steps={1}
+                                max={96}
+                                min={8}
+                                steps={8}
                                 label="lora_alpha"
                                 value={loraAlphaVal}
                                 onChange={(e) => {
@@ -132,9 +136,9 @@ export default function AdaptorCharacterForm({
                                 key="lora_dropout"
                                 id="lora_dropout"
                                 name="lora_dropout"
-                                max={1000}
+                                max={1}
                                 min={0}
-                                steps={1}
+                                steps={0.01}
                                 label="lora_dropout"
                                 value={loraDropoutVal}
                                 onChange={(e) => {
@@ -186,8 +190,8 @@ export default function AdaptorCharacterForm({
                                 key="num_train_epochs"
                                 id="num_train_epochs"
                                 name="num_train_epochs"
-                                max={1000}
-                                min={"0"}
+                                max={100}
+                                min={1}
                                 steps={1}
                                 label="Number of Train Epochs"
                                 value={epochsVal}
@@ -201,8 +205,8 @@ export default function AdaptorCharacterForm({
                                 key="per_device_train_batch_size"
                                 id="per_device_train_batch_size"
                                 name="per_device_train_batch_size"
-                                max={1000}
-                                min={"0"}
+                                max={100}
+                                min={1}
                                 steps={1}
                                 label="Batch Size"
                                 value={batchSizeVal}
@@ -217,9 +221,9 @@ export default function AdaptorCharacterForm({
                                 key="learning_rate"
                                 id="learning_rate"
                                 name="learning_rate"
-                                max={1000}
-                                min={"0"}
-                                steps={1}
+                                max={0.01}
+                                min={0}
+                                steps={0.0001}
                                 label="Learning Rate"
                                 value={learningRateVal}
                                 onChange={(e) => {
@@ -231,9 +235,9 @@ export default function AdaptorCharacterForm({
                                 key="warmup_steps"
                                 id="warmup_steps"
                                 name="warmup_steps"
-                                max={1000}
-                                min={"0"}
-                                steps={1}
+                                max={400}
+                                min={0}
+                                steps={10}
                                 label="Warmpup Steps"
                                 value={warmupStepsVal}
                                 onChange={(e) => {
@@ -273,8 +277,8 @@ export default function AdaptorCharacterForm({
                                 key="gradient_accumulation_steps"
                                 id="gradient_accumulation_steps"
                                 name="gradient_accumulation_steps"
-                                max={1000}
-                                min={"0"}
+                                max={50}
+                                min={1}
                                 steps={1}
                                 label="Gradient Accumulation Steps"
                                 value={gradientAccumulationStepsVal}

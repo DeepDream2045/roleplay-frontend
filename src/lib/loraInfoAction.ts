@@ -12,6 +12,7 @@ import {
     TLoraTrainingInfo,
     TUpdateLoraActionState,
     TUpdateLoraFormBody,
+    TUpdateLoraResponse,
     TgetLoraInfoActionReturn,
 } from "@/types/loraInfoAction";
 import { fetchRequest } from "./fetchRequest";
@@ -59,7 +60,7 @@ export async function createLoraAction(
             base_model_id,
             lora_r: parseInt(lora_r as string),
             lora_alpha: parseInt(lora_alpha as string),
-            lora_dropout: parseInt(lora_dropout as string),
+            lora_dropout: parseFloat(lora_dropout as string),
             lora_bias,
             dataset: JSON.stringify(JSON.parse(dataset), null, 4),
             num_train_epochs,
@@ -113,13 +114,11 @@ export async function updateLoraAction(
     state: TUpdateLoraActionState,
     payload: TLoraFormPayload
 ) {
-    let data: undefined | TCreateLoraResponse;
+    let data: undefined | TUpdateLoraResponse;
     let isExpiredSession = false;
 
     try {
-        const lora_model_name = payload.get("lora_model_name");
         const lora_short_bio = payload.get("lora_short_bio");
-        const base_model_id = payload.get("base_model_id");
 
         const lora_r = payload.get("lora_r");
         const lora_alpha = payload.get("lora_alpha");
@@ -142,12 +141,10 @@ export async function updateLoraAction(
 
         const body: TUpdateLoraFormBody = {
             id: lodaAdaptorId,
-            lora_model_name,
             lora_short_bio,
-            base_model_id,
             lora_r: parseInt(lora_r as string),
             lora_alpha: parseInt(lora_alpha as string),
-            lora_dropout: parseInt(lora_dropout as string),
+            lora_dropout: parseFloat(lora_dropout as string),
             lora_bias,
             dataset,
             num_train_epochs,
@@ -161,7 +158,7 @@ export async function updateLoraAction(
 
         const res = await fetchRequest<
             TUpdateLoraFormBody,
-            TCreateLoraResponse
+            TUpdateLoraResponse
         >({
             method: "put",
             url: `${MAIN_API_BASE_URL}/lora_modal_info/`,
@@ -193,7 +190,9 @@ export async function updateLoraAction(
     }
 
     if (data) {
-        return redirect(`${DASHBOARD_BASE_URL}/lora/${data.id}`);
+        console.log({ data });
+
+        return redirect(`${DASHBOARD_BASE_URL}/lora-adaptor/${lodaAdaptorId}`);
     }
 }
 

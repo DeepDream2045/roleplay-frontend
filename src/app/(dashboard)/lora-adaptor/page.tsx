@@ -38,7 +38,7 @@ export default async function LoraAdaptorListPage({}: TLoraAdaptorListPageProps)
     return (
         <div className="flex flex-wrap flex-col gap-4">
             <h1>All Lora Adapator</h1>
-            <div className="flex flex-wrap flex-col gap-4">
+            <div className="flex flex-wrap flex-row gap-4">
                 {loras.map((lora: TLoraInfo) => {
                     return <LoraAdaptorCard key={lora.id} lora={lora} />;
                 })}

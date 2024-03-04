@@ -32,6 +32,7 @@ const InputRange = (props: TInputRangeProps) => {
                     min={props.min}
                     max={props.max}
                     value={props.value}
+                    step={props.steps}
                     onChange={props.onChange}
                 />
             </div>
