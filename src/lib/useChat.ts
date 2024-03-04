@@ -140,6 +140,7 @@ const useChat = () => {
             setConnectionState("Connecting");
             // setMessages([]);
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, roomId]);
 
     const setData = (roomInfo: {

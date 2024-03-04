@@ -28,6 +28,7 @@ const ChatList = (props: TChatListProps) => {
 
             setRooms(guestRooms);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
