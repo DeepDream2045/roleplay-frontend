@@ -13,6 +13,7 @@ import {
 } from "@/lib/loraInfoAction";
 import { snakeCaseToTitle } from "@/util/convertTextUtil";
 import LoraAdaptorTrainTrigger from "./LoraAdaptorTrainTrigger";
+import CreateLoraChatRoomForm from "./CreateLoraChatRoomForm";
 
 type TLoraAdaptorPageProps = {
     params: { lora_id: string };
@@ -98,8 +99,6 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
         "hasError" in loraTrainingStatusData &&
         loraTrainingStatusData.hasError
     ) {
-        console.log({ errorMsg: loraTrainingStatusData.errorMsg });
-
         loraAdaptorShouldAuthInfo.train_status = undefined;
     }
 
@@ -107,7 +106,6 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
         !("hasError" in loraTrainingStatusData) &&
         Array.isArray(loraTrainingStatusData.data)
     ) {
-        console.log(loraTrainingStatusData);
         const currentLoraTrainData = loraTrainingStatusData.data.find((val) => {
             return (
                 String(val.lora_model_info) ===
@@ -124,10 +122,6 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
     }
 
     const loraAdaptorAccessed = loraAdaptorShouldAuthInfo;
-
-    console.log({
-        loraAdaptorAccessedStatus: loraAdaptorAccessed.train_status,
-    });
 
     return (
         <div className="flex flex-col pt-5 flex-1 items-center min-h-dvh min-w-full max-h-dvh max-w-full">
@@ -270,6 +264,7 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                     </div>
                 </div>
             </div>
+            <CreateLoraChatRoomForm lora_id={lora_id} />
         </div>
     );
 }

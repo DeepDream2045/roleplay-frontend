@@ -2,7 +2,6 @@ import LoraAdaptorCard from "@/components/organism/LoraAdaptorCard/LoraAdaptorCa
 import { getAuthSession } from "@/lib/authSession";
 import { getLoraInfoAction } from "@/lib/loraInfoAction";
 import { TLoraInfo } from "@/types/loraInfoAction";
-import { timeAgo } from "@/util/dateUtil";
 
 export type TLoraAdaptorListPageProps = {};
 
@@ -26,7 +25,6 @@ export default async function LoraAdaptorListPage({}: TLoraAdaptorListPageProps)
                 </>
             );
         }
-        console.log({ loraAdapatorData });
 
         if (
             !("hasError" in loraAdapatorData) &&

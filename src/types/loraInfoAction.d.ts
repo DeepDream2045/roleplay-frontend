@@ -171,3 +171,41 @@ export type TGetLoraTrainingInfoActionReturn =
           errorMsg: any[];
       }
     | undefined;
+
+export type TLoraCompletedTrainingInfo = {
+    id: number;
+    created_date: string;
+    modified_date: string;
+    current_status: "completed";
+    lora_training_error: string;
+    user: number;
+    lora_model_info: number;
+};
+export type TGetLoraCompletedTrainingListInfoResponse = {
+    message: string;
+    data: TLoraCompletedTrainingInfo[];
+};
+export type TGetLoraCompletedTrainingListInfoActionReturn =
+    | TGetLoraCompletedTrainingListInfoResponse
+    | {
+          hasError: true;
+          errorMsg: any[];
+      }
+    | undefined;
+
+export type TSendMessageToLoraCompletedTrainingFormBody = {
+    lora_model_id: number;
+    user_text: string;
+};
+
+export type TSendMessageToLoraCompletedTrainingResponse = {
+    response_message: string;
+};
+
+export type TSendMessageToLoraCompletedTrainingActionReturn =
+    | TSendMessageToLoraCompletedTrainingResponse
+    | {
+          hasError: true;
+          errorMsg: any;
+      }
+    | undefined;

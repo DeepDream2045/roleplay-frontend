@@ -5,11 +5,16 @@ import {
     TCreateLoraFormBody,
     TCreateLoraResponse,
     TDeleteLoraActionState,
+    TGetLoraCompletedTrainingListInfoActionReturn,
+    TGetLoraCompletedTrainingListInfoResponse,
     TGetLoraInfoResponse,
     TGetLoraTrainingInfoActionReturn,
     TGetLoraTrainingInfoResponse,
     TLoraFormPayload,
     TLoraTrainingInfo,
+    TSendMessageToLoraCompletedTrainingActionReturn,
+    TSendMessageToLoraCompletedTrainingFormBody,
+    TSendMessageToLoraCompletedTrainingResponse,
     TUpdateLoraActionState,
     TUpdateLoraFormBody,
     TUpdateLoraResponse,
@@ -82,8 +87,6 @@ export async function createLoraAction(
             gradient_accumulation_steps,
         };
 
-        console.log({ body });
-
         const res = await fetchRequest<
             TCreateLoraFormBody,
             TCreateLoraResponse
@@ -97,13 +100,10 @@ export async function createLoraAction(
             data = res.responseData;
         }
     } catch (err: any) {
-        console.log({ err });
-
         if ("isError" in err && err.isError) {
             if ("isExpiredSession" in err && err.isExpiredSession) {
                 isExpiredSession = true;
             } else {
-                console.log({ err });
                 return {
                     hasError: true,
                     errorMsg: err.errorData.errors,
@@ -199,7 +199,6 @@ export async function updateLoraAction(
             if ("isExpiredSession" in err && err.isExpiredSession) {
                 isExpiredSession = true;
             } else {
-                console.log({ err });
                 return {
                     hasError: true,
                     errorMsg: err.errorData.errors,
@@ -213,8 +212,6 @@ export async function updateLoraAction(
     }
 
     if (data) {
-        console.log({ data });
-
         return redirect(`${DASHBOARD_BASE_URL}/lora-adaptor/${lodaAdaptorId}`);
     }
 }
@@ -278,7 +275,6 @@ export async function getLoraInfoAction(): Promise<TgetLoraInfoActionReturn> {
             if ("isExpiredSession" in err && err.isExpiredSession) {
                 isExpiredSession = true;
             } else {
-                console.log({ err });
                 return {
                     hasError: true,
                     errorMsg: err.errorData.errors,
@@ -304,8 +300,6 @@ export async function getLoraTrainingInfoAction(): Promise<TGetLoraTrainingInfoA
         );
 
         if (!res.isError) {
-            console.log(res.responseData);
-
             return res.responseData;
         }
     } catch (err: any) {
@@ -313,7 +307,6 @@ export async function getLoraTrainingInfoAction(): Promise<TGetLoraTrainingInfoA
             if ("isExpiredSession" in err && err.isExpiredSession) {
                 isExpiredSession = true;
             } else {
-                console.log({ err });
                 return {
                     hasError: true,
                     errorMsg: err.errorData.errors,
@@ -369,5 +362,93 @@ export async function triggerTrainingAction(
 
     if (data) {
         return redirect(`${DASHBOARD_BASE_URL}/lora-adaptor/${loraAdaptorId}`);
+    }
+}
+
+export async function getLoraCompletedTrainingListInfoAction(): Promise<TGetLoraCompletedTrainingListInfoActionReturn> {
+    let isExpiredSession = false;
+
+    try {
+        const res = await fetchRequest<
+            undefined,
+            TGetLoraCompletedTrainingListInfoResponse
+        >({
+            method: "get",
+            url: `${MAIN_API_BASE_URL}/lora_adapters_list/`,
+        });
+
+        if (!res.isError) {
+            return res.responseData;
+        }
+    } catch (err: any) {
+        if ("isError" in err && err.isError) {
+            if ("isExpiredSession" in err && err.isExpiredSession) {
+                isExpiredSession = true;
+            } else {
+                return {
+                    hasError: true,
+                    errorMsg: err.errorData.errors,
+                };
+            }
+        }
+    }
+
+    if (isExpiredSession) {
+        return redirect(`${DASHBOARD_BASE_URL}/lora-adaptor`);
+    }
+}
+
+export async function sendMessageToLoraCompletedTrainingAction(
+    lodaAdaptorId: number,
+    state: any,
+    payload: any
+): Promise<TSendMessageToLoraCompletedTrainingActionReturn> {
+    let data: undefined | TSendMessageToLoraCompletedTrainingResponse;
+    let isExpiredSession = false;
+
+    try {
+        const user_text = payload.get("user_text");
+
+        const body: TSendMessageToLoraCompletedTrainingFormBody = {
+            lora_model_id: lodaAdaptorId,
+            user_text,
+        };
+
+        console.log({ body });
+
+        const res = await fetchRequest<
+            TSendMessageToLoraCompletedTrainingFormBody,
+            TSendMessageToLoraCompletedTrainingResponse
+        >({
+            method: "post",
+            url: `${MAIN_API_BASE_URL}/run_lora_adapters/`,
+            body,
+        });
+
+        if (!res.isError) {
+            data = res.responseData;
+            revalidatePath("/lora-adaptor");
+            revalidatePath("/");
+            revalidatePath("/profile");
+        }
+    } catch (err: any) {
+        if ("isError" in err && err.isError) {
+            if ("isExpiredSession" in err && err.isExpiredSession) {
+                isExpiredSession = true;
+            } else {
+                return {
+                    hasError: true,
+                    errorMsg: err.errorData.errors,
+                };
+            }
+        }
+    }
+
+    if (isExpiredSession) {
+        return redirect(`${DASHBOARD_BASE_URL}/lora-adaptor`);
+    }
+
+    if (data) {
+        return data;
     }
 }

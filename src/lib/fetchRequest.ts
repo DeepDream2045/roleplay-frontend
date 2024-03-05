@@ -79,6 +79,7 @@ export async function fetchRequest<TBody, TResponse>({
             url,
             method,
             headers,
+            timeout: 50000,
             // Adjusting to allow body in GET request
             ...(method.toLowerCase() === "get"
                 ? { params: body }
@@ -91,12 +92,10 @@ export async function fetchRequest<TBody, TResponse>({
         // Return a success response
         return { isError: false, responseData: response.data as TResponse };
     } catch (error) {
-        console.log({ error });
         // Handles any errors thrown during the Axios operation or response processing.
         if (axios.isAxiosError(error)) {
             // Customize based on actual error response structure
             const isExpiredSession = error.response?.status === 401;
-            console.log(error.response);
 
             let errors = [];
 
