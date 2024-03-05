@@ -15,6 +15,7 @@ import {
     LR_SCHEDULER_TYPE_CHOICES,
     OPTIMIZER_CHOICES,
 } from "@/constants/constants";
+import InputTextArea from "@/components/atoms/Input/InputTextArea";
 
 type AdaptorCharacterFormPropsType = {
     models: TInputOption[];
@@ -72,15 +73,16 @@ export default function AdaptorCharacterForm({
                             required
                             errorMsg={state.errorMsg.lora_model_name}
                         />
-                        <InputText
+                        <InputTextArea
                             key="lora_short_bio"
                             id="lora_short_bio"
-                            label="LoRA Model Bio"
+                            label="LoRA Model Description"
                             helperText="Description of your LoRA model"
                             placeholder="Select Model"
                             name="lora_short_bio"
                             required
                             errorMsg={state.errorMsg.lora_short_bio}
+                            rows={5}
                         />
                         <InputSelect
                             key="base_model_id"

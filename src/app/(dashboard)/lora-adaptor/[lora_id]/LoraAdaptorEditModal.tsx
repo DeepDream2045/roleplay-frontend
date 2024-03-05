@@ -18,6 +18,7 @@ import {
     LR_SCHEDULER_TYPE_CHOICES,
     OPTIMIZER_CHOICES,
 } from "@/constants/constants";
+import InputTextArea from "@/components/atoms/Input/InputTextArea";
 
 type Props = {
     onClose: () => void;
@@ -135,10 +136,10 @@ const LoraAdaptorEditModal = ({ onClose, models, loraAdaptorData }: Props) => {
                                         }
                                         disabled
                                     />
-                                    <InputText
+                                    <InputTextArea
                                         key="lora_short_bio"
                                         id="lora_short_bio"
-                                        label="LoRA Model Bio"
+                                        label="LoRA Model Description"
                                         helperText="Description of your LoRA model"
                                         placeholder="Select Model"
                                         name="lora_short_bio"
@@ -147,6 +148,7 @@ const LoraAdaptorEditModal = ({ onClose, models, loraAdaptorData }: Props) => {
                                         defaultValue={
                                             loraAdaptorData.lora_short_bio
                                         }
+                                        rows={5}
                                     />
                                     <InputSelect
                                         key="base_model_id"
