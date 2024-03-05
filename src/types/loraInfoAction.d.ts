@@ -224,3 +224,50 @@ export type TSendMessageToLoraCompletedTrainingActionReturn =
           errorMsg: any;
       }
     | undefined;
+
+type TLoraPublicInfo = {
+    id: number;
+    created_date: string;
+    modified_date: string;
+    current_status: "pending" | "running" | "error" | "completed";
+    lora_training_error: string;
+    lora_model_info: {
+        id: number;
+        created_date: string;
+        modified_date: string;
+        lora_model_name: string;
+        lora_short_bio: string;
+        num_train_epochs: number;
+        per_device_train_batch_size: number;
+        learning_rate: number;
+        warmup_steps: number;
+        optimizer: string;
+        lr_scheduler_type: string;
+        gradient_accumulation_steps: number;
+        lora_alpha: number;
+        lora_dropout: number;
+        lora_r: number;
+        lora_bias: string;
+        base_model_id: number;
+        user: number;
+    };
+    user: {
+        id: number;
+        full_name: string;
+        username: string;
+        profile_image: string;
+    };
+};
+
+export type TGetLoraPublicInfoResponse = {
+    message: string;
+    data: TLoraPublicInfo[];
+};
+
+export type TgetLoraPublicInfoActionReturn =
+    | TGetLoraPublicInfoResponse
+    | {
+          hasError: true;
+          errorMsg: any[];
+      }
+    | undefined;

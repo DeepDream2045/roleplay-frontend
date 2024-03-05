@@ -8,6 +8,7 @@ import {
     TGetLoraCompletedTrainingListInfoActionReturn,
     TGetLoraCompletedTrainingListInfoResponse,
     TGetLoraInfoResponse,
+    TGetLoraPublicInfoResponse,
     TGetLoraTrainingInfoActionReturn,
     TGetLoraTrainingInfoResponse,
     TLoraFormPayload,
@@ -19,6 +20,7 @@ import {
     TUpdateLoraFormBody,
     TUpdateLoraResponse,
     TgetLoraInfoActionReturn,
+    TgetLoraPublicInfoActionReturn,
 } from "@/types/loraInfoAction";
 import { fetchRequest } from "./fetchRequest";
 import {
@@ -414,8 +416,6 @@ export async function sendMessageToLoraCompletedTrainingAction(
             user_text,
         };
 
-        console.log({ body });
-
         const res = await fetchRequest<
             TSendMessageToLoraCompletedTrainingFormBody,
             TSendMessageToLoraCompletedTrainingResponse
@@ -450,5 +450,35 @@ export async function sendMessageToLoraCompletedTrainingAction(
 
     if (data) {
         return data;
+    }
+}
+
+export async function getLoraPublicInfoAction(): Promise<TgetLoraPublicInfoActionReturn> {
+    let isExpiredSession = false;
+
+    try {
+        const res = await fetchRequest<undefined, TGetLoraPublicInfoResponse>({
+            method: "get",
+            url: `${MAIN_API_BASE_URL}/public_lora_adapters/`,
+        });
+
+        if (!res.isError) {
+            return res.responseData;
+        }
+    } catch (err: any) {
+        if ("isError" in err && err.isError) {
+            if ("isExpiredSession" in err && err.isExpiredSession) {
+                isExpiredSession = true;
+            } else {
+                return {
+                    hasError: true,
+                    errorMsg: err.errorData.errors,
+                };
+            }
+        }
+    }
+
+    if (isExpiredSession) {
+        return redirect(`${DASHBOARD_BASE_URL}/lora-adaptor`);
     }
 }
