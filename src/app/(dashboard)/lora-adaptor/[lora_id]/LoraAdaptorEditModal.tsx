@@ -273,7 +273,7 @@ const LoraAdaptorEditModal = ({ onClose, models, loraAdaptorData }: Props) => {
                                             key="num_train_epochs"
                                             id="num_train_epochs"
                                             name="num_train_epochs"
-                                            max={100}
+                                            max={10}
                                             min={1}
                                             steps={1}
                                             label="Number of Train Epochs"

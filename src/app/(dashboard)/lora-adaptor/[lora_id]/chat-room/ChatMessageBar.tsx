@@ -65,6 +65,7 @@ const ChatMessageBar = (props: TChatMessageBarProps) => {
                 props.onNewMessage(state.response_message);
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state]);
 
     return (

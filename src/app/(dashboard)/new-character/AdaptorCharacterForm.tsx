@@ -30,7 +30,7 @@ export default function AdaptorCharacterForm({
     const [loraBiasVal, setLoraBiasVal] = useState<TInputOption[]>([
         LORA_BIAS_CHOICES[0],
     ]);
-    const [epochsVal, setEpochsVal] = useState("10");
+    const [epochsVal, setEpochsVal] = useState("5");
     const [batchSizeVal, setBatchSizeVal] = useState("1");
     const [learningRateVal, setLearningRateVal] = useState("0.0002");
     const [warmupStepsVal, setWarmupStepsVal] = useState("100");
@@ -190,7 +190,7 @@ export default function AdaptorCharacterForm({
                                 key="num_train_epochs"
                                 id="num_train_epochs"
                                 name="num_train_epochs"
-                                max={100}
+                                max={10}
                                 min={1}
                                 steps={1}
                                 label="Number of Train Epochs"
