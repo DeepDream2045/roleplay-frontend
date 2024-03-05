@@ -2,14 +2,14 @@
 
 import { getAuthSession } from "@/lib/authSession";
 import Link from "next/link";
-import React from "react";
+import React, { ReactNode } from "react";
 import LoraAdaptorEditDeleteAction from "./LoraAdaptorEditDeleteAction";
 import { TInputOption } from "@/components/atoms/Input/InputType";
 import { getModelInfoListAction } from "@/lib/modelInfoAction";
 import { TLoraInfo } from "@/types/loraInfoAction";
 import {
     getLoraInfoAction,
-    getLoraTrainingInfoAction,
+    getLoraPublicInfoAction,
 } from "@/lib/loraInfoAction";
 import { snakeCaseToTitle } from "@/util/convertTextUtil";
 import LoraAdaptorTrainTrigger from "./LoraAdaptorTrainTrigger";
@@ -23,6 +23,7 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
     const session = await getAuthSession();
     let loraAdaptorShouldAuth: TLoraInfo[] = [];
     let formattedModel: TInputOption[] = [];
+    let loraAdaptorAccessed: TLoraInfo | undefined;
 
     if (session?.access) {
         const loraAdapatorData = await getLoraInfoAction();
@@ -66,69 +67,117 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
         formattedModel = models.map((item) => {
             return { label: item.model_name, value: String(item.id) };
         });
+
+        const loraAdaptorShouldAuthInfo: TLoraInfo | undefined =
+            loraAdaptorShouldAuth.find((lora) => {
+                return (
+                    String(lora.id) === String(lora_id) &&
+                    String(lora.user.id) === String(session.user?.id)
+                );
+            });
+
+        if (loraAdaptorShouldAuthInfo) {
+            loraAdaptorAccessed = loraAdaptorShouldAuthInfo;
+        }
     }
 
-    const loraAdaptorShouldAuthInfo:
-        | (TLoraInfo & {
-              train_status?: "pending" | "running" | "error" | "completed";
-              train_error?: string;
-          })
-        | undefined = loraAdaptorShouldAuth.find((lora) => {
-        return (
-            String(lora.id) === String(lora_id) &&
-            String(lora.user) === String(session.user?.id)
-        );
-    });
+    if (!loraAdaptorAccessed) {
+        const loraAdapatorPublicData = await getLoraPublicInfoAction();
+        if (!loraAdapatorPublicData) {
+            return;
+        }
 
-    if (!loraAdaptorShouldAuthInfo) {
+        if (
+            "hasError" in loraAdapatorPublicData &&
+            loraAdapatorPublicData.hasError
+        ) {
+            return (
+                <>
+                    <h1>{loraAdapatorPublicData.errorMsg[0]}</h1>
+                    {loraAdapatorPublicData.errorMsg
+                        ?.slice(1)
+                        .map((val: string) => {
+                            return <p key={val}>{val}</p>;
+                        })}
+                </>
+            );
+        }
+
+        if (
+            !("hasError" in loraAdapatorPublicData) &&
+            Array.isArray(loraAdapatorPublicData.data)
+        ) {
+            const formattedLoraAdapatorPublicData: TLoraInfo[] =
+                loraAdapatorPublicData.data.map((item) => {
+                    return {
+                        id: item.lora_model_info.id,
+                        created_date: item.lora_model_info.created_date,
+                        modified_date: item.lora_model_info.modified_date,
+                        lora_model_name: item.lora_model_info.lora_model_name,
+                        lora_short_bio: item.lora_model_info.lora_short_bio,
+                        dataset: "",
+                        num_train_epochs: item.lora_model_info.num_train_epochs,
+                        per_device_train_batch_size:
+                            item.lora_model_info.per_device_train_batch_size,
+                        learning_rate: item.lora_model_info.learning_rate,
+                        warmup_steps: item.lora_model_info.warmup_steps,
+                        optimizer: item.lora_model_info.optimizer,
+                        lr_scheduler_type:
+                            item.lora_model_info.lr_scheduler_type,
+                        gradient_accumulation_steps:
+                            item.lora_model_info.gradient_accumulation_steps,
+                        lora_alpha: item.lora_model_info.lora_alpha,
+                        lora_dropout: item.lora_model_info.lora_dropout,
+                        lora_r: item.lora_model_info.lora_r,
+                        lora_bias: item.lora_model_info.lora_bias,
+                        current_status: [
+                            {
+                                id: 999999,
+                                lora_model_info: item.lora_model_info.id,
+                                current_status: item.current_status,
+                                lora_training_error: item.lora_training_error,
+                            },
+                        ],
+                        base_model_id: {
+                            id: item.lora_model_info.base_model_id,
+                            model_name: "unknown-model-name",
+                            short_bio: "unknown-short-bio",
+                        },
+                        user: {
+                            id: item.user.id,
+                            full_name: item.user.full_name,
+                            username: item.user.username,
+                            profile_image: item.user.profile_image,
+                        },
+                    };
+                });
+
+            const loraAdaptorPublicInfo: TLoraInfo | undefined =
+                formattedLoraAdapatorPublicData.find((lora) => {
+                    return String(lora.id) === String(lora_id);
+                });
+
+            if (loraAdaptorPublicInfo) {
+                loraAdaptorAccessed = loraAdaptorPublicInfo;
+            }
+        }
+    }
+
+    if (!loraAdaptorAccessed) {
         return (
             <>
                 <h1>Not Found</h1>
-                <p>Lora Adaptor is not found</p>
+                <p>Lora is not found</p>
             </>
         );
     }
 
-    const loraTrainingStatusData = await getLoraTrainingInfoAction();
-
-    if (!loraTrainingStatusData) {
-        return;
-    }
-
-    if (
-        "hasError" in loraTrainingStatusData &&
-        loraTrainingStatusData.hasError
-    ) {
-        loraAdaptorShouldAuthInfo.train_status = undefined;
-    }
-
-    if (
-        !("hasError" in loraTrainingStatusData) &&
-        Array.isArray(loraTrainingStatusData.data)
-    ) {
-        const currentLoraTrainData = loraTrainingStatusData.data.find((val) => {
-            return (
-                String(val.lora_model_info) ===
-                String(loraAdaptorShouldAuthInfo.id)
-            );
-        });
-
-        if (!currentLoraTrainData) {
-            loraAdaptorShouldAuthInfo.train_status = undefined;
-        } else {
-            loraAdaptorShouldAuthInfo.train_status =
-                currentLoraTrainData.current_status;
-        }
-    }
-
-    const loraAdaptorAccessed = loraAdaptorShouldAuthInfo;
-
     return (
         <div className="flex flex-col pt-5 flex-1 items-center min-h-dvh min-w-full max-h-dvh max-w-full">
-            <div className="flex flex-1 max-h-full overflow-y-scroll max-w-full min-w-full flex-col items-start gap-8 pb-20">
+            <div className="flex flex-1 max-h-full overflow-y-scroll max-w-full min-w-full flex-col items-center gap-8 pb-20">
                 <div
                     key="character_basic_info_container"
-                    className="flex flex-col gap-2 items-start"
+                    className="flex flex-col gap-2 items-start min-w-2xl max-w-2xl"
                 >
                     <header>
                         <h1>Lora Information</h1>
@@ -148,21 +197,29 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                                 Lora Training Status
                             </h3>
                             <p>
-                                {loraAdaptorAccessed?.train_status ||
-                                    "Not Trained"}
+                                {loraAdaptorAccessed?.current_status[0]
+                                    .current_status || "Not Trained"}
                             </p>
                         </div>
-                        {loraAdaptorAccessed?.train_status === "error" && (
-                            <p>{loraAdaptorAccessed?.train_error}</p>
+                        {loraAdaptorAccessed?.current_status[0]
+                            .current_status === "error" && (
+                            <p>
+                                {
+                                    loraAdaptorAccessed?.current_status[0]
+                                        .lora_training_error
+                                }
+                            </p>
                         )}
-                        {(loraAdaptorAccessed?.train_status === "pending" ||
-                            loraAdaptorAccessed?.train_status ===
-                                "running") && (
+                        {(loraAdaptorAccessed?.current_status[0]
+                            .current_status === "pending" ||
+                            loraAdaptorAccessed?.current_status[0]
+                                .current_status === "running") && (
                             <p className="text-sm">
                                 Please refresh to get latest training status
                             </p>
                         )}
-                        {loraAdaptorAccessed?.train_status === undefined && (
+                        {loraAdaptorAccessed?.current_status[0]
+                            .current_status === undefined && (
                             <LoraAdaptorTrainTrigger
                                 loraAdaptorId={loraAdaptorAccessed.id}
                             />
@@ -174,19 +231,21 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                                     String(loraAdaptorAccessed?.user) ===
                                     String(session.user?.id)
                                         ? `/profile`
-                                        : `/profile/${loraAdaptorAccessed?.user}`
+                                        : `/profile/${loraAdaptorAccessed?.user.id}`
                                 }
                                 className="text-blue-500"
                                 target="_blank"
                             >
-                                <p className="font-medium">@NoName </p>
+                                <p className="font-medium">
+                                    @{loraAdaptorAccessed.user.username}
+                                </p>
                             </Link>
                         </div>
                         <div
                             key="character_additional_info_container"
                             className="flex flex-col gap-4"
                         >
-                            {String(loraAdaptorAccessed.user) ===
+                            {String(loraAdaptorAccessed.user.id) ===
                                 String(session.user?.id) && (
                                 <LoraAdaptorEditDeleteAction
                                     models={formattedModel}
@@ -220,7 +279,7 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                                         {
                                             loraAdaptorAccessed[
                                                 val as keyof TLoraInfo
-                                            ]
+                                            ] as ReactNode
                                         }
                                     </p>
                                 </div>
@@ -255,7 +314,7 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                                         {
                                             loraAdaptorAccessed[
                                                 val as keyof TLoraInfo
-                                            ]
+                                            ] as ReactNode
                                         }
                                     </p>
                                 </div>
@@ -264,9 +323,9 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                     </div>
                 </div>
             </div>
-            {loraAdaptorShouldAuthInfo?.train_status === "completed" && (
-                <CreateLoraChatRoomForm lora_id={lora_id} />
-            )}
+            {loraAdaptorAccessed &&
+                loraAdaptorAccessed.current_status[0].current_status ===
+                    "completed" && <CreateLoraChatRoomForm lora_id={lora_id} />}
         </div>
     );
 }
