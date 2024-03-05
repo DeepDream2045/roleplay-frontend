@@ -146,7 +146,10 @@ const LoraAdaptorChatRoomPage = async (
         );
     }
 
-    if (loraAdaptorAccessed.current_status[0].current_status !== "completed") {
+    if (
+        loraAdaptorAccessed.current_status.length === 0 ||
+        loraAdaptorAccessed.current_status[0].current_status !== "completed"
+    ) {
         return (
             <>
                 <h1>Bad Request</h1>

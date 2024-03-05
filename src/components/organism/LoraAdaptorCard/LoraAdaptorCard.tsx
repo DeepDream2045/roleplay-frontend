@@ -27,7 +27,9 @@ const LoraAdaptorCard = ({ lora }: Props) => {
             <div className="flex flex-col font-normal justify-start px-4 py-2 border-b border-blue-300">
                 <h4>Train Status</h4>
                 <p className="text-base mb-4">
-                    {lora.current_status[0].current_status}
+                    {lora.current_status.length > 0
+                        ? lora.current_status[0].current_status
+                        : "Not Trained"}
                 </p>
                 <h4>Description</h4>
                 <p className="line-clamp-2 min-h-[3rem] text-base">

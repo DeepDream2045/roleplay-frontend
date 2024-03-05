@@ -200,7 +200,6 @@ export default function AdaptorCharacterForm({
                                 onChange={(e) => {
                                     setEpochsVal(e.target.value);
                                 }}
-                                helperText={`the value should be from xxx to xxx`}
                                 errorMsg={state.errorMsg.num_train_epochs}
                             />
                             <InputRange

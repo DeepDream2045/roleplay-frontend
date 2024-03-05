@@ -197,29 +197,33 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                                 Lora Training Status
                             </h3>
                             <p>
-                                {loraAdaptorAccessed?.current_status[0]
-                                    .current_status || "Not Trained"}
+                                {loraAdaptorAccessed.current_status.length > 0
+                                    ? loraAdaptorAccessed.current_status[0]
+                                          .current_status
+                                    : "Not Trained"}
                             </p>
                         </div>
-                        {loraAdaptorAccessed?.current_status[0]
-                            .current_status === "error" && (
-                            <p>
-                                {
-                                    loraAdaptorAccessed?.current_status[0]
-                                        .lora_training_error
-                                }
-                            </p>
-                        )}
-                        {(loraAdaptorAccessed?.current_status[0]
-                            .current_status === "pending" ||
+                        {loraAdaptorAccessed.current_status.length > 0 &&
                             loraAdaptorAccessed?.current_status[0]
-                                .current_status === "running") && (
+                                .current_status === "error" && (
+                                <p>
+                                    {
+                                        loraAdaptorAccessed.current_status[0]
+                                            .lora_training_error
+                                    }
+                                </p>
+                            )}
+                        {((loraAdaptorAccessed.current_status.length > 0 &&
+                            loraAdaptorAccessed.current_status[0]
+                                .current_status === "pending") ||
+                            (loraAdaptorAccessed.current_status.length > 0 &&
+                                loraAdaptorAccessed.current_status[0]
+                                    .current_status === "running")) && (
                             <p className="text-sm">
                                 Please refresh to get latest training status
                             </p>
                         )}
-                        {loraAdaptorAccessed?.current_status[0]
-                            .current_status === undefined && (
+                        {loraAdaptorAccessed.current_status.length === 0 && (
                             <LoraAdaptorTrainTrigger
                                 loraAdaptorId={loraAdaptorAccessed.id}
                             />
@@ -324,6 +328,7 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                 </div>
             </div>
             {loraAdaptorAccessed &&
+                loraAdaptorAccessed.current_status.length > 0 &&
                 loraAdaptorAccessed.current_status[0].current_status ===
                     "completed" && <CreateLoraChatRoomForm lora_id={lora_id} />}
         </div>
