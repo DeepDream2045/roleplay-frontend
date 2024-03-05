@@ -75,7 +75,7 @@ export default function SidebarClient({ isLogin }: SidebarClientProps) {
                     iconOnly={pathName.includes("/chats")}
                 />
                 <NavLink
-                    path="/profile"
+                    path="/profile?character=Chatbot"
                     Icon={User}
                     label="Profile"
                     active={pathName.includes("/profile")}

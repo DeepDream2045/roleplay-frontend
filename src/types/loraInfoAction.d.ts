@@ -132,8 +132,23 @@ type TLoraInfo = {
     lora_dropout: number;
     lora_r: number;
     lora_bias: LoraBiasOption;
-    base_model_id: number;
-    user: number;
+    current_status: {
+        id: number;
+        lora_model_info: number;
+        current_status: "pending" | "running" | "completed" | "error";
+        lora_training_error: string;
+    }[];
+    base_model_id: {
+        id: number;
+        model_name: string;
+        short_bio: string;
+    };
+    user: {
+        id: number;
+        full_name: string;
+        username: string;
+        profile_image: string;
+    };
 };
 
 export type TGetLoraInfoResponse = {

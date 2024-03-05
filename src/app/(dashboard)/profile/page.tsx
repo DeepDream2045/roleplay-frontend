@@ -1,6 +1,4 @@
-import Button from "@/components/atoms/Button";
 import Image from "next/image";
-import CharacterCard from "../../components/dashboard/CharacterCard";
 import AskToLogin from "@/components/organism/AskToLogin/AskToLogin";
 import { getAuthSession } from "@/lib/authSession";
 import { getCharacterInfoAction } from "@/lib/characterInfoAction";
@@ -8,9 +6,20 @@ import { MAIN_API_BASE_URL } from "@/constants/environtment";
 import ProfileEditButton from "./ProfileEditButton";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { CharacterInfoType } from "@/types/action";
+import { redirect } from "next/navigation";
+import { getLoraInfoAction } from "@/lib/loraInfoAction";
+import { TLoraInfo } from "@/types/loraInfoAction";
+import ProfileCharacterDisplay from "./ProfileCharacterDisplay";
 
-async function ProfilePage() {
+export type TProfilePageProps = {
+    searchParams: {
+        character: "Chatbot" | "LoraAdaptor" | undefined;
+    };
+};
+async function ProfilePage({ searchParams: { character } }: TProfilePageProps) {
     const session = await getAuthSession();
+    let characters: CharacterInfoType[] = [];
+    let loraAdaptors: TLoraInfo[] = [];
 
     if (!session?.access) {
         return (
@@ -23,21 +32,54 @@ async function ProfilePage() {
         );
     }
 
-    const characterData = await getCharacterInfoAction();
-    if (characterData.hasError) {
-        return (
-            <>
-                <h1>{characterData.errorMsg[0]}</h1>
-                {characterData.errorMsg?.slice(1).map((val: string) => {
-                    return <p key={val}>{val}</p>;
-                })}
-            </>
-        );
+    if (!character || !["Chatbot", "LoraAdaptor"].includes(character)) {
+        redirect("/profile?character=Chatbot");
     }
 
-    let characters: CharacterInfoType[] = [];
-    if (Array.isArray(characterData.characters)) {
-        characters = characterData.characters!;
+    if (character === "Chatbot") {
+        const characterData = await getCharacterInfoAction();
+        if (characterData.hasError) {
+            return (
+                <>
+                    <h1>{characterData.errorMsg[0]}</h1>
+                    {characterData.errorMsg?.slice(1).map((val: string) => {
+                        return <p key={val}>{val}</p>;
+                    })}
+                </>
+            );
+        }
+
+        if (Array.isArray(characterData.characters)) {
+            characters = characterData.characters!;
+        }
+    } else if (character === "LoraAdaptor") {
+        const loraAdaptorData = await getLoraInfoAction();
+
+        if (!loraAdaptorData) {
+            return (
+                <>
+                    <h1>{"Something Wrong Happened"}</h1>
+                </>
+            );
+        }
+
+        if ("hasError" in loraAdaptorData && loraAdaptorData.hasError) {
+            return (
+                <>
+                    <h1>{loraAdaptorData.errorMsg[0]}</h1>
+                    {loraAdaptorData.errorMsg?.slice(1).map((val: string) => {
+                        return <p key={val}>{val}</p>;
+                    })}
+                </>
+            );
+        }
+
+        if (
+            !("hasError" in loraAdaptorData) &&
+            Array.isArray(loraAdaptorData.data)
+        ) {
+            loraAdaptors = loraAdaptorData.data;
+        }
     }
 
     return (
@@ -65,48 +107,20 @@ async function ProfilePage() {
                         <h1>@{session.user?.username}</h1>
                         <p className="text-base">{`No biography provided. Set one by clicking 'Account'.`}</p>
                     </div>
-                    <div className="flex flex-row justify-start">
+                    {/* <div className="flex flex-row justify-start">
                         <ConnectButton />
-                    </div>
+                    </div> */}
                     <div className="flex flex-row gap-4">
                         <ProfileEditButton profileData={session.user} />
-                        {/* <Button size="medium" color="secondary" variant="fill">
-                            Setting
-                        </Button> */}
                     </div>
                 </div>
             </div>
             <hr className="border-t my-4" />
-            <div>
-                <h2>Characters</h2>
-                <p>
-                    Characters created by you. Others can only see public
-                    characters.
-                </p>
-                {/* All Character */}
-                <div className="flex flex-wrap flex-row">
-                    {characters.map((val, index) => {
-                        return (
-                            <CharacterCard
-                                id={`${val.id}`}
-                                key={`${val.id}`}
-                                imageSrc={
-                                    val.image
-                                        ? `${MAIN_API_BASE_URL}${val.image}`
-                                        : "/images/default-image-placeholder.webp"
-                                }
-                                profileImageSrc={
-                                    `${MAIN_API_BASE_URL}${val.user.profile_image}` ||
-                                    "/images/default-image-placeholder.webp"
-                                }
-                                name={val.character_name}
-                                profileName={val.user.full_name}
-                                characterInformation={val}
-                            />
-                        );
-                    })}
-                </div>
-            </div>
+            <ProfileCharacterDisplay
+                characterType={character}
+                characters={characters}
+                loraAdaptors={loraAdaptors}
+            />
         </div>
     );
 }

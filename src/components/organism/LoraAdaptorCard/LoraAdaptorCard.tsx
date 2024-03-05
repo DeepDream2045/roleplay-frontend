@@ -23,16 +23,22 @@ const LoraAdaptorCard = ({ lora }: Props) => {
             <div className="flex text-lg font-semibold items-center px-4 py-2 border-b border-blue-300">
                 {lora.lora_model_name}
             </div>
-            <div className="flex flex-col font-normal px-4 py-2 border-b border-blue-300">
+
+            <div className="flex flex-col font-normal justify-start px-4 py-2 border-b border-blue-300">
+                <h4>Train Status</h4>
+                <p className="text-base mb-4">
+                    {lora.current_status[0].current_status}
+                </p>
                 <h4>Description</h4>
-                <p className="line-clamp-3 min-h-[4.5rem] text-base">
+                <p className="line-clamp-2 min-h-[3rem] text-base">
                     {lora.lora_short_bio}
                 </p>
             </div>
+
             <div className="flex flex-col py-2 px-4">
                 <div className="flex flex-row items-center gap-3">
                     <h4>Creator</h4>
-                    <p className="text-xs">{lora.user}</p>
+                    <p className="text-xs">{lora.user.username}</p>
                 </div>
                 <p className="text-xs">{timeAgo(lora.modified_date)}</p>
             </div>
