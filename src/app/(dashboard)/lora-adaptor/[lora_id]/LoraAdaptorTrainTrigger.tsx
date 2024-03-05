@@ -31,7 +31,7 @@ const LoraAdaptorTrainTrigger = (props: Props) => {
                 type="submit"
                 className="flex-1"
             >
-                Traing Lora
+                Training Lora
             </Button>
         </form>
     );
