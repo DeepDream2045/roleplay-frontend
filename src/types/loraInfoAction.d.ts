@@ -213,9 +213,13 @@ export type TSendMessageToLoraCompletedTrainingFormBody = {
     user_text: string;
 };
 
-export type TSendMessageToLoraCompletedTrainingResponse = {
-    response_message: string;
-};
+export type TSendMessageToLoraCompletedTrainingResponse =
+    | {
+          response_message: string;
+      }
+    | {
+          error: string;
+      };
 
 export type TSendMessageToLoraCompletedTrainingActionReturn =
     | TSendMessageToLoraCompletedTrainingResponse

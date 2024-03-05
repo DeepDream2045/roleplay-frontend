@@ -61,10 +61,15 @@ const ChatMessageBar = (props: TChatMessageBarProps) => {
 
                 props.setWaitForLoraAdaptorChat(false);
             } else {
-                console.log({ response: state.response_message });
+                if ("error" in state) {
+                    setErrorMessage(state.error);
+                    props.setWaitForLoraAdaptorChat(false);
+                } else {
+                    console.log({ response: state.response_message });
 
-                // set response message
-                props.onNewMessage(state.response_message);
+                    // set response message
+                    props.onNewMessage(state.response_message);
+                }
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
