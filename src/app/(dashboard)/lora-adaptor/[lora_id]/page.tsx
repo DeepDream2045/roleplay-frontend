@@ -280,11 +280,10 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                                         {snakeCaseToTitle(val)}
                                     </h3>
                                     <p>
-                                        {
-                                            loraAdaptorAccessed[
+                                        {loraAdaptorAccessed &&
+                                            (loraAdaptorAccessed[
                                                 val as keyof TLoraInfo
-                                            ] as ReactNode
-                                        }
+                                            ] as ReactNode)}
                                     </p>
                                 </div>
                             );
@@ -315,11 +314,10 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                                         {snakeCaseToTitle(val)}
                                     </h3>
                                     <p>
-                                        {
-                                            loraAdaptorAccessed[
+                                        {loraAdaptorAccessed &&
+                                            (loraAdaptorAccessed[
                                                 val as keyof TLoraInfo
-                                            ] as ReactNode
-                                        }
+                                            ] as ReactNode)}
                                     </p>
                                 </div>
                             );
