@@ -264,7 +264,9 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                     </div>
                 </div>
             </div>
-            <CreateLoraChatRoomForm lora_id={lora_id} />
+            {loraAdaptorShouldAuthInfo?.train_status === "completed" && (
+                <CreateLoraChatRoomForm lora_id={lora_id} />
+            )}
         </div>
     );
 }

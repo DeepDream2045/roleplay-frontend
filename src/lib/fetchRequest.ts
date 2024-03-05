@@ -94,6 +94,22 @@ export async function fetchRequest<TBody, TResponse>({
     } catch (error) {
         // Handles any errors thrown during the Axios operation or response processing.
         if (axios.isAxiosError(error)) {
+            console.log("Axios Error: ", error);
+
+            if (error.response?.status && error.response?.status >= 500) {
+                throw {
+                    isError: true,
+                    isExpiredSession: false,
+                    errorData: {
+                        errorTitle: "Internal Server Error",
+                        errorSubtitle: "Please try again later.",
+                        errors: [
+                            "Internal Server Error",
+                            "Please try again later.",
+                        ],
+                    },
+                };
+            }
             // Customize based on actual error response structure
             const isExpiredSession = error.response?.status === 401;
 
@@ -127,6 +143,8 @@ export async function fetchRequest<TBody, TResponse>({
                 errorData,
             };
         }
+
+        console.log("Unexpected Error: ", error);
 
         // Generic or unknown error handling
         throw {

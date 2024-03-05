@@ -53,6 +53,8 @@ const ChatMessageBar = (props: TChatMessageBarProps) => {
                 // set error message
                 if (state?.errorMsg?.error?.user_text) {
                     setErrorMessage(state.errorMsg.error.user_text);
+                } else if (state?.errorMsg && Array.isArray(state.errorMsg)) {
+                    setErrorMessage(state.errorMsg.join(", "));
                 } else {
                     setErrorMessage("Something went wrong, please try again");
                 }
