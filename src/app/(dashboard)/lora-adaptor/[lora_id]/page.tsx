@@ -1,8 +1,7 @@
 "use server";
 
 import { getAuthSession } from "@/lib/authSession";
-import Link from "next/link";
-import React, { ReactNode } from "react";
+import React from "react";
 import LoraAdaptorEditDeleteAction from "./LoraAdaptorEditDeleteAction";
 import { TInputOption } from "@/components/atoms/Input/InputType";
 import { getModelInfoListAction } from "@/lib/modelInfoAction";
@@ -11,7 +10,6 @@ import {
     getLoraInfoAction,
     getLoraPublicInfoAction,
 } from "@/lib/loraInfoAction";
-import { snakeCaseToTitle } from "@/util/convertTextUtil";
 import LoraAdaptorTrainTrigger from "./LoraAdaptorTrainTrigger";
 import CreateLoraChatRoomForm from "./CreateLoraChatRoomForm";
 import LoraAdaptorInformationContainer from "./LoraAdaptorInformationContainer";
@@ -189,6 +187,13 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                     key="character_basic_info_container"
                     className="flex flex-col gap-12 items-start min-w-xl max-w-xl"
                 >
+                    {String(loraAdaptorAccessed.user.id) ===
+                        String(session.user?.id) && (
+                        <LoraAdaptorEditDeleteAction
+                            loraAdaptorData={loraAdaptorAccessed}
+                            models={formattedModel}
+                        />
+                    )}
                     <LoraAdaptorInformationContainer>
                         <LoraAdaptorInformationHeader>
                             Lora Basic Information

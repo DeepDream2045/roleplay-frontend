@@ -18,9 +18,9 @@ const LoraAdaptorEditDeleteAction = (props: Props) => {
 
     return (
         <>
-            <div className="flex flex-row gap-2 items-center justify-between">
+            <div className="flex flex-row w-full items-center justify-between">
                 <div
-                    className="flex flex-col gap-2 justify-center items-center cursor-pointer"
+                    className="flex flex-row gap-2 justify-center items-center cursor-pointer bg-[#25AADA] text-[#EDF7F5] px-8 py-2 rounded-lg"
                     onClick={() => {
                         setEditModalShow(true);
                     }}
@@ -29,7 +29,7 @@ const LoraAdaptorEditDeleteAction = (props: Props) => {
                     <p>Edit</p>
                 </div>
                 <div
-                    className="flex flex-col gap-2 justify-center items-center cursor-pointer"
+                    className="flex flex-row gap-2 justify-center items-center cursor-pointer bg-[#DA254F] text-[#EDF7F5] px-8 py-2 rounded-lg"
                     onClick={() => {
                         setDeleteModalShow(true);
                     }}

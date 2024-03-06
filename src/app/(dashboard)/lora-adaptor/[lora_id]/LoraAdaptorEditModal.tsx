@@ -28,7 +28,7 @@ type Props = {
 
 const LoraAdaptorEditModal = ({ onClose, models, loraAdaptorData }: Props) => {
     const currentBaseModel = models.find((val) => {
-        return String(val.value) === String(loraAdaptorData.base_model_id);
+        return String(val.value) === String(loraAdaptorData.base_model_id.id);
     });
 
     const [baseModelVal, setBaseModelVal] = useState<TInputOption[]>(
