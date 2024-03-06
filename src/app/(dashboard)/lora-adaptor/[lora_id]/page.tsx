@@ -14,6 +14,9 @@ import {
 import { snakeCaseToTitle } from "@/util/convertTextUtil";
 import LoraAdaptorTrainTrigger from "./LoraAdaptorTrainTrigger";
 import CreateLoraChatRoomForm from "./CreateLoraChatRoomForm";
+import LoraAdaptorInformationContainer from "./LoraAdaptorInformationContainer";
+import LoraAdaptorInformationHeader from "./LoraAdaptorInformationHeader";
+import LoraAdaptorInformationItem from "./LoraAdaptorInformationItem";
 
 type TLoraAdaptorPageProps = {
     params: { lora_id: string };
@@ -173,158 +176,124 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
     }
 
     return (
-        <div className="flex flex-col pt-5 flex-1 items-center min-h-dvh min-w-full max-h-dvh max-w-full">
-            <div className="flex flex-1 max-h-full overflow-y-scroll max-w-full min-w-full flex-col items-center gap-8 pb-20">
+        <div className="flex flex-col flex-1 min-h-dvh min-w-full max-h-dvh max-w-full">
+            <div className="flex border-b">
+                <header className="flex flex-row justify-start items-center px-8 min-h-30">
+                    <h1 className="text-4xl leading-[2.75rem]">
+                        {loraAdaptorAccessed?.lora_model_name} Information
+                    </h1>
+                </header>
+            </div>
+            <div className="flex flex-1 max-h-full overflow-y-scroll max-w-full min-w-full flex-col items-center gap-8 py-8">
                 <div
                     key="character_basic_info_container"
-                    className="flex flex-col gap-2 items-start min-w-2xl max-w-2xl"
+                    className="flex flex-col gap-12 items-start min-w-xl max-w-xl"
                 >
-                    <header>
-                        <h1>Lora Information</h1>
-                    </header>
-                    <div
-                        className="flex flex-col gap-2 items-start"
-                        id="lora_basic_info"
-                        key="lora_basic_info"
-                    >
-                        <h2>Lora Basic Information</h2>
-                        <div className="flex flex-row gap-4 items-center justify-center">
-                            <h3 className="font-semibold">Lora Name</h3>
-                            <p>{loraAdaptorAccessed?.lora_model_name}</p>
-                        </div>
-                        <div className="flex flex-row gap-4 items-center justify-center">
-                            <h3 className="font-semibold">
-                                Lora Training Status
-                            </h3>
-                            <p>
-                                {loraAdaptorAccessed.current_status.length > 0
-                                    ? loraAdaptorAccessed.current_status[0]
-                                          .current_status
-                                    : "Not Trained"}
-                            </p>
-                        </div>
-                        {loraAdaptorAccessed.current_status.length > 0 &&
-                            loraAdaptorAccessed?.current_status[0]
-                                .current_status === "error" && (
-                                <p>
-                                    {
-                                        loraAdaptorAccessed.current_status[0]
-                                            .lora_training_error
-                                    }
-                                </p>
-                            )}
-                        {((loraAdaptorAccessed.current_status.length > 0 &&
-                            loraAdaptorAccessed.current_status[0]
-                                .current_status === "pending") ||
-                            (loraAdaptorAccessed.current_status.length > 0 &&
-                                loraAdaptorAccessed.current_status[0]
-                                    .current_status === "running")) && (
-                            <p className="text-sm">
-                                Please refresh to get latest training status
-                            </p>
-                        )}
-                        {loraAdaptorAccessed.current_status.length === 0 && (
-                            <LoraAdaptorTrainTrigger
-                                loraAdaptorId={loraAdaptorAccessed.id}
-                            />
-                        )}
-                        <div className="flex flex-row gap-4 items-center justify-center">
-                            <h3 className="font-semibold">Lora Author</h3>
-                            <Link
-                                href={
-                                    String(loraAdaptorAccessed?.user) ===
-                                    String(session.user?.id)
-                                        ? `/profile`
-                                        : `/profile/${loraAdaptorAccessed?.user.id}`
-                                }
-                                className="text-blue-500"
-                                target="_blank"
-                            >
-                                <p className="font-medium">
-                                    @{loraAdaptorAccessed.user.username}
-                                </p>
-                            </Link>
-                        </div>
-                        <div
-                            key="character_additional_info_container"
-                            className="flex flex-col gap-4"
-                        >
-                            {String(loraAdaptorAccessed.user.id) ===
-                                String(session.user?.id) && (
-                                <LoraAdaptorEditDeleteAction
-                                    models={formattedModel}
-                                    loraAdaptorData={loraAdaptorAccessed!}
-                                />
-                            )}
-                        </div>
-                    </div>
+                    <LoraAdaptorInformationContainer>
+                        <LoraAdaptorInformationHeader>
+                            Lora Basic Information
+                        </LoraAdaptorInformationHeader>
+                        <LoraAdaptorInformationItem
+                            key={`basic_information`}
+                            informations={[
+                                {
+                                    label: "Lora Name",
+                                    value: loraAdaptorAccessed?.lora_model_name,
+                                },
+                                {
+                                    label: "Lora Training Status",
+                                    value:
+                                        loraAdaptorAccessed.current_status
+                                            .length > 0
+                                            ? loraAdaptorAccessed
+                                                  .current_status[0]
+                                                  .current_status
+                                            : "Untrained",
+                                },
+                                {
+                                    label: "Lora Description",
+                                    value: loraAdaptorAccessed?.lora_short_bio,
+                                },
+                                {
+                                    label: "Lora Author",
+                                    value: loraAdaptorAccessed?.user.username,
+                                },
+                            ]}
+                        />
+                    </LoraAdaptorInformationContainer>
 
-                    <div
-                        className="flex flex-col gap-2 items-start"
-                        id="lora_config"
-                        key="lora_config"
-                    >
-                        <h2>Lora Configuration</h2>
-                        {[
-                            "lora_r",
-                            "lora_alpha",
-                            "lora_dropout",
-                            "lora_bias",
-                        ].map((val: string) => {
-                            return (
-                                <div
-                                    className="flex flex-row gap-4 items-center justify-center"
-                                    key={val}
-                                >
-                                    <h3 className="font-semibold">
-                                        {snakeCaseToTitle(val)}
-                                    </h3>
-                                    <p>
-                                        {loraAdaptorAccessed &&
-                                            (loraAdaptorAccessed[
-                                                val as keyof TLoraInfo
-                                            ] as ReactNode)}
-                                    </p>
-                                </div>
-                            );
-                        })}
-                    </div>
+                    <LoraAdaptorInformationContainer>
+                        <LoraAdaptorInformationHeader>
+                            Lora Configuration Information
+                        </LoraAdaptorInformationHeader>
+                        <LoraAdaptorInformationItem
+                            key={`configuration_information`}
+                            informations={[
+                                {
+                                    label: "Lora R",
+                                    value: loraAdaptorAccessed?.lora_r,
+                                },
+                                {
+                                    label: "Lora Alpha",
+                                    value: loraAdaptorAccessed?.lora_alpha,
+                                },
+                                {
+                                    label: "Lora Dropout",
+                                    value: loraAdaptorAccessed?.lora_dropout,
+                                },
+                                {
+                                    label: "Lora Bias",
+                                    value: loraAdaptorAccessed?.lora_bias,
+                                },
+                            ]}
+                        />
+                    </LoraAdaptorInformationContainer>
 
-                    <div
-                        className="flex flex-col gap-2 items-start"
-                        id="lora_config"
-                        key="lora_config"
-                    >
-                        <h2>Lora Training Argument</h2>
-                        {[
-                            "num_train_epochs",
-                            "per_device_train_batch_size",
-                            "learning_rate",
-                            "warmup_steps",
-                            "optimizer",
-                            "lr_scheduler_type",
-                            "gradient_accumulation_steps",
-                        ].map((val: string) => {
-                            return (
-                                <div
-                                    className="flex flex-row gap-4 items-center justify-center"
-                                    key={val}
-                                >
-                                    <h3 className="font-semibold">
-                                        {snakeCaseToTitle(val)}
-                                    </h3>
-                                    <p>
-                                        {loraAdaptorAccessed &&
-                                            (loraAdaptorAccessed[
-                                                val as keyof TLoraInfo
-                                            ] as ReactNode)}
-                                    </p>
-                                </div>
-                            );
-                        })}
-                    </div>
+                    <LoraAdaptorInformationContainer>
+                        <LoraAdaptorInformationHeader>
+                            Lora Training Information
+                        </LoraAdaptorInformationHeader>
+                        <LoraAdaptorInformationItem
+                            key={`training_information`}
+                            informations={[
+                                {
+                                    label: "Num Train Epochs",
+                                    value: loraAdaptorAccessed?.num_train_epochs,
+                                },
+                                {
+                                    label: "Per Device Train Batch Size",
+                                    value: loraAdaptorAccessed?.per_device_train_batch_size,
+                                },
+                                {
+                                    label: "Learning Rate",
+                                    value: loraAdaptorAccessed?.learning_rate,
+                                },
+                                {
+                                    label: "Warmup Steps",
+                                    value: loraAdaptorAccessed?.warmup_steps,
+                                },
+                                {
+                                    label: "Optimizer",
+                                    value: loraAdaptorAccessed?.optimizer,
+                                },
+                                {
+                                    label: "LR Scheduler Type",
+                                    value: loraAdaptorAccessed?.lr_scheduler_type,
+                                },
+                                {
+                                    label: "Gradient Accumulation Steps",
+                                    value: loraAdaptorAccessed?.gradient_accumulation_steps,
+                                },
+                            ]}
+                        />
+                    </LoraAdaptorInformationContainer>
                 </div>
             </div>
+
+            <LoraAdaptorTrainTrigger
+                loraAdaptorId={loraAdaptorAccessed.id}
+                current_status={loraAdaptorAccessed.current_status}
+            />
             {loraAdaptorAccessed &&
                 loraAdaptorAccessed.current_status.length > 0 &&
                 loraAdaptorAccessed.current_status[0].current_status ===

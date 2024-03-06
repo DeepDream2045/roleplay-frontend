@@ -19,6 +19,13 @@ const config: Config = {
       height: {
         "18": "4.5rem",
         "112": "28rem",
+        "30": "7.5rem",
+      },
+      minHeight: {
+        "30": "7.5rem",
+      },
+      maxHeight: {
+        "30": "7.5rem",
       },
       minWidth: {
         md: "28rem",
