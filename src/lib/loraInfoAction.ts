@@ -423,6 +423,7 @@ export async function sendMessageToLoraCompletedTrainingAction(
             method: "post",
             url: `${MAIN_API_BASE_URL}/run_lora_adapters/`,
             body,
+            useAuthSession: false,
         });
 
         if (!res.isError) {
