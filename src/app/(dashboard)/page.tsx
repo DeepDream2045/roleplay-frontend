@@ -103,11 +103,11 @@ async function Dashboard(props: DashboardProps) {
                 </div>
 
                 {/* All Character */}
-                <div className="flex flex-wrap flex-row gap-4">
+                <div className="flex flex-1 flex-row gap-4 flex-wrap  ">
                     {characterData.characters!.map((val, index) => {
                         return (
                             <CharacterCard
-                                key={`char-${index + 1}`}
+                                key={`char-${val.id}`}
                                 id={String(val.id)}
                                 imageSrc={
                                     val.image

@@ -130,14 +130,6 @@ export default function CharacterCard({
                             </p>
                         </>
                     )}
-                    {/* {characterInformation.prompt && (
-                        <>
-                            <h4>Character prompt</h4>
-                            <p className="text-xs line-clamp-[10]">
-                                {characterInformation.prompt}
-                            </p>
-                        </>
-                    )} */}
                     <hr className="border-1 my-3" />
                     <p className="text-xs">
                         {timeAgo(characterInformation.modified_date)}

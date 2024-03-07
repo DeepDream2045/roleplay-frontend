@@ -10,10 +10,12 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         <div className="flex max-w-full">
             <Sidebar />
             <div
-                style={{ maxWidth: "calc(100vw - var(--dynamic-rem))" }}
-                className="min-h-screen flex flex-1 flex-col max-w-full flex-wrap overflow-clip pl-4"
+                style={{ maxWidth: "calc(100vw - var(--dynamic-rem) - 1rem)" }}
+                className="min-h-screen flex flex-1 flex-col max-w-full flex-wrap pl-4"
             >
-                <div className="flex flex-col flex-1">{children}</div>
+                <div className="flex flex-col flex-1 max-w-full">
+                    {children}
+                </div>
             </div>
         </div>
     );

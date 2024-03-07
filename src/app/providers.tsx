@@ -94,13 +94,15 @@ function Providers({ children }: { children: React.ReactNode }) {
         guestHandlers();
     }, []);
 
-    return (
-        <WagmiProvider config={config}>
-            <QueryClientProvider client={queryClient}>
-                <RainbowKitProvider>{children}</RainbowKitProvider>
-            </QueryClientProvider>
-        </WagmiProvider>
-    );
+    // return (
+    //     <WagmiProvider config={config}>
+    //         <QueryClientProvider client={queryClient}>
+    //             <RainbowKitProvider>{children}</RainbowKitProvider>
+    //         </QueryClientProvider>
+    //     </WagmiProvider>
+    // );
+
+    return <>{children}</>;
 }
 
 export default Providers;
