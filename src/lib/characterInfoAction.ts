@@ -15,6 +15,7 @@ import {
 } from "../types/action";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { validateInputChatbotPromptPattern } from "@/util/validationUtil";
 
 export async function createCharacterAction(
     state: TCreateCharacterActionState,
@@ -29,6 +30,16 @@ export async function createCharacterAction(
         const tags = payload.getAll("tags");
         const model_id = payload.get("model_id");
         const prompt = payload.get("prompt");
+
+        if (!validateInputChatbotPromptPattern(prompt)) {
+            return {
+                hasError: true,
+                errorMsg: {
+                    prompt: "Prompt should following this patter key:value and split by new line",
+                },
+            };
+        }
+
         const character_visibility = payload.get("character_visibility");
 
         const initial_message = payload.get("initial_message");
@@ -76,16 +87,24 @@ export async function createCharacterAction(
         data = await req.json();
     } catch (error: Response | unknown) {
         console.log({ error });
-        const errors = await (error as Response).json();
-        console.log({ errors });
-        return {
-            hasError: true,
-            errorMsg:
-                typeof errors === "object" && "error" in errors
-                    ? errors?.error
-                    : errors,
-        };
+        if (error instanceof Response) {
+            const errors = await (error as Response).json();
+            console.log({ errors });
+            return {
+                hasError: true,
+                errorMsg:
+                    typeof errors === "object" && "error" in errors
+                        ? errors?.error
+                        : errors,
+            };
+        } else {
+            return {
+                hasError: true,
+                errorMsg: ["An unexpected error occurred"],
+            };
+        }
     }
+
     if (data) {
         return redirect(`${DASHBOARD_BASE_URL}/character/${data.data.id}`);
     }
@@ -106,6 +125,16 @@ export async function updateCharacterAction(
         const tags = payload.getAll("tags");
         const model_id = payload.get("model_id");
         const prompt = payload.get("prompt");
+
+        if (!validateInputChatbotPromptPattern(prompt)) {
+            return {
+                hasError: true,
+                errorMsg: {
+                    prompt: "Prompt should following this patter key:value and split by new line",
+                },
+            };
+        }
+
         const character_visibility = payload.get("character_visibility");
 
         const initial_message = payload.get("initial_message");
