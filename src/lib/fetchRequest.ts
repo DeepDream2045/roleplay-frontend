@@ -111,7 +111,27 @@ export async function fetchRequest<TBody, TResponse>({
                 };
             }
             // Customize based on actual error response structure
-            const isExpiredSession = error.response?.status === 401;
+            let isExpiredSession = false;
+            if (
+                error.response?.status === 401 &&
+                error.response?.data.detail !==
+                    "Authentication credentials were not provided."
+            ) {
+                isExpiredSession = true;
+            } else {
+                throw {
+                    isError: true,
+                    isExpiredSession: false,
+                    errorData: {
+                        errorTitle: "Unexpected Error",
+                        errorSubtitle: "An unexpected error occurred",
+                        errors: [
+                            "Unexpected Error",
+                            "An unexpected error occurred",
+                        ],
+                    },
+                };
+            }
 
             let errors = [];
 

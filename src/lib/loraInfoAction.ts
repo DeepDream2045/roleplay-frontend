@@ -460,6 +460,7 @@ export async function getLoraPublicInfoAction(): Promise<TgetLoraPublicInfoActio
         const res = await fetchRequest<undefined, TGetLoraPublicInfoResponse>({
             method: "get",
             url: `${MAIN_API_BASE_URL}/public_lora_adapters/`,
+            useAuthSession: false,
         });
 
         if (!res.isError) {
