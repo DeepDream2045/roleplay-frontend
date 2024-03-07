@@ -13,6 +13,7 @@ import React, { useState } from "react";
 import { useFormState } from "react-dom";
 import Button from "@/components/atoms/Button";
 import InputAdditionalInfo from "../../new-character/InputAdditionalInfo";
+import { CHATBOT_PROMPT_PLACEHOLDER } from "@/constants/constants";
 
 type Props = {
     onClose: () => void;
@@ -160,8 +161,7 @@ const CharacterEditModal = ({
                                     name="prompt"
                                     label="Character prompt"
                                     helperText="Provide the exact character description as you want it to be used by the AI to generate responses and messsages."
-                                    placeholder="Name:BulmaBody: Bulma is a 16-year-old girl with green hair  in a braided ponytail with a red ribbon and milky colored skin.
-Mind: Bulma is a complex character, balancing tomboyish and girly traits alongside a temperamental nature. She surprises with her friendliness and helpfulness, approaching major decisions rationally, displaying persistence in achieving her goals..."
+                                    placeholder={CHATBOT_PROMPT_PLACEHOLDER}
                                     required
                                     rows={5}
                                     defaultValue={characterData.prompt}

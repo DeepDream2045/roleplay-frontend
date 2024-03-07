@@ -80,7 +80,10 @@ export async function createCharacterAction(
         console.log({ errors });
         return {
             hasError: true,
-            errorMsg: errors,
+            errorMsg:
+                typeof errors === "object" && "error" in errors
+                    ? errors?.error
+                    : errors,
         };
     }
     if (data) {
@@ -122,15 +125,12 @@ export async function updateCharacterAction(
         form.append("short_bio", short_bio);
         form.append("character_gender", character_gender);
 
-        // tags.forEach((item) => {
-        //     form.append("tags", item);
-        // });
+        console.log({ tags });
+
         if (tags.length > 0) {
-            const formattedTags = tags.map((val) => {
-                return parseInt(val);
-            });
-            form.append("tags", JSON.stringify(formattedTags));
+            form.append("tags", JSON.stringify(tags));
         }
+
         form.append("model_id", model_id);
         form.append("prompt", prompt);
         form.append("character_visibility", character_visibility);

@@ -120,6 +120,18 @@ async function CharacterPage({
 
     const userCharacter = characterShouldAuthInfo || characterInfo;
 
+    if (userCharacter) {
+        userCharacter.prompt = userCharacter.prompt.replace(/\\n/g, "<br />");
+        userCharacter.prompt = userCharacter.prompt.replace(/\n/g, "<br />");
+        if (userCharacter.character_story) {
+            userCharacter.character_story =
+                userCharacter.character_story.replace(/\\n/g, "<br />");
+
+            userCharacter.character_story =
+                userCharacter.character_story.replace(/\n/g, "<br />");
+        }
+    }
+
     return (
         <div className="flex flex-col pt-5 flex-1 items-center min-h-dvh min-w-full max-h-dvh max-w-full">
             <div className="flex flex-1 overflow-y-scroll min-w-full max-w-full justify-center pt-8">
