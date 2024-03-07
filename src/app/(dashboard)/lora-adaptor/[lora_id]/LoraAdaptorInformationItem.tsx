@@ -7,6 +7,7 @@ export type TLoraAdaptorInformationItem = {
 };
 type TLoraAdaptorInformationItemProps = {
     informations: TLoraAdaptorInformationItem[];
+    displayItemContentInRow?: boolean;
 };
 
 const LoraAdaptorInformationItem = (
@@ -23,15 +24,23 @@ const LoraAdaptorInformationItem = (
                 >
                     {row.map((item) => (
                         <div
-                            className="flex flex-col flex-1 gap-2 justify-start items-start"
+                            className={`flex ${
+                                props.displayItemContentInRow
+                                    ? "flex-row items-center"
+                                    : "flex-col items-start"
+                            } flex-1 gap-2 justify-start `}
                             key={item.label}
                         >
-                            <h6 className="text-xl leading-7 line-clamp-1 font-bold">
-                                {item.label}
-                            </h6>
-                            <p className="text-sm leading-5 line-clamp-1">
-                                {item.value}
-                            </p>
+                            <div className="flex flex-1 items-center">
+                                <h6 className="text-xl leading-7 line-clamp-1 font-bold">
+                                    {item.label}
+                                </h6>
+                            </div>
+                            <div className="flex flex-1 items-center">
+                                <p className="text-sm leading-5 line-clamp-1">
+                                    {item.value}
+                                </p>
+                            </div>
                         </div>
                     ))}
                 </div>

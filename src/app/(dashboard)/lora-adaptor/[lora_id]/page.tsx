@@ -233,21 +233,22 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                         </LoraAdaptorInformationHeader>
                         <LoraAdaptorInformationItem
                             key={`configuration_information`}
+                            displayItemContentInRow={true}
                             informations={[
                                 {
-                                    label: "Lora R",
+                                    label: "R",
                                     value: loraAdaptorAccessed?.lora_r,
                                 },
                                 {
-                                    label: "Lora Alpha",
+                                    label: "Alpha",
                                     value: loraAdaptorAccessed?.lora_alpha,
                                 },
                                 {
-                                    label: "Lora Dropout",
+                                    label: "Dropout",
                                     value: loraAdaptorAccessed?.lora_dropout,
                                 },
                                 {
-                                    label: "Lora Bias",
+                                    label: "Bias",
                                     value: loraAdaptorAccessed?.lora_bias,
                                 },
                             ]}
