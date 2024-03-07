@@ -122,131 +122,137 @@ async function CharacterPage({
 
     return (
         <div className="flex flex-col pt-5 flex-1 items-center min-h-dvh min-w-full max-h-dvh max-w-full">
-            <div className="flex flex-1 max-h-full overflow-y-scroll max-w-full min-w-full flex-col items-center gap-8 pb-20">
-                <div key="character_image_container" className="flex">
-                    <Image
-                        src={`${
-                            userCharacter?.image
-                                ? `${MAIN_API_BASE_URL}${userCharacter?.image}`
-                                : "/images/default-image-placeholder.webp"
-                        }`}
-                        width={300}
-                        height={300}
-                        alt={
-                            userCharacter?.character_name ||
-                            "user-character-image"
-                        }
-                        className="w-72 rounded-2xl aspect-square object-cover"
-                        priority
-                    />
-                </div>
-
-                <div
-                    key="character_basic_info_container"
-                    className="flex flex-col gap-2 items-center"
-                >
-                    <h3 className="font-semibold">
-                        {userCharacter?.character_name}
-                    </h3>
-                    <Link
-                        href={
-                            String(userCharacter?.user.id) ===
-                            String(session.user?.id)
-                                ? `/profile`
-                                : `/profile/${userCharacter?.user.id}`
-                        }
-                        className="text-blue-500"
-                        target="_blank"
-                    >
-                        <p className="font-medium">
-                            @{userCharacter?.user.username}
-                        </p>
-                    </Link>
-                </div>
-
-                <div
-                    key="character_additional_info_container"
-                    className="flex flex-col gap-4"
-                >
-                    <div className="flex flex-row gap-2 items-center justify-center">
-                        <p>{"5.0"}</p>
-                        <Rating rating={2.5} />
-                        <p>(2)</p>
-                    </div>
-
-                    <div className="flex flex-row gap-2 items-center justify-center">
-                        {userCharacter?.tags?.map((val) => {
-                            return (
-                                <div
-                                    key={val.id}
-                                    className="text-gray-400 font-semibold border border-gray-300 px-2 py-1 rounded-full"
-                                >
-                                    <p className="text-xs">{val.tag_name}</p>
-                                </div>
-                            );
-                        })}
-                    </div>
-                    {(userCharacter?.user === session.user?.id ||
-                        String(userCharacter?.user.id) ===
-                            String(session.user?.id)) && (
-                        <CharacterEditDeleteAction
-                            characterId={userCharacter!.id}
-                            models={formattedModel}
-                            tags={formattedTag}
-                            characterData={userCharacter!}
+            <div className="flex flex-1 overflow-y-scroll min-w-full max-w-full justify-center pt-8">
+                <div className="flex flex-1 max-h-full  max-w-xl min-w-xl flex-col items-center gap-8 pb-20">
+                    <div key="character_image_container" className="flex">
+                        <Image
+                            src={`${
+                                userCharacter?.image
+                                    ? `${MAIN_API_BASE_URL}${userCharacter?.image}`
+                                    : "/images/default-image-placeholder.webp"
+                            }`}
+                            width={300}
+                            height={300}
+                            alt={
+                                userCharacter?.character_name ||
+                                "user-character-image"
+                            }
+                            className="w-72 rounded-2xl aspect-square object-cover"
+                            priority
                         />
-                    )}
-                </div>
+                    </div>
+                    <div
+                        key="character_basic_info_container"
+                        className="flex flex-col gap-2 items-center"
+                    >
+                        <h3 className="font-semibold">
+                            {userCharacter?.character_name}
+                        </h3>
+                        <Link
+                            href={
+                                String(userCharacter?.user.id) ===
+                                String(session.user?.id)
+                                    ? `/profile`
+                                    : `/profile/${userCharacter?.user.id}`
+                            }
+                            className="text-blue-500"
+                            target="_blank"
+                        >
+                            <p className="font-medium">
+                                @{userCharacter?.user.username}
+                            </p>
+                        </Link>
+                    </div>
 
-                <div
-                    key="character_additional_basic_info_container"
-                    className="flex flex-col gap-4"
-                >
                     <div
-                        key="character_short_description_container"
-                        className="flex flex-col gap-2"
+                        key="character_additional_info_container"
+                        className="flex flex-col gap-4"
                     >
-                        <h3>Short description</h3>
-                        <p>{userCharacter?.short_bio || ""}</p>
+                        <div className="flex flex-row gap-2 items-center justify-center">
+                            <p>{"5.0"}</p>
+                            <Rating rating={2.5} />
+                            <p>(2)</p>
+                        </div>
+
+                        <div className="flex flex-row gap-2 items-center justify-center">
+                            {userCharacter?.tags?.map((val) => {
+                                return (
+                                    <div
+                                        key={val.id}
+                                        className="text-gray-400 font-semibold border border-gray-300 px-2 py-1 rounded-full"
+                                    >
+                                        <p className="text-xs">
+                                            {val.tag_name}
+                                        </p>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        {(userCharacter?.user === session.user?.id ||
+                            String(userCharacter?.user.id) ===
+                                String(session.user?.id)) && (
+                            <CharacterEditDeleteAction
+                                characterId={userCharacter!.id}
+                                models={formattedModel}
+                                tags={formattedTag}
+                                characterData={userCharacter!}
+                            />
+                        )}
                     </div>
+
                     <div
-                        key="character_initial_message_container"
-                        className="flex flex-col gap-2"
+                        key="character_additional_basic_info_container"
+                        className="flex flex-col gap-4"
                     >
-                        <h3>Initial message</h3>
-                        <p>{userCharacter?.initial_message || ""}</p>
-                    </div>
-                    <div
-                        key="character_character_prompt_container"
-                        className="flex flex-col gap-2"
-                    >
-                        <h3>Character prompt</h3>
-                        <p
-                            dangerouslySetInnerHTML={{
-                                __html: userCharacter?.prompt
-                                    ? userCharacter.prompt.replace(
-                                          /\n/g,
-                                          "<br />"
-                                      )
-                                    : "",
-                            }}
-                        ></p>
-                    </div>
-                    <div
-                        key="character_character_story_container"
-                        className="flex flex-col gap-2"
-                    >
-                        <h3>Character Story</h3>
-                        <p
-                            dangerouslySetInnerHTML={{
-                                __html: userCharacter?.character_story
-                                    ? userCharacter.character_story.replace(
-                                          /\n/g,
-                                          "<br />"
-                                      )
-                                    : "",
-                            }}
-                        ></p>
+                        <div
+                            key="character_short_description_container"
+                            className="flex flex-col gap-2"
+                        >
+                            <h3>Short description</h3>
+                            <p>{userCharacter?.short_bio || ""}</p>
+                        </div>
+                        <div
+                            key="character_initial_message_container"
+                            className="flex flex-col gap-2"
+                        >
+                            <h3>Initial message</h3>
+                            <p>{userCharacter?.initial_message || ""}</p>
+                        </div>
+                        <div
+                            key="character_character_prompt_container"
+                            className="flex flex-col gap-2"
+                        >
+                            <h3>Character prompt</h3>
+                            <p
+                                dangerouslySetInnerHTML={{
+                                    __html: userCharacter?.prompt
+                                        ? userCharacter.prompt.replace(
+                                              /\\n/g,
+                                              "<br />"
+                                          )
+                                        : "",
+                                }}
+                            ></p>
+                        </div>
+
+                        {userCharacter?.character_story && (
+                            <div
+                                key="character_character_story_container"
+                                className="flex flex-col gap-2"
+                            >
+                                <h3>Character Story</h3>
+                                <p
+                                    dangerouslySetInnerHTML={{
+                                        __html: userCharacter?.character_story
+                                            ? userCharacter.character_story.replace(
+                                                  /\\n/g,
+                                                  "<br />"
+                                              )
+                                            : "",
+                                    }}
+                                ></p>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

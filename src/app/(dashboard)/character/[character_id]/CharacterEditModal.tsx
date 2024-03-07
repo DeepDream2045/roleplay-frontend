@@ -59,6 +59,14 @@ const CharacterEditModal = ({
         }
     );
 
+    characterData.prompt = characterData.prompt.replace(/\\n/g, "\n");
+    if (characterData.character_story) {
+        characterData.character_story = characterData.character_story.replace(
+            /\\n/g,
+            "\n"
+        );
+    }
+
     return (
         <ModalWrapper>
             <div
