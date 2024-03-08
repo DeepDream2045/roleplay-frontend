@@ -198,100 +198,51 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                         <LoraAdaptorInformationHeader>
                             Lora Basic Information
                         </LoraAdaptorInformationHeader>
-                        <LoraAdaptorInformationItem
-                            key={`basic_information`}
-                            informations={[
-                                {
-                                    label: "Lora Name",
-                                    value: loraAdaptorAccessed?.lora_model_name,
-                                },
-                                {
-                                    label: "Lora Training Status",
-                                    value:
-                                        loraAdaptorAccessed.current_status
-                                            .length > 0
-                                            ? loraAdaptorAccessed
-                                                  .current_status[0]
-                                                  .current_status
-                                            : "Untrained",
-                                },
-                                {
-                                    label: "Lora Description",
-                                    value: loraAdaptorAccessed?.lora_short_bio,
-                                },
-                                {
-                                    label: "Lora Author",
-                                    value: loraAdaptorAccessed?.user.username,
-                                },
-                            ]}
-                        />
-                    </LoraAdaptorInformationContainer>
-
-                    <LoraAdaptorInformationContainer>
-                        <LoraAdaptorInformationHeader>
-                            Lora Configuration Information
-                        </LoraAdaptorInformationHeader>
-                        <LoraAdaptorInformationItem
-                            key={`configuration_information`}
-                            displayItemContentInRow={true}
-                            informations={[
-                                {
-                                    label: "R",
-                                    value: loraAdaptorAccessed?.lora_r,
-                                },
-                                {
-                                    label: "Alpha",
-                                    value: loraAdaptorAccessed?.lora_alpha,
-                                },
-                                {
-                                    label: "Dropout",
-                                    value: loraAdaptorAccessed?.lora_dropout,
-                                },
-                                {
-                                    label: "Bias",
-                                    value: loraAdaptorAccessed?.lora_bias,
-                                },
-                            ]}
-                        />
-                    </LoraAdaptorInformationContainer>
-
-                    <LoraAdaptorInformationContainer>
-                        <LoraAdaptorInformationHeader>
-                            Lora Training Information
-                        </LoraAdaptorInformationHeader>
-                        <LoraAdaptorInformationItem
-                            key={`training_information`}
-                            informations={[
-                                {
-                                    label: "Num Train Epochs",
-                                    value: loraAdaptorAccessed?.num_train_epochs,
-                                },
-                                {
-                                    label: "Per Device Train Batch Size",
-                                    value: loraAdaptorAccessed?.per_device_train_batch_size,
-                                },
-                                {
-                                    label: "Learning Rate",
-                                    value: loraAdaptorAccessed?.learning_rate,
-                                },
-                                {
-                                    label: "Warmup Steps",
-                                    value: loraAdaptorAccessed?.warmup_steps,
-                                },
-                                {
-                                    label: "Optimizer",
-                                    value: loraAdaptorAccessed?.optimizer,
-                                },
-                                {
-                                    label: "LR Scheduler Type",
-                                    value: loraAdaptorAccessed?.lr_scheduler_type,
-                                },
-                                {
-                                    label: "Gradient Accumulation Steps",
-                                    value: loraAdaptorAccessed?.gradient_accumulation_steps,
-                                },
-                            ]}
-                        />
+                        <div className="flex flex-col gap-4">
+                            <div className="flex flex-1 flex-col">
+                                <h6 className="text-xl leading-7 line-clamp-1 font-bold">
+                                    Name
+                                </h6>
+                                <p className="text-sm leading-5">
+                                    {loraAdaptorAccessed.lora_model_name}
+                                </p>
+                            </div>
+                            <div className="flex flex-1 flex-col">
+                                <h6 className="text-xl leading-7 line-clamp-1 font-bold">
+                                    Training Status
+                                </h6>
+                                <p className="text-sm leading-5">
+                                    {loraAdaptorAccessed.current_status.length >
+                                    0
+                                        ? loraAdaptorAccessed.current_status[0]
+                                              .current_status
+                                        : "Untrained"}
+                                </p>
+                            </div>
+                            <div className="flex flex-1 flex-col">
+                                <h6 className="text-xl leading-7 line-clamp-1 font-bold">
+                                    Author
+                                </h6>
+                                <p className="text-sm leading-5">
+                                    {loraAdaptorAccessed.user.username}
+                                </p>
+                            </div>
+                            <div className="flex flex-1 flex-col">
+                                <h6 className="text-xl leading-7 line-clamp-1 font-bold">
+                                    Description
+                                </h6>
+                                <p
+                                    className="text-sm leading-5"
+                                    dangerouslySetInnerHTML={{
+                                        __html: loraAdaptorAccessed?.lora_short_bio
+                                            ? loraAdaptorAccessed.lora_short_bio
+                                                  .replace(/\\n/g, "<br />")
+                                                  .replace(/\n/g, "<br />")
+                                            : "",
+                                    }}
+                                />
+                            </div>
+                        </div>
                     </LoraAdaptorInformationContainer>
                 </div>
             </div>
