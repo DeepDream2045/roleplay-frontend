@@ -12,7 +12,7 @@ function MagicLinkLoginSubmit() {
             type="submit"
             color="primary"
             size="fullWidth"
-            className="mt-4"
+            className="mt-4 text-white-0"
             disabled={pending}
         >
             {pending ? "Loading" : "Sign in with email"}

@@ -18,9 +18,9 @@ export default async function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning>
             <body
-                className={`${inter.className} max-w-vw bg-white-0 dark:bg-black-900`}
+                className={`${inter.className} max-w-vw min-h-dvh max-h-dvh bg-white-0 dark:bg-black-900`}
             >
                 <ThemeProvider
                     attribute="class"
@@ -28,9 +28,11 @@ export default async function RootLayout({
                     enableSystem
                     disableTransitionOnChange
                 >
-                    <Providers>{children}</Providers>
+                    <Providers>
+                        {children}
+                        <div id="modal-wrapper" />
+                    </Providers>
                 </ThemeProvider>
-                <div id="modal-wrapper" />
             </body>
         </html>
     );

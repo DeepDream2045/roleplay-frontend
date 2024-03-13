@@ -16,7 +16,7 @@ function GoogleLoginForm() {
                     variant="custom"
                     color="custom"
                     size="custom"
-                    className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold"
+                    className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold text-white-0"
                     type="button"
                     onClick={() => {
                         router.push(`/api/auth/google`);

@@ -19,8 +19,8 @@ export default function AskToLogin({ title, subtitle }: AskToLoginProps) {
 
     return (
         <>
-            <div className="flex flex-col flex-1 items-center justify-center">
-                <div className="flex flex-col max-w-screen-md">
+            <div className="flex flex-col flex-1 items-center justify-center px-8">
+                <div className="flex flex-col max-w-screen-md justify-center">
                     <h1>{title}</h1>
                     <p className="text-base mt-8 font-normal">{subtitle}</p>
                     <Button
@@ -28,7 +28,7 @@ export default function AskToLogin({ title, subtitle }: AskToLoginProps) {
                         variant="fill"
                         color="primary"
                         size="medium"
-                        className="mt-10"
+                        className="mt-10 text-white-0"
                         onClick={handleModal}
                     >
                         Sign in
