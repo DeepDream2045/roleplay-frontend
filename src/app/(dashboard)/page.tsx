@@ -26,11 +26,12 @@ async function Dashboard(props: DashboardProps) {
         );
     }
 
-    const roomData = await getRoomInfoAction();
     let rooms: TRoomInfo[] = [];
-    if (!roomData.hasError) {
-        rooms = roomData.rooms;
-    }
+
+    // const roomData = await getRoomInfoAction();
+    // if (!roomData.hasError) {
+    //     rooms = roomData.rooms;
+    // }
 
     const tagData = await getPublicTagInfoListAction();
 
@@ -40,8 +41,8 @@ async function Dashboard(props: DashboardProps) {
     }
 
     return (
-        <main className="flex flex-1 max-w-full flex-col">
-            <header className="sticky top-0 flex flex-1 w-full bg-neutral-50 py-2 justify-center z-10">
+        <main className="flex flex-1 max-w-full flex-col bg-transparent">
+            <header className="sticky top-0 flex flex-1 w-full py-2 justify-center z-10">
                 <input
                     type="text"
                     placeholder="Search"

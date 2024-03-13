@@ -117,8 +117,11 @@ export async function fetchRequest<TBody, TResponse>({
                 error.response?.data.detail !==
                     "Authentication credentials were not provided."
             ) {
+                console.log({ error5: error.response?.data });
                 isExpiredSession = true;
             } else {
+                console.log({ error4: error.response?.data });
+
                 throw {
                     isError: true,
                     isExpiredSession: false,

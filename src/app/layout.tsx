@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
 import Providers from "./providers";
+import { ThemeProvider } from "./ThemeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,8 +19,17 @@ export default async function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className={`${inter.className} max-w-vw`}>
-                <Providers>{children}</Providers>
+            <body
+                className={`${inter.className} max-w-vw bg-white-0 dark:bg-black-900`}
+            >
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange
+                >
+                    <Providers>{children}</Providers>
+                </ThemeProvider>
                 <div id="modal-wrapper" />
             </body>
         </html>

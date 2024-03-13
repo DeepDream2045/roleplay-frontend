@@ -32,7 +32,7 @@ import {
 const { wallets } = getDefaultWallets();
 
 const config = getDefaultConfig({
-    appName: "Roleplay Project",
+    appName: "My RainbowKit App",
     projectId: process.env.RAINBOW_KIT_PROJECT_ID || "YOUR_PROJECT_ID",
     wallets: [
         ...wallets,
@@ -94,15 +94,15 @@ function Providers({ children }: { children: React.ReactNode }) {
         guestHandlers();
     }, []);
 
-    // return (
-    //     <WagmiProvider config={config}>
-    //         <QueryClientProvider client={queryClient}>
-    //             <RainbowKitProvider>{children}</RainbowKitProvider>
-    //         </QueryClientProvider>
-    //     </WagmiProvider>
-    // );
+    return (
+        <WagmiProvider config={config}>
+            <QueryClientProvider client={queryClient}>
+                <RainbowKitProvider>{children}</RainbowKitProvider>
+            </QueryClientProvider>
+        </WagmiProvider>
+    );
 
-    return <>{children}</>;
+    // return <>{children}</>;
 }
 
 export default Providers;

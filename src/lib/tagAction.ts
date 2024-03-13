@@ -24,6 +24,8 @@ export async function getTagInfoListAction() {
         return { hasError: false, tags: data };
     } catch (err) {
         let errors = [];
+        console.log({ err });
+
         if (err instanceof Response) {
             console.log(err.status);
             if (err.status === 401) {

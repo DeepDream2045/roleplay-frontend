@@ -107,9 +107,9 @@ async function ProfilePage({ searchParams: { character } }: TProfilePageProps) {
                         <h1>@{session.user?.username}</h1>
                         <p className="text-base">{`No biography provided. Set one by clicking 'Account'.`}</p>
                     </div>
-                    {/* <div className="flex flex-row justify-start">
+                    <div className="flex flex-row justify-start">
                         <ConnectButton />
-                    </div> */}
+                    </div>
                     <div className="flex flex-row gap-4">
                         <ProfileEditButton profileData={session.user} />
                     </div>
