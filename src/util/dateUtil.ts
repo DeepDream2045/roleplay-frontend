@@ -1,4 +1,4 @@
-export function timeAgo(dateString: string): string {
+export function timeAgo(dateString: string): string[] {
     const date = new Date(dateString);
     const now = new Date();
 
@@ -10,18 +10,16 @@ export function timeAgo(dateString: string): string {
     const yearsAgo = Math.round(monthsAgo / 12);
 
     if (secondsAgo < 60) {
-        return "last update just now";
+        return [String(secondsAgo), `Second${secondsAgo > 1 ? "s" : ""} ago`];
     } else if (minutesAgo < 60) {
-        return `Last update ${minutesAgo} minute${
-            minutesAgo > 1 ? "s" : ""
-        } ago`;
+        return [`${minutesAgo}`, `Minute${minutesAgo > 1 ? "s" : ""} ago`];
     } else if (hoursAgo < 24) {
-        return `Last update ${hoursAgo} hour${hoursAgo > 1 ? "s" : ""} ago`;
+        return [`${hoursAgo}`, `Hour${hoursAgo > 1 ? "s" : ""} ago`];
     } else if (daysAgo < 30) {
-        return `Last update ${daysAgo} day${daysAgo > 1 ? "s" : ""} ago`;
+        return [`${daysAgo}`, `Day${daysAgo > 1 ? "s" : ""} ago`];
     } else if (monthsAgo < 12) {
-        return `Last update ${monthsAgo} month${monthsAgo > 1 ? "s" : ""} ago`;
+        return [`${monthsAgo}`, `Month${monthsAgo > 1 ? "s" : ""} ago`];
     } else {
-        return `Last update ${yearsAgo} year${yearsAgo > 1 ? "s" : ""} ago`;
+        return [`${yearsAgo}`, `Year${yearsAgo > 1 ? "s" : ""} ago`];
     }
 }

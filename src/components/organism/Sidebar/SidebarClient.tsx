@@ -49,7 +49,7 @@ export default function SidebarClient({ isLogin }: SidebarClientProps) {
             <aside
                 id="sidebar"
                 // className={`flex flex-col h-screen sticky top-0 max-w-16 ${sidebarSize} py-4 border-r`}
-                className={`flex flex-row w-full z-20 top-0 justify-between items-center sticky py-4 px-4`}
+                className={`flex flex-row w-full justify-between items-center sticky z-20 top-0  py-4 px-4 bg-white-0 dark:bg-black-900`}
             >
                 {/* Sidebar Mobile for toggle */}
                 {/* Toggle Button */}

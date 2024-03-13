@@ -1,6 +1,6 @@
 "use client";
 
-import { CharacterInfoType } from "@/types/action";
+import convertImageSrcUtil from "@/util/convertImageSrcUtil";
 import { timeAgo } from "@/util/dateUtil";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -8,20 +8,24 @@ import { useEffect, useRef, useState } from "react";
 
 interface CharacterCardProps {
     id: string;
-    name: string;
-    imageSrc: string;
-    profileImageSrc: string;
-    profileName: string;
-    characterInformation: CharacterInfoType;
+    chatbotImageSrc: string | null;
+    chatbotName: string;
+    chatbotDescription: string;
+    creatorImageSrc: string | null;
+    creatorUsername: string;
+    chatbotTotalReviews: number;
+    chatbotLastModifiedDate: string;
 }
 
 export default function CharacterCard({
     id,
-    name,
-    imageSrc,
-    profileImageSrc,
-    profileName,
-    characterInformation,
+    chatbotImageSrc,
+    chatbotName,
+    chatbotDescription,
+    creatorImageSrc,
+    creatorUsername,
+    chatbotTotalReviews,
+    chatbotLastModifiedDate,
 }: CharacterCardProps) {
     const router = useRouter();
     const containerRef = useRef<HTMLDivElement>(null);
@@ -55,84 +59,89 @@ export default function CharacterCard({
     return (
         <div
             ref={containerRef}
-            className="w-72 p-4 flex flex-col cursor-pointer relative group"
+            className="p-2.5 rounded-md flex flex-col cursor-pointer relative group bg-white-100 dark:bg-black-500"
             onClick={(e) => {
                 e.preventDefault();
                 router.push(`/character/${id}`, {});
             }}
         >
             {/* Character Card Show */}
-            <div className="flex flex-col gap-4">
-                <div className="flex flex-col">
+            <div className="flex flex-col">
+                <div className="flex flex-col relative aspect-square rounded-sm">
                     <Image
-                        src={imageSrc}
-                        width={100}
-                        height={100}
-                        alt={`${name} character picture`}
+                        src={convertImageSrcUtil(chatbotImageSrc)}
+                        alt={`${chatbotName} image`}
                         quality={100}
                         priority
                         unoptimized
-                        className="w-72 aspect-square rounded-lg object-cover object-center"
+                        fill
+                        className="object-cover object-center"
                     />
-                </div>
-
-                <div className="flex flex-row flex-1 gap-4">
-                    <div>
+                    <div className="absolute -bottom-5 rounded-full w-10 aspect-square left-1/2 -translate-x-1/2">
                         <Image
-                            src={profileImageSrc}
-                            width={100}
-                            height={100}
-                            alt={`${profileName} profile picture`}
-                            className="rounded-full w-8 aspect-square object-cover object-center"
+                            src={convertImageSrcUtil(creatorImageSrc)}
+                            alt={`${creatorUsername} image`}
+                            fill
+                            className="object-cover object-center rounded-full"
                         />
                     </div>
+                </div>
 
-                    <div className="flex flex-col">
-                        <p className="text-base font-semibold truncate">
-                            {name || "No Character Name"}
+                <div className="flex flex-col flex-1 gap-2 items-center mt-7">
+                    <div className="flex flex-col gap-[0.125rem] items-center">
+                        <p className="text-xs line-clamp-1 leading-normal font-bold text-black-500 dark:text-white-0">
+                            {chatbotName}
                         </p>
 
-                        <div className="flex flex-col gap-1 font-light">
-                            <p className="text-sm">
-                                @
-                                {characterInformation.user.username ||
-                                    "No Name"}
-                            </p>
+                        <p className="text-[0.5rem] line-clamp-1 leading-normal font-normal text-black-200">
+                            @{creatorUsername}
+                        </p>
+                    </div>
+                    <p className="text-[0.625rem] min-h-[1.875rem] line-clamp-2 leading-normal font-normal text-black-500 dark:text-white-0">
+                        @{chatbotDescription}
+                    </p>
 
-                            <div>
-                                <p className="text-xs">
-                                    {timeAgo(
-                                        characterInformation.modified_date
-                                    )}
-                                </p>
-                            </div>
+                    <div className="flex flex-row gap-3">
+                        <div className="flex flex-1 flex-col items-center">
+                            <p className="text-sm leading-normal line-clamp-1 font-bold text-black-500 dark:text-white-0">
+                                {chatbotTotalReviews}
+                            </p>
+                            <p className="text-[0.625rem] line-clamp-1 leading-normal font-normal text-black-100">
+                                Comments
+                            </p>
+                        </div>
+                        <div className="flex flex-1 flex-col items-center">
+                            <p className="text-sm leading-normal line-clamp-1 font-bold text-black-500 dark:text-white-0">
+                                {timeAgo(chatbotLastModifiedDate)[0]}
+                            </p>
+                            <p className="text-[0.625rem] line-clamp-1 leading-normal font-normal text-black-100">
+                                {timeAgo(chatbotLastModifiedDate)[1]}
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
             {/* Character Detail Information show on hover */}
             <div
-                className={`absolute hidden group-hover:flex flex-col bg-white shadow-lg rounded-md border border-gray-200 z-50 ${
+                className={`absolute hidden group-hover:flex flex-col bg-white-0 dark:bg-black-900 shadow-lg rounded-md border border-gray-200 z-50 ${
                     hoverOnLeft ? "right-full" : "left-full"
                 } top-4 min-w-[18rem] p-4`}
             >
                 <div className="overflow-hidden flex flex-col gap-1">
-                    <h3>{characterInformation.character_name}</h3>
+                    <h3>{chatbotName}</h3>
                     <h4>Creator</h4>
-                    <p className="text-xs">
-                        {characterInformation.user.username}
-                    </p>
-                    {characterInformation.short_bio && (
+                    <p className="text-xs">{creatorUsername}</p>
+                    {chatbotDescription && (
                         <>
                             <h4>Short Description</h4>
                             <p className="text-xs line-clamp-5">
-                                {characterInformation.short_bio}
+                                {chatbotDescription}
                             </p>
                         </>
                     )}
                     <hr className="border-1 my-3" />
                     <p className="text-xs">
-                        {timeAgo(characterInformation.modified_date)}
+                        {timeAgo(chatbotLastModifiedDate).join(" ")}
                     </p>
                 </div>
             </div>
