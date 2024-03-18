@@ -1,31 +1,37 @@
 "use client";
 
+import { Tag } from "@/types/action";
 import convertImageSrcUtil from "@/util/convertImageSrcUtil";
 import { timeAgo } from "@/util/dateUtil";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import ChatbotImage from "./ChatbotImage";
+import ChatbotTagContainer from "./ChatbotTagContainer";
+import ChatbotDetailContainer from "./ChatbotDetailContainer";
 
-interface CharacterCardProps {
+export type CharacterCardProps = {
     id: string;
     chatbotImageSrc: string | null;
     chatbotName: string;
     chatbotDescription: string;
-    creatorImageSrc: string | null;
-    creatorUsername: string;
     chatbotTotalReviews: number;
     chatbotLastModifiedDate: string;
-}
+    chatbotTags: Tag[];
+    creatorImageSrc: string | null;
+    creatorUsername: string;
+};
 
 export default function CharacterCard({
     id,
     chatbotImageSrc,
     chatbotName,
     chatbotDescription,
-    creatorImageSrc,
-    creatorUsername,
     chatbotTotalReviews,
     chatbotLastModifiedDate,
+    chatbotTags,
+    creatorImageSrc,
+    creatorUsername,
 }: CharacterCardProps) {
     const router = useRouter();
     const containerRef = useRef<HTMLDivElement>(null);
@@ -59,68 +65,30 @@ export default function CharacterCard({
     return (
         <div
             ref={containerRef}
-            className="p-6 w-82 max-w-82 rounded-md flex flex-col cursor-pointer relative group bg-white-0 dark:bg-black-500"
+            className="p-6 w-82 max-w-82 h-95 max-h-95 rounded-2xl flex flex-col cursor-pointer relative group bg-white-0 dark:bg-black-500"
             onClick={(e) => {
                 e.preventDefault();
                 router.push(`/character/${id}`, {});
             }}
         >
             {/* Character Card Show */}
-            <div className="flex flex-col gap-4">
-                <div className="flex flex-col relative aspect-square rounded-xl">
-                    <Image
-                        src={convertImageSrcUtil(chatbotImageSrc)}
-                        alt={`${chatbotName} image`}
-                        quality={100}
-                        priority
-                        unoptimized
-                        fill
-                        className="object-cover object-center rounded-xl"
-                    />
-                    <div className="absolute -bottom-5 rounded-full w-10 aspect-square left-1/2 -translate-x-1/2">
-                        <Image
-                            src={convertImageSrcUtil(creatorImageSrc)}
-                            alt={`${creatorUsername} image`}
-                            fill
-                            className="object-cover object-center rounded-full"
-                        />
-                    </div>
-                </div>
-
-                <div className="flex flex-col flex-1 gap-2 items-center mt-7">
-                    <div className="flex flex-col gap-[0.125rem] items-center">
-                        <p className="text-xs line-clamp-1 leading-normal font-bold text-black-500 dark:text-white-0">
-                            {chatbotName}
-                        </p>
-
-                        <p className="text-[0.5rem] line-clamp-1 leading-normal font-normal text-black-200">
-                            @{creatorUsername}
-                        </p>
-                    </div>
-                    <p className="text-[0.625rem] min-h-[1.875rem] line-clamp-2 leading-normal font-normal text-black-500 dark:text-white-0">
-                        @{chatbotDescription}
-                    </p>
-
-                    <div className="flex flex-row gap-3">
-                        <div className="flex flex-1 flex-col items-center">
-                            <p className="text-sm leading-normal line-clamp-1 font-bold text-black-500 dark:text-white-0">
-                                {chatbotTotalReviews}
-                            </p>
-                            <p className="text-[0.625rem] line-clamp-1 leading-normal font-normal text-black-100">
-                                Comments
-                            </p>
-                        </div>
-                        <div className="flex flex-1 flex-col items-center">
-                            <p className="text-sm leading-normal line-clamp-1 font-bold text-black-500 dark:text-white-0">
-                                {timeAgo(chatbotLastModifiedDate)[0]}
-                            </p>
-                            <p className="text-[0.625rem] line-clamp-1 leading-normal font-normal text-black-100">
-                                {timeAgo(chatbotLastModifiedDate)[1]}
-                            </p>
-                        </div>
-                    </div>
-                </div>
+            <div className="flex flex-col gap-4 flex-1 max-h-full">
+                <ChatbotImage
+                    chatbotImageSrc={chatbotImageSrc}
+                    chatbotName={chatbotName}
+                />
+                {/* Character Card Tag */}
+                <ChatbotTagContainer chatbotTags={chatbotTags} />
+                <ChatbotDetailContainer
+                    chatbotDescription={chatbotDescription}
+                    chatbotLastModifiedDate={chatbotLastModifiedDate}
+                    chatbotTotalReviews={chatbotTotalReviews}
+                    chatbotName={chatbotName}
+                    creatorImageSrc={creatorImageSrc}
+                    creatorUsername={creatorUsername}
+                />
             </div>
+
             {/* Character Detail Information show on hover */}
             <div
                 className={`absolute hidden group-hover:flex flex-col bg-white-0 dark:bg-black-900 shadow-lg rounded-md border border-gray-200 z-50 ${
@@ -128,12 +96,18 @@ export default function CharacterCard({
                 } top-4 min-w-[18rem] p-4`}
             >
                 <div className="overflow-hidden flex flex-col gap-1">
-                    <h3>{chatbotName}</h3>
-                    <h4>Creator</h4>
+                    <h3 className="font-bold text-sm leading-normal text-black-900 line-clamp-1">
+                        {chatbotName}
+                    </h3>
+                    <h4 className="font-semibold text-sm leading-normal text-black-900 line-clamp-1">
+                        Creator
+                    </h4>
                     <p className="text-xs">{creatorUsername}</p>
                     {chatbotDescription && (
                         <>
-                            <h4>Short Description</h4>
+                            <h4 className="font-semibold text-sm leading-normal text-black-900 line-clamp-1">
+                                Short Description
+                            </h4>
                             <p className="text-xs line-clamp-5">
                                 {chatbotDescription}
                             </p>

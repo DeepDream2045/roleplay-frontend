@@ -68,6 +68,7 @@ async function Dashboard(props: DashboardProps) {
                             chatbotImageSrc={val.image}
                             chatbotName={val.character_name}
                             chatbotDescription={val.short_bio}
+                            chatbotTags={val.tags}
                             creatorImageSrc={val.user.profile_image}
                             creatorUsername={val.user.username}
                             chatbotTotalReviews={0}

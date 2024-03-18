@@ -15,6 +15,7 @@ const config: Config = {
       },
       fontSize: {
         inherit: "inherit",
+        2: "0.5rem",
         3: "0.75rem",
         4: "1rem",
         5: "1.25rem",
@@ -49,8 +50,10 @@ const config: Config = {
         25: "6.25rem",
         30: "7.5rem",
         62: "15.5rem",
+        70: "17.5rem",
         72: "18rem",
         82: "20.5rem",
+        95: "23.75rem",
         112: "28rem",
         128: "32rem",
         144: "36rem",
