@@ -12,7 +12,7 @@ function CreateLoraChatRoomForm({ lora_id }: TCreateLoraChatRoomFormProps) {
     const router = useRouter();
 
     return (
-        <div className="flex flex-row w-full left-0 items-center justify-center ml-[-1.75rem] bg-white-0">
+        <div className="flex flex-row w-screen-md left-0 items-center justify-center rounded-b-xl bg-white-0">
             <Button
                 type="button"
                 variant="fill"

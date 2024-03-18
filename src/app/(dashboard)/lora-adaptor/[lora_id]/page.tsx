@@ -180,7 +180,7 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
 
     return (
         <div className="relative flex flex-col flex-1 max-h-full justify-center items-center pt-10">
-            <div className="relative max-w-screen-md min-w-screen-md overflow-y-scroll scrollbar-hide bg-white-0 flex flex-col gap-4 rounded-xl px-10 py-10">
+            <div className="relative max-w-screen-md min-w-screen-md overflow-y-scroll scrollbar-hide bg-white-0 flex flex-col gap-4 rounded-t-xl px-10 py-10">
                 <LoraExtraInfo
                     loraAdaptorLastModifiedDate={
                         loraAdaptorAccessed.modified_date
