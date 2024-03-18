@@ -41,7 +41,7 @@ const LoraExtraInfo = ({
                 {toTitleCase(trainStatus)}
             </div>
             <p className={`text-black-200 text-sm leading-normal`}>
-                {timeAgo(loraAdaptorLastModifiedDate)}
+                {timeAgo(loraAdaptorLastModifiedDate).join(" ")}
             </p>
         </div>
     );
