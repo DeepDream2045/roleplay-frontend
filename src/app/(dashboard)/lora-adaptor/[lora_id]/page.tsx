@@ -187,9 +187,11 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                     }
                     loraAdaptorTrainStatus={loraAdaptorAccessed.current_status}
                 />
-                <h4 className="text-5 font-semibold leading-none text-black-900 line-clamp-1">
-                    {loraAdaptorAccessed.lora_model_name}
-                </h4>
+                <div>
+                    <h3 className="text-5 leading-[100%] font-semibold text-black-900 line-clamp-1">
+                        {loraAdaptorAccessed.lora_model_name}
+                    </h3>
+                </div>
                 <div className="flex flex-row items-center justify-start gap-2">
                     <div className="w-8 h-8 relative rounded-full aspect-square">
                         <Image
@@ -214,7 +216,7 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                 )}
 
                 <div className="flex flex-col gap-2">
-                    <h3 className="text-5 leading-none font-semibold text-black-900">
+                    <h3 className="text-5 leading-[100%] font-semibold text-black-900">
                         Description
                     </h3>
                     <p
@@ -230,7 +232,7 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                    <h3 className="text-5 leading-none font-semibold text-black-900">
+                    <h3 className="text-5 leading-[100%] font-semibold text-black-900">
                         Lora Training Information
                     </h3>
                     <div className="grid grid-flow-row grid-cols-4 gap-2">
@@ -270,7 +272,7 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                    <h3 className="text-5 leading-none font-semibold text-black-900">
+                    <h3 className="text-5 leading-[100%] font-semibold text-black-900">
                         Lora Configuration Information
                     </h3>
                     <div className="grid grid-flow-row grid-cols-4 gap-2">
