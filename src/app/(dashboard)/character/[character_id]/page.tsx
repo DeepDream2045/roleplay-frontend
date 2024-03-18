@@ -26,6 +26,7 @@ async function CharacterPage({
 }: TCharacterPageProps) {
     const session = await getAuthSession();
     let characterShouldAuth: CharacterInfoType[] = [];
+    let characterInfo: CharacterInfoType | undefined;
     let formattedModel: TInputOption[] = [];
     let formattedTag: TInputOption[] = [];
 
@@ -87,20 +88,24 @@ async function CharacterPage({
 
     const characterPublicData = await getPublicCharacterInfoAction();
 
-    if (characterPublicData.hasError) {
-        return (
-            <>
-                <h1>{characterPublicData.errorMsg[0]}</h1>
-                {characterPublicData.errorMsg?.slice(1).map((val: string) => {
-                    return <p key={val}>{val}</p>;
-                })}
-            </>
-        );
-    }
+    if (characterPublicData) {
+        if (characterPublicData.hasError) {
+            return (
+                <>
+                    <h1>{characterPublicData.errorMsg[0]}</h1>
+                    {characterPublicData.errorMsg
+                        ?.slice(1)
+                        .map((val: string) => {
+                            return <p key={val}>{val}</p>;
+                        })}
+                </>
+            );
+        }
 
-    const characterInfo = characterPublicData.characters?.find((char) => {
-        return String(char.id) === character_id;
-    });
+        characterInfo = characterPublicData.characters?.find((char) => {
+            return String(char.id) === character_id;
+        });
+    }
 
     const characterShouldAuthInfo = characterShouldAuth.find((char) => {
         return (

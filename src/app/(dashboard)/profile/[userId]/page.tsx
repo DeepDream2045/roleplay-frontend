@@ -3,25 +3,30 @@ import CharacterCard from "@/app/components/dashboard/CharacterCard";
 import { getPublicCharacterInfoAction } from "@/lib/characterInfoAction";
 import { MAIN_API_BASE_URL } from "@/constants/environtment";
 import { notFound } from "next/navigation";
+import { CharacterInfoType } from "@/types/action";
 
 async function ProfilePage({
     params: { userId },
 }: {
     params: { userId: string };
 }) {
-    const characterData = await getPublicCharacterInfoAction();
-    if (characterData.hasError) {
-        return (
-            <>
-                <h1>{characterData.errorMsg[0]}</h1>
-                {characterData.errorMsg?.slice(1).map((val: string) => {
-                    return <p key={val}>{val}</p>;
-                })}
-            </>
-        );
-    }
+    let characters: CharacterInfoType[] = [];
 
-    const characters = characterData.characters!;
+    const characterData = await getPublicCharacterInfoAction();
+    if (characterData) {
+        if (characterData.hasError) {
+            return (
+                <>
+                    <h1>{characterData.errorMsg[0]}</h1>
+                    {characterData.errorMsg?.slice(1).map((val: string) => {
+                        return <p key={val}>{val}</p>;
+                    })}
+                </>
+            );
+        }
+
+        characters = characterData.characters!;
+    }
 
     const filteredCharacters = characters.filter((val) => {
         return String(val.user.id) === userId;
@@ -68,26 +73,16 @@ async function ProfilePage({
                     {filteredCharacters.map((val, index) => {
                         return (
                             <CharacterCard
-                                id={`${val.id}`}
-                                key={`${val.id}`}
-                                imageSrc={
-                                    val.image
-                                        ? `${MAIN_API_BASE_URL}${val.image}`
-                                        : "/images/default-image-placeholder.webp"
-                                }
-                                profileImageSrc={
-                                    val?.user?.profile_image &&
-                                    val.user.profile_image.length > 0
-                                        ? val.user.profile_image.includes(
-                                              "http"
-                                          )
-                                            ? val.user.profile_image
-                                            : `${MAIN_API_BASE_URL}${val.user.profile_image}`
-                                        : "/images/default-image-placeholder.webp"
-                                }
-                                name={val.character_name}
-                                profileName={val.user.full_name}
-                                characterInformation={val}
+                                key={`char-${val.id}`}
+                                id={String(val.id)}
+                                chatbotImageSrc={val.image}
+                                chatbotName={val.character_name}
+                                chatbotDescription={val.short_bio}
+                                chatbotTags={val.tags}
+                                creatorImageSrc={val.user.profile_image}
+                                creatorUsername={val.user.username}
+                                chatbotTotalReviews={0}
+                                chatbotLastModifiedDate={val.modified_date}
                             />
                         );
                     })}
