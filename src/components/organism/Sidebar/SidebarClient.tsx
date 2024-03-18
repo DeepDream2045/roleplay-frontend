@@ -7,10 +7,9 @@ import {
     MessageCircleMore,
     User,
     LogOut,
-    PanelLeftCloseIcon,
-    LucidePanelLeftOpen,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import BrandLogo from "@/../public/icons/BrandLogo.svg";
 
 interface SidebarClientProps {
     isLogin: boolean;
@@ -46,36 +45,16 @@ export default function SidebarClient({ isLogin }: SidebarClientProps) {
     );
     return (
         <>
-            <aside
-                id="sidebar"
-                // className={`flex flex-col h-screen sticky top-0 max-w-16 ${sidebarSize} py-4 border-r`}
-                className={`flex flex-row w-full justify-between items-center sticky z-20 top-0  py-4 px-4 bg-white-0 dark:bg-black-900`}
-            >
-                {/* Sidebar Mobile for toggle */}
-                {/* Toggle Button */}
-                <LucidePanelLeftOpen
-                    className="w-6 h-6"
-                    onClick={toggleSidebar}
-                />
-                {/* Website Name */}
-                <h2 className="text-2xl">ComChat</h2>
-                {/* Search Icon */}
-                <div className="flex w-6 h-6"></div>
-            </aside>
             {/* Navbar that will show relatively */}
             <nav
-                className={`h-screen absolute flex flex-col w-full transform duration-500 ${
-                    open ? "translate-x-0" : "-translate-x-full"
-                } bg-red-500 dark:bg-blue-500 px-4 py-4 z-50`}
+                id="sidebar"
+                className={`min-h-full max-h-full w-62 max-w-62 flex flex-col bg-white-0 dark:bg-blue-500 pb-8 z-50`}
             >
-                {/* Close Menu */}
-                <div className="flex flex-row justify-between items-center">
-                    <div className="text-3xl">Chat Com</div>
-                    <div className="p-2 w-16" onClick={toggleSidebar}>
-                        <PanelLeftCloseIcon className="w-8 h-8" />
-                    </div>
+                <div className="flex flex-row gap-2 items-center justify-center h-25 px-8 py-8">
+                    <BrandLogo className="w-10 h-10 text-blue-500" />
+                    <h3 className="text-7 leading-normal">Comchat</h3>
                 </div>
-                <div className="flex flex-col mt-8">
+                <div className="flex flex-col pt-4">
                     <NavLink
                         path="/"
                         Icon={Home}

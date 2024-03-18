@@ -59,15 +59,15 @@ export default function CharacterCard({
     return (
         <div
             ref={containerRef}
-            className="p-2.5 rounded-md flex flex-col cursor-pointer relative group bg-white-100 dark:bg-black-500"
+            className="p-6 w-82 max-w-82 rounded-md flex flex-col cursor-pointer relative group bg-white-0 dark:bg-black-500"
             onClick={(e) => {
                 e.preventDefault();
                 router.push(`/character/${id}`, {});
             }}
         >
             {/* Character Card Show */}
-            <div className="flex flex-col">
-                <div className="flex flex-col relative aspect-square rounded-sm">
+            <div className="flex flex-col gap-4">
+                <div className="flex flex-col relative aspect-square rounded-xl">
                     <Image
                         src={convertImageSrcUtil(chatbotImageSrc)}
                         alt={`${chatbotName} image`}
@@ -75,7 +75,7 @@ export default function CharacterCard({
                         priority
                         unoptimized
                         fill
-                        className="object-cover object-center"
+                        className="object-cover object-center rounded-xl"
                     />
                     <div className="absolute -bottom-5 rounded-full w-10 aspect-square left-1/2 -translate-x-1/2">
                         <Image

@@ -7,10 +7,10 @@ interface CategoryProps {
 export default function Category({ children, active = false }: CategoryProps) {
     return (
         <div
-            className={`px-4 py-2 flex flex-shrink-0 font-semibold cursor-pointer text-sm ${
+            className={`relative px-2 py-2 flex flex-row h-9 items-center justify-center font-semibold cursor-pointer select-none whitespace-nowrap text-xs ${
                 active
-                    ? "bg-red-500 text-slate-100"
-                    : "bg-slate-200 text-neutral-800"
+                    ? "bg-blue-500 text-white-0"
+                    : "bg-white-0 text-black-200"
             } rounded-md`}
         >
             {children}
