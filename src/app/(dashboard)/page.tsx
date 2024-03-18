@@ -1,8 +1,6 @@
 import { ReactElement } from "react";
 import DashboardLayout from "./layout";
 import RecentChatCard from "../components/dashboard/RecentChatCard";
-import Category from "../components/dashboard/Category";
-import CharacterCard from "../components/dashboard/CharacterCard";
 import { getPublicCharacterInfoAction } from "@/lib/characterInfoAction";
 import { TRoomInfo, getRoomInfoAction } from "@/lib/chatAction";
 import { getPublicTagInfoListAction } from "@/lib/tagAction";
@@ -29,24 +27,25 @@ async function Dashboard({ searchParams }: DashboardProps) {
     const currentView = searchParams.character || "Chatbot";
 
     if (currentView === "Chatbot") {
-        const publicCharacterresponse = await getPublicCharacterInfoAction();
+        const publicCharacterResponse = await getPublicCharacterInfoAction();
 
-        if (publicCharacterresponse.hasError) {
-            console.log("character data has error");
-            return (
-                <div className="flex flex-1 flex-col">
-                    <h1>{publicCharacterresponse.errorMsg[0]}</h1>
-                    {publicCharacterresponse.errorMsg
-                        ?.slice(1)
-                        .map((val: string) => {
-                            return <p key={val}>{val}</p>;
-                        })}
-                </div>
-            );
-        }
-
-        if (Array.isArray(publicCharacterresponse.characters)) {
-            characterData = publicCharacterresponse.characters!;
+        if (publicCharacterResponse) {
+            if (publicCharacterResponse.hasError) {
+                console.log("character data has error");
+                return (
+                    <div className="flex flex-1 flex-col justify-center items-center">
+                        <h1>{publicCharacterResponse.errorMsg[0]}</h1>
+                        {publicCharacterResponse.errorMsg
+                            ?.slice(1)
+                            .map((val: string) => {
+                                return <p key={val}>{val}</p>;
+                            })}
+                    </div>
+                );
+            }
+            if (Array.isArray(publicCharacterResponse.characters)) {
+                characterData = publicCharacterResponse.characters!;
+            }
         }
 
         let rooms: TRoomInfo[] = [];

@@ -16,6 +16,8 @@ import {
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { validateInputChatbotPromptPattern } from "@/util/validationUtil";
+import { fetchRequest } from "./fetchRequest";
+import { TGetPublicCharacterInfoActionResponse } from "@/types/characterInfoAction";
 
 export async function createCharacterAction(
     state: TCreateCharacterActionState,
@@ -346,66 +348,43 @@ export async function getCharacterInfoAction() {
 }
 
 export async function getPublicCharacterInfoAction() {
+    let data: CharacterInfoType[] | undefined;
+    let isExpiredSession = false;
+
     try {
-        const req = await fetch(`${MAIN_API_BASE_URL}/public_character_info/`, {
-            method: "GET",
-            cache: "no-store",
+        const res = await fetchRequest<
+            any,
+            TGetPublicCharacterInfoActionResponse
+        >({
+            url: `${MAIN_API_BASE_URL}/public_character_info/`,
+            method: "get",
+            useAuthSession: false,
         });
 
-        if (!req.ok) {
-            throw req;
+        if (!res.isError) {
+            data = res.responseData;
         }
-
-        const data: CharacterInfoType[] = await req.json();
-
-        return { hasError: false, characters: data };
-    } catch (err) {
-        let errors = [];
-        if (err instanceof Response) {
-            console.log(err.status);
-            if (err.status === 401) {
-                errors = ["Your session has expired", "Please login again"];
-            } else if (err.status === 400) {
-                const errorResponse = await err.json();
-                errors = errorResponse.map((val: any) => val);
-            } else if (err.status === 502) {
-                errors = [
-                    "Internal Server Error",
-                    "Please contact our admin for this issue",
-                ];
+    } catch (err: any) {
+        if ("isError" in err && err.isError) {
+            if ("isExpiredSession" in err && err.isExpiredSession) {
+                isExpiredSession = true;
             } else {
-                const errorResponse = await err.json();
-                errors = errorResponse.messages.map((val: any) => val.message);
+                return {
+                    hasError: true,
+                    errorMsg: err.errorData.errors,
+                };
             }
         }
+    }
 
-        if (err instanceof TypeError) {
-            if (err.cause instanceof AggregateError) {
-                const errorCode = (
-                    err.cause as AggregateError & { code: string }
-                ).code;
+    if (isExpiredSession) {
+        return redirect(`${DASHBOARD_BASE_URL}/lora-adaptor`);
+    }
 
-                if (errorCode === "ECONNREFUSED") {
-                    errors = [
-                        "Internal Server Error",
-                        "Please contact our admin for this issue",
-                    ];
-                }
-            } else if (err.cause instanceof Error) {
-                const errorCode = (err.cause as Error & { code: string }).code;
-
-                if (errorCode === "ECONNRESET") {
-                    errors = [
-                        "Internal Server Error",
-                        "Please contact our admin for this issue",
-                    ];
-                }
-            }
-        }
-
+    if (data) {
         return {
-            hasError: true,
-            errorMsg: errors,
+            hasError: false,
+            characters: data,
         };
     }
 }
