@@ -1,6 +1,8 @@
 import { MAIN_API_BASE_URL } from "@/constants/environtment";
 
-export default function convertImageSrcUtil(imageSrc: string | null) {
+export default function convertImageSrcUtil(
+    imageSrc: string | null | undefined
+) {
     if (imageSrc === null || !imageSrc) {
         return "/images/default-image-placeholder.webp";
     }

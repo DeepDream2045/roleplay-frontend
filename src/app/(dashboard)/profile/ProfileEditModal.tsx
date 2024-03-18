@@ -28,7 +28,7 @@ const ProfileEditModal = ({ onClose, profileData }: Props) => {
                 className="flex flex-col flex-1 justify-center items-center max-h-full p-8"
                 style={{ backgroundColor: "rgba(0, 0, 0, 0.48)" }}
             >
-                <div className="flex flex-1 py-4 px-8 flex-col bg-white min-w-2xl max-w-2xl rounded-lg">
+                <div className="flex flex-1 py-4 px-8 flex-col bg-white-0 min-w-2xl max-w-2xl rounded-lg">
                     <header className=" py-4 px-6 ">
                         <div className="h-10 flex flex-row justify-between items-center">
                             <h2 className="flex flex-1 justify-center">

@@ -1,0 +1,76 @@
+[
+    {
+        "id": 1,
+        "model_id": {
+            "id": 101,
+            "model_name": "AdventureSeeker",
+            "short_bio": "A model specialized in creating adventurous narratives.",
+            "model_location": "Cloud",
+            "prompt_template": "Imagine you're in a vast, unexplored wilderness. What happens next?",
+            "temperature": "0.9",
+            "repetition_penalty": "1.2",
+            "top_p": 0.92,
+            "top_k": 50
+        },
+        "user": {
+            "id": 201,
+            "full_name": "Jane Doe",
+            "username": "jane_doe",
+            "profile_image": "https://example.com/images/jane_doe.jpg"
+        },
+        "tags": [
+            { "id": "tag01", "tag_name": "Adventure" },
+            { "id": "tag02", "tag_name": "Exploration" }
+        ],
+        "character_name": "Eldric the Explorer",
+        "short_bio": "Eldric, a seasoned explorer, has ventured through uncharted territories with nothing but his wits and a compass.",
+        "character_gender": "male",
+        "prompt": "You encounter a mysterious cave. What do you do?",
+        "character_visibility": "public",
+        "initial_message": "Greetings, adventurer! Ready to explore?",
+        "image": "https://example.com/images/eldric.jpg",
+        "NSFW": false,
+        "lorebook": "https://example.com/lorebook/eldric",
+        "language": "en",
+        "character_story": "Eldric once got lost in the Densmore Forest, a place rumored to be enchanted. He survived and mapped the forest, making him a legend.",
+        "created_date": "2023-01-01T00:00:00Z",
+        "modified_date": "2023-01-02T00:00:00Z"
+    },
+    {
+        "id": 2,
+        "model_id": {
+            "id": 102,
+            "model_name": "MysterySolver",
+            "short_bio": "Expert at unraveling the most intricate mysteries.",
+            "model_location": "Virtual",
+            "prompt_template": "A letter arrives detailing an inheritance from an unknown relative. It leads to...",
+            "temperature": "0.7",
+            "repetition_penalty": "1.0",
+            "top_p": 0.85,
+            "top_k": 60
+        },
+        "user": {
+            "id": 202,
+            "full_name": "Alex Johnson",
+            "username": "alex_j",
+            "profile_image": null
+        },
+        "tags": [
+            { "id": "tag03", "tag_name": "Mystery" },
+            { "id": "tag04", "tag_name": "Detective" }
+        ],
+        "character_name": "Sherlock the Sleuth",
+        "short_bio": "With an unmatched intellect and a keen eye for detail, Sherlock has solved cases deemed unsolvable.",
+        "character_gender": "non-binary",
+        "prompt": "A mysterious figure has been seen at the crime scenes. What's your approach?",
+        "character_visibility": "private",
+        "initial_message": "The game is afoot. Care to join?",
+        "image": "https://example.com/images/sherlock.jpg",
+        "NSFW": false,
+        "lorebook": "https://example.com/lorebook/sherlock",
+        "language": "en",
+        "character_story": "Sherlock's most famous case involved tracking a jewel thief across London, using nothing but a series of cryptic clues.",
+        "created_date": "2023-03-10T00:00:00Z",
+        "modified_date": "2023-03-11T00:00:00Z"
+    }
+]

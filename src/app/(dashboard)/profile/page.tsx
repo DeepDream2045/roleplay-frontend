@@ -1,15 +1,14 @@
-import Image from "next/image";
 import AskToLogin from "@/components/organism/AskToLogin/AskToLogin";
 import { getAuthSession } from "@/lib/authSession";
 import { getCharacterInfoAction } from "@/lib/characterInfoAction";
-import { MAIN_API_BASE_URL } from "@/constants/environtment";
-import ProfileEditButton from "./ProfileEditButton";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+
 import { CharacterInfoType } from "@/types/action";
 import { redirect } from "next/navigation";
 import { getLoraInfoAction } from "@/lib/loraInfoAction";
 import { TLoraInfo } from "@/types/loraInfoAction";
 import ProfileCharacterDisplay from "./ProfileCharacterDisplay";
+import ProfileInfoCard from "@/components/organism/ProfileInfoCard/ProfileInfoCard";
+import DisplaySwitcher from "@/components/organism/DisplaySwitcher/DisplaySwitcher";
 
 export type TProfilePageProps = {
     searchParams: {
@@ -20,6 +19,8 @@ async function ProfilePage({ searchParams: { character } }: TProfilePageProps) {
     const session = await getAuthSession();
     let characters: CharacterInfoType[] = [];
     let loraAdaptors: TLoraInfo[] = [];
+
+    const currentView = character || "Chatbot";
 
     if (!session?.access) {
         return (
@@ -83,41 +84,31 @@ async function ProfilePage({ searchParams: { character } }: TProfilePageProps) {
     }
 
     return (
-        <div className="flex flex-1 flex-col px-10 py-6">
-            <div className="flex flex-row gap-10">
-                <div>
-                    <Image
-                        src={
-                            session.user?.profile_image &&
-                            session.user.profile_image.length > 0
-                                ? session.user.profile_image.includes("http")
-                                    ? session.user?.profile_image
-                                    : `${MAIN_API_BASE_URL}${session.user.profile_image}`
-                                : "/images/default-image-placeholder.webp"
-                        }
-                        width={150}
-                        height={150}
-                        alt="User profile picture"
-                        className="w-44 rounded-2xl aspect-square object-cover object-center"
-                        priority
-                    />
-                </div>
-                <div className="flex flex-col justify-between">
-                    <div className="flex flex-col gap-1">
-                        <h1>@{session.user?.username}</h1>
-                        <p className="text-base">{`No biography provided. Set one by clicking 'Account'.`}</p>
-                    </div>
-                    <div className="flex flex-row justify-start">
-                        <ConnectButton />
-                    </div>
-                    <div className="flex flex-row gap-4">
-                        <ProfileEditButton profileData={session.user} />
-                    </div>
-                </div>
+        <div className="flex flex-1 flex-col px-10 py-10">
+            <ProfileInfoCard
+                userUsername={session.user!.username!}
+                userFullName={session.user!.full_name}
+                userPhotoProfileSrc={session.user?.profile_image}
+                userBio={""}
+                totalData={
+                    currentView === "LoraAdaptor"
+                        ? loraAdaptors.length
+                        : characters.length
+                }
+                totalDataType={
+                    currentView === "LoraAdaptor" ? "Lora(s)" : "Chatbot(s)"
+                }
+            />
+            <div className="flex mt-9">
+                <DisplaySwitcher
+                    active={currentView}
+                    chatbotHref="/profile?character=Chatbot"
+                    loraHref="/profile?character=LoraAdaptor"
+                />
             </div>
-            <hr className="border-t my-4" />
+
             <ProfileCharacterDisplay
-                characterType={character}
+                characterType={currentView}
                 characters={characters}
                 loraAdaptors={loraAdaptors}
             />
