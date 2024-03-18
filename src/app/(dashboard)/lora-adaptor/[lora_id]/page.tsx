@@ -15,6 +15,11 @@ import CreateLoraChatRoomForm from "./CreateLoraChatRoomForm";
 import LoraAdaptorInformationContainer from "./LoraAdaptorInformationContainer";
 import LoraAdaptorInformationHeader from "./LoraAdaptorInformationHeader";
 import LoraAdaptorInformationItem from "./LoraAdaptorInformationItem";
+import { toTitleCase } from "@/util/stringUtil";
+import LoraExtraInfo from "@/components/organism/LoraAdaptorCard/LoraExtraInfo";
+import Image from "next/image";
+import convertImageSrcUtil from "@/util/convertImageSrcUtil";
+import LoraBadgeInformation from "@/components/organism/LoraBadgeInformation/LoraBadgeInformation";
 
 type TLoraAdaptorPageProps = {
     params: { lora_id: string };
@@ -174,83 +179,124 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
     }
 
     return (
-        <div className="flex flex-col flex-1 min-h-dvh min-w-full max-h-dvh max-w-full">
-            <div className="flex border-b">
-                <header className="flex flex-row justify-start items-center px-8 min-h-30">
-                    <h1 className="text-4xl leading-[2.75rem]">
-                        {loraAdaptorAccessed?.lora_model_name} Information
-                    </h1>
-                </header>
-            </div>
-            <div className="flex flex-1 max-h-full overflow-y-scroll max-w-full min-w-full flex-col items-center gap-8 py-8">
-                <div
-                    key="character_basic_info_container"
-                    className="flex flex-col gap-12 items-start min-w-xl max-w-xl"
-                >
-                    {String(loraAdaptorAccessed.user.id) ===
-                        String(session.user?.id) && (
-                        <LoraAdaptorEditDeleteAction
-                            loraAdaptorData={loraAdaptorAccessed}
-                            models={formattedModel}
+        <div className="relative flex flex-col flex-1 max-h-full justify-center items-center pt-10">
+            <div className="relative max-w-screen-md min-w-screen-md overflow-y-scroll scrollbar-hide bg-white-0 flex flex-col gap-4 rounded-xl px-10 py-10">
+                <LoraExtraInfo
+                    loraAdaptorLastModifiedDate={
+                        loraAdaptorAccessed.modified_date
+                    }
+                    loraAdaptorTrainStatus={loraAdaptorAccessed.current_status}
+                />
+                <h4 className="text-5 font-semibold leading-none text-black-900 line-clamp-1">
+                    {loraAdaptorAccessed.lora_model_name}
+                </h4>
+                <div className="flex flex-row items-center justify-start gap-2">
+                    <div className="w-8 h-8 relative rounded-full aspect-square">
+                        <Image
+                            src={convertImageSrcUtil(
+                                loraAdaptorAccessed.user.profile_image
+                            )}
+                            alt={`${loraAdaptorAccessed.user.username} image`}
+                            fill
+                            className="object-cover object-center rounded-full"
                         />
-                    )}
-                    <LoraAdaptorInformationContainer>
-                        <LoraAdaptorInformationHeader>
-                            Lora Basic Information
-                        </LoraAdaptorInformationHeader>
-                        <div className="flex flex-col gap-4">
-                            <div className="flex flex-1 flex-col">
-                                <h6 className="text-xl leading-7 line-clamp-1 font-bold">
-                                    Name
-                                </h6>
-                                <p className="text-sm leading-5">
-                                    {loraAdaptorAccessed.lora_model_name}
-                                </p>
-                            </div>
-                            <div className="flex flex-1 flex-col">
-                                <h6 className="text-xl leading-7 line-clamp-1 font-bold">
-                                    Training Status
-                                </h6>
-                                <p className="text-sm leading-5">
-                                    {loraAdaptorAccessed.current_status.length >
-                                    0
-                                        ? loraAdaptorAccessed.current_status[0]
-                                              .current_status
-                                        : "Untrained"}
-                                </p>
-                            </div>
-                            <div className="flex flex-1 flex-col">
-                                <h6 className="text-xl leading-7 line-clamp-1 font-bold">
-                                    Author
-                                </h6>
-                                <p className="text-sm leading-5">
-                                    {loraAdaptorAccessed.user.username}
-                                </p>
-                            </div>
-                            <div className="flex flex-1 flex-col">
-                                <h6 className="text-xl leading-7 line-clamp-1 font-bold">
-                                    Description
-                                </h6>
-                                <p
-                                    className="text-sm leading-5"
-                                    dangerouslySetInnerHTML={{
-                                        __html: loraAdaptorAccessed?.lora_short_bio
-                                            ? loraAdaptorAccessed.lora_short_bio
-                                                  .replace(/\\n/g, "<br />")
-                                                  .replace(/\n/g, "<br />")
-                                            : "",
-                                    }}
-                                />
-                            </div>
-                        </div>
-                    </LoraAdaptorInformationContainer>
+                    </div>
+                    <p className="line-clamp-1 flex flex-1 text-ellipsis text-xs font-medium leading-normal text-black-200">
+                        {loraAdaptorAccessed.user.username}
+                    </p>
                 </div>
-            </div>
+                {String(loraAdaptorAccessed.user.id) ===
+                    String(session.user?.id) && (
+                    <LoraAdaptorEditDeleteAction
+                        loraAdaptorData={loraAdaptorAccessed}
+                        models={formattedModel}
+                    />
+                )}
 
-            <LoraAdaptorTrainTrigger
-                loraAdaptorId={loraAdaptorAccessed.id}
-                current_status={loraAdaptorAccessed.current_status}
-            />
+                <div className="flex flex-col gap-2">
+                    <h3 className="text-5 leading-none font-semibold text-black-900">
+                        Description
+                    </h3>
+                    <p
+                        className="text-sm text-black-300 font-normal leading-normal"
+                        dangerouslySetInnerHTML={{
+                            __html: loraAdaptorAccessed?.lora_short_bio
+                                ? loraAdaptorAccessed.lora_short_bio
+                                      .replace(/\\n/g, "<br />")
+                                      .replace(/\n/g, "<br />")
+                                : "",
+                        }}
+                    />
+                </div>
+
+                <div className="flex flex-col gap-2">
+                    <h3 className="text-5 leading-none font-semibold text-black-900">
+                        Lora Training Information
+                    </h3>
+                    <div className="grid grid-flow-row grid-cols-4 gap-2">
+                        <LoraBadgeInformation
+                            label="Num Train Epochs"
+                            value={loraAdaptorAccessed.num_train_epochs}
+                        />
+                        <LoraBadgeInformation
+                            label="Train Batch Size"
+                            value={
+                                loraAdaptorAccessed.per_device_train_batch_size
+                            }
+                        />
+                        <LoraBadgeInformation
+                            label="Learning Rate"
+                            value={loraAdaptorAccessed.learning_rate}
+                        />
+                        <LoraBadgeInformation
+                            label="Warmup Steps"
+                            value={loraAdaptorAccessed.warmup_steps}
+                        />
+                        <LoraBadgeInformation
+                            label="Optimizer"
+                            value={loraAdaptorAccessed.optimizer}
+                        />
+                        <LoraBadgeInformation
+                            label="LR Scheduler Type"
+                            value={loraAdaptorAccessed.lr_scheduler_type}
+                        />
+                        <LoraBadgeInformation
+                            label="Gradient Steps"
+                            value={
+                                loraAdaptorAccessed.gradient_accumulation_steps
+                            }
+                        />
+                    </div>
+                </div>
+
+                <div className="flex flex-col gap-2">
+                    <h3 className="text-5 leading-none font-semibold text-black-900">
+                        Lora Configuration Information
+                    </h3>
+                    <div className="grid grid-flow-row grid-cols-4 gap-2">
+                        <LoraBadgeInformation
+                            label="R Value"
+                            value={loraAdaptorAccessed.lora_r}
+                        />
+                        <LoraBadgeInformation
+                            label="Alpha"
+                            value={loraAdaptorAccessed.lora_alpha}
+                        />
+                        <LoraBadgeInformation
+                            label="Dropout"
+                            value={loraAdaptorAccessed.lora_dropout}
+                        />
+                        <LoraBadgeInformation
+                            label="Biass"
+                            value={loraAdaptorAccessed.lora_bias}
+                        />
+                    </div>
+                </div>
+                <LoraAdaptorTrainTrigger
+                    loraAdaptorId={loraAdaptorAccessed.id}
+                    current_status={loraAdaptorAccessed.current_status}
+                />
+            </div>
             {loraAdaptorAccessed &&
                 loraAdaptorAccessed.current_status.length > 0 &&
                 loraAdaptorAccessed.current_status[0].current_status ===

@@ -65,6 +65,7 @@ const config: Config = {
         208: "52rem",
         vw: "100vw",
         dvw: "100dvw",
+        "screen-md": "768px",
       },
       transitionDuration: {
         3000: "3000ms",

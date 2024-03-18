@@ -1,5 +1,4 @@
 import { LORA_TRAIN_STATUS_BG_COLOR } from "@/constants/constants";
-import { TLoraInfo } from "@/types/loraInfoAction";
 import { timeAgo } from "@/util/dateUtil";
 import { toTitleCase } from "@/util/stringUtil";
 import React from "react";

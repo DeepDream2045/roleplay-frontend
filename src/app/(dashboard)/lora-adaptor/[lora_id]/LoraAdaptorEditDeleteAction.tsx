@@ -18,24 +18,22 @@ const LoraAdaptorEditDeleteAction = (props: Props) => {
 
     return (
         <>
-            <div className="flex flex-row w-full items-center justify-between">
+            <div className="flex flex-row w-full items-center gap-4">
                 <div
-                    className="flex flex-row gap-2 justify-center items-center cursor-pointer bg-[#25AADA] text-[#EDF7F5] px-8 py-2 rounded-lg"
+                    className="flex flex-row gap-2 justify-center items-center cursor-pointer px-7 py-1 bg-blue-500 text-white-200 rounded-md"
                     onClick={() => {
                         setEditModalShow(true);
                     }}
                 >
-                    <Pencil className="w-6 h-6" />
-                    <p>Edit</p>
+                    <p className="text-white-200">EDIT</p>
                 </div>
                 <div
-                    className="flex flex-row gap-2 justify-center items-center cursor-pointer bg-[#DA254F] text-[#EDF7F5] px-8 py-2 rounded-lg"
+                    className="flex flex-row gap-2 justify-center items-center cursor-pointer px-7 py-1 bg-red-200 text-white-200 rounded-md"
                     onClick={() => {
                         setDeleteModalShow(true);
                     }}
                 >
-                    <Trash2 className="w-6 h-6" />
-                    <p>Delete</p>
+                    <p>DELETE</p>
                 </div>
             </div>
             {editModalShow && (

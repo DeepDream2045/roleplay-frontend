@@ -12,18 +12,13 @@ function CreateLoraChatRoomForm({ lora_id }: TCreateLoraChatRoomFormProps) {
     const router = useRouter();
 
     return (
-        <div
-            className="flex flex-row w-full left-0 items-center justify-center ml-[-1.75rem]"
-            style={{
-                backgroundColor: "rgb(250 250 250 / var(--tw-bg-opacity))",
-            }}
-        >
+        <div className="flex flex-row w-full left-0 items-center justify-center ml-[-1.75rem] bg-white-0">
             <Button
                 type="button"
                 variant="fill"
                 color="primary"
                 size="medium"
-                className="min-w-72 sticky bottom-0"
+                className="min-w-72 sticky z-10 bottom-0"
                 onClick={() => {
                     router.push(`/lora-adaptor/${lora_id}/chat-room`);
                 }}
