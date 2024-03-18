@@ -7,76 +7,155 @@ import { getPublicCharacterInfoAction } from "@/lib/characterInfoAction";
 import { TRoomInfo, getRoomInfoAction } from "@/lib/chatAction";
 import { getPublicTagInfoListAction } from "@/lib/tagAction";
 import { MAIN_API_BASE_URL } from "@/constants/environtment";
-import { Tag } from "@/types/action";
+import { CharacterInfoType, Tag } from "@/types/action";
+import DisplaySwitcher from "@/components/organism/DisplaySwitcher/DisplaySwitcher";
+import ChatbotPageView from "./ChatbotPageView";
+import { TLoraInfo } from "@/types/loraInfoAction";
+import { getLoraPublicInfoAction } from "@/lib/loraInfoAction";
+import LoraAdaptorPageView from "./LoraAdaptorPageView";
 
-interface DashboardProps {}
+export type DashboardProps = {
+    searchParams: {
+        character: "Chatbot" | "LoraAdaptor" | undefined;
+    };
+};
 
-async function Dashboard(props: DashboardProps) {
-    const characterData = await getPublicCharacterInfoAction();
+async function Dashboard({ searchParams }: DashboardProps) {
+    let characterData: CharacterInfoType[] = [];
+    let tags: Tag[] = [];
 
-    if (characterData.hasError) {
-        console.log("character data has error");
-        return (
-            <div className="flex flex-1 flex-col">
-                <h1>{characterData.errorMsg[0]}</h1>
-                {characterData.errorMsg?.slice(1).map((val: string) => {
-                    return <p key={val}>{val}</p>;
-                })}
-            </div>
-        );
+    let loras: TLoraInfo[] = [];
+
+    const currentView = searchParams.character || "Chatbot";
+
+    if (currentView === "Chatbot") {
+        const publicCharacterresponse = await getPublicCharacterInfoAction();
+
+        if (publicCharacterresponse.hasError) {
+            console.log("character data has error");
+            return (
+                <div className="flex flex-1 flex-col">
+                    <h1>{publicCharacterresponse.errorMsg[0]}</h1>
+                    {publicCharacterresponse.errorMsg
+                        ?.slice(1)
+                        .map((val: string) => {
+                            return <p key={val}>{val}</p>;
+                        })}
+                </div>
+            );
+        }
+
+        if (Array.isArray(publicCharacterresponse.characters)) {
+            characterData = publicCharacterresponse.characters!;
+        }
+
+        let rooms: TRoomInfo[] = [];
+
+        // const roomData = await getRoomInfoAction();
+        // if (!roomData.hasError) {
+        //     rooms = roomData.rooms;
+        // }
+
+        const tagData = await getPublicTagInfoListAction();
+
+        if (!tagData.hasError) {
+            tags = tagData.tags!;
+        }
     }
 
-    let rooms: TRoomInfo[] = [];
+    if (currentView === "LoraAdaptor") {
+        const loraAdapatorPublicData = await getLoraPublicInfoAction();
+        if (!loraAdapatorPublicData) {
+            return;
+        }
 
-    // const roomData = await getRoomInfoAction();
-    // if (!roomData.hasError) {
-    //     rooms = roomData.rooms;
-    // }
+        if (
+            "hasError" in loraAdapatorPublicData &&
+            loraAdapatorPublicData.hasError
+        ) {
+            return (
+                <>
+                    <h1>{loraAdapatorPublicData.errorMsg[0]}</h1>
+                    {loraAdapatorPublicData.errorMsg
+                        ?.slice(1)
+                        .map((val: string) => {
+                            return <p key={val}>{val}</p>;
+                        })}
+                </>
+            );
+        }
 
-    const tagData = await getPublicTagInfoListAction();
-
-    let tags: Tag[] = [];
-    if (!tagData.hasError) {
-        tags = tagData.tags!;
+        if (
+            !("hasError" in loraAdapatorPublicData) &&
+            Array.isArray(loraAdapatorPublicData.data)
+        ) {
+            const formattedLoraAdapatorPublicData: TLoraInfo[] =
+                loraAdapatorPublicData.data.map((item) => {
+                    return {
+                        id: item.lora_model_info.id,
+                        created_date: item.lora_model_info.created_date,
+                        modified_date: item.lora_model_info.modified_date,
+                        lora_model_name: item.lora_model_info.lora_model_name,
+                        lora_short_bio: item.lora_model_info.lora_short_bio,
+                        dataset: "",
+                        num_train_epochs: item.lora_model_info.num_train_epochs,
+                        per_device_train_batch_size:
+                            item.lora_model_info.per_device_train_batch_size,
+                        learning_rate: item.lora_model_info.learning_rate,
+                        warmup_steps: item.lora_model_info.warmup_steps,
+                        optimizer: item.lora_model_info.optimizer,
+                        lr_scheduler_type:
+                            item.lora_model_info.lr_scheduler_type,
+                        gradient_accumulation_steps:
+                            item.lora_model_info.gradient_accumulation_steps,
+                        lora_alpha: item.lora_model_info.lora_alpha,
+                        lora_dropout: item.lora_model_info.lora_dropout,
+                        lora_r: item.lora_model_info.lora_r,
+                        lora_bias: item.lora_model_info.lora_bias,
+                        current_status: [
+                            {
+                                id: 999999,
+                                lora_model_info: item.lora_model_info.id,
+                                current_status: item.current_status,
+                                lora_training_error: item.lora_training_error,
+                            },
+                        ],
+                        base_model_id: {
+                            id: item.lora_model_info.base_model_id,
+                            model_name: "unknown-model-name",
+                            short_bio: "unknown-short-bio",
+                        },
+                        user: {
+                            id: item.user.id,
+                            full_name: item.user.full_name,
+                            username: item.user.username,
+                            profile_image: item.user.profile_image,
+                        },
+                    };
+                });
+            loras = [...loras, ...formattedLoraAdapatorPublicData];
+        }
     }
 
     return (
         <main className="relative flex flex-1 flex-col pl-10 py-10 gap-10">
-            <div
-                className="sticky top-0 z-10 py-4 flex flex-row overflow-x-scroll gap-4 bg-white-200 scrollbar-hide"
-                style={{
-                    maxWidth: "calc(100vw - var(--dynamic-rem) - 5rem)",
-                }}
-            >
-                <Category key={"Featured"} active>
-                    Featured
-                </Category>
-                <Category key={"Recommended"}>Recommended</Category>
-                <Category key={"All"}>All</Category>
-                <Category key={"Recently Added"}>Recently Added</Category>
-                <Category key={"Top"}>Top</Category>
-                {tags.map((item) => {
-                    return <Category key={item.id}>{item.tag_name}</Category>;
-                })}
-            </div>
-            <div className="flex flex-row flex-wrap flex-1 gap-10">
-                {characterData.characters!.map((val, index) => {
-                    return (
-                        <CharacterCard
-                            key={`char-${val.id}`}
-                            id={String(val.id)}
-                            chatbotImageSrc={val.image}
-                            chatbotName={val.character_name}
-                            chatbotDescription={val.short_bio}
-                            chatbotTags={val.tags}
-                            creatorImageSrc={val.user.profile_image}
-                            creatorUsername={val.user.username}
-                            chatbotTotalReviews={0}
-                            chatbotLastModifiedDate={val.modified_date}
-                        />
-                    );
-                })}
-            </div>
+            <DisplaySwitcher
+                active={currentView}
+                chatbotHref="/"
+                loraHref="/?character=LoraAdaptor"
+            />
+
+            {currentView === "Chatbot" && (
+                <ChatbotPageView
+                    characterData={characterData}
+                    rooms={[]}
+                    tags={tags}
+                />
+            )}
+
+            {currentView === "LoraAdaptor" && (
+                <LoraAdaptorPageView loraData={loras} />
+            )}
             {/* <div className="pl-11 mt-4 flex flex-1 flex-col pb-12"> */}
             {/* Recent Chat */}
             {/* {rooms.length > 0 && (

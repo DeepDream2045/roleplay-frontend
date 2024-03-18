@@ -114,7 +114,7 @@ type LRSchedulerTypeOption =
 // Extract the 'value' type from OPTIMIZER_CHOICES
 type OptimizerOption = (typeof OPTIMIZER_CHOICES)[number]["value"];
 
-type TLoraInfo = {
+export type TLoraInfo = {
     id: number;
     created_date: string;
     modified_date: string;

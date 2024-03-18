@@ -1,9 +1,7 @@
 "use client";
 
 import { Tag } from "@/types/action";
-import convertImageSrcUtil from "@/util/convertImageSrcUtil";
 import { timeAgo } from "@/util/dateUtil";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import ChatbotImage from "./ChatbotImage";

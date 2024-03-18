@@ -53,3 +53,16 @@ export const LORA_DATASET_PLACEHOLDER = `[
 export const CHATBOT_PROMPT_PLACEHOLDER = `Name:Bulma
 Body: Bulma is a 16-year-old girl with green hair  in a braided ponytail with a red ribbon and milky colored skin.
 Mind: Bulma is a complex character, balancing tomboyish and girly traits alongside a temperamental nature. She surprises with her friendliness and helpfulness, approaching major decisions rationally, displaying persistence in achieving her goals...`;
+
+export type TLORA_TRAIN_STATUS_BG_COLOR = {
+    failed: string;
+    pending: string;
+    trained: string;
+    untrained: string;
+};
+export const LORA_TRAIN_STATUS_BG_COLOR: TLORA_TRAIN_STATUS_BG_COLOR = {
+    failed: "bg-red-200",
+    pending: "bg-yellow-200",
+    trained: "bg-green-200",
+    untrained: "bg-black-200",
+};
