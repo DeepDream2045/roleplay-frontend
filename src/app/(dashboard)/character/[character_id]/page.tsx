@@ -16,6 +16,8 @@ import CharacterEditDeleteAction from "./CharacterEditDeleteAction";
 import { TInputOption } from "@/components/atoms/Input/InputType";
 import { getTagInfoListAction } from "@/lib/tagAction";
 import { getModelInfoListAction } from "@/lib/modelInfoAction";
+import ChatbotBasicInfo from "./ChatbotBasicInfo";
+import ChatbotInformationContainer from "./ChatbotInformationContainer";
 
 type TCharacterPageProps = {
     params: { character_id: string };
@@ -125,140 +127,80 @@ async function CharacterPage({
 
     const userCharacter = characterShouldAuthInfo || characterInfo;
 
+    if (!userCharacter) {
+        return (
+            <>
+                <h1>Not Found</h1>
+                <p>Character is not found</p>
+            </>
+        );
+    }
+
     return (
-        <div className="flex flex-col pt-5 flex-1 items-center min-h-dvh min-w-full max-h-dvh max-w-full">
-            <div className="flex flex-1 overflow-y-scroll min-w-full max-w-full justify-center pt-8">
-                <div className="flex flex-1 max-h-full  max-w-xl min-w-xl flex-col items-center gap-8 pb-20">
-                    <div key="character_image_container" className="flex">
-                        <Image
-                            src={`${
-                                userCharacter?.image
-                                    ? `${MAIN_API_BASE_URL}${userCharacter?.image}`
-                                    : "/images/default-image-placeholder.webp"
-                            }`}
-                            width={300}
-                            height={300}
-                            alt={
-                                userCharacter?.character_name ||
-                                "user-character-image"
-                            }
-                            className="w-72 rounded-2xl aspect-square object-cover"
-                            priority
-                        />
-                    </div>
-                    <div
-                        key="character_basic_info_container"
-                        className="flex flex-col gap-2 items-center"
-                    >
-                        <h3 className="font-semibold">
-                            {userCharacter?.character_name}
-                        </h3>
-                        <Link
-                            href={
-                                String(userCharacter?.user.id) ===
-                                String(session.user?.id)
-                                    ? `/profile`
-                                    : `/profile/${userCharacter?.user.id}`
-                            }
-                            className="text-blue-500"
-                            target="_blank"
-                        >
-                            <p className="font-medium">
-                                @{userCharacter?.user.username}
+        <div className="relative flex flex-col flex-1 py-8  items-center justify-start overflow-clip">
+            <div className="relative flex flex-col min-w-screen-md max-w-screen-md max-h-full pb-8">
+                <div className="flex flex-1 flex-col gap-7 overflow-y-scroll scrollbar-hide max-h-full">
+                    <ChatbotBasicInfo
+                        characterData={userCharacter}
+                        chatbotGender={userCharacter.character_gender}
+                        chatbotImageSrc={userCharacter.image}
+                        chatbotLastModifiedDate={userCharacter.modified_date}
+                        chatbotName={userCharacter.character_name}
+                        chatbotTags={userCharacter.tags}
+                        creatorImageSrc={userCharacter.user.profile_image}
+                        creatorUsername={userCharacter.user.username}
+                        id={userCharacter.id}
+                        models={formattedModel}
+                        tags={formattedTag}
+                    />
+
+                    <ChatbotInformationContainer>
+                        <div className="flex flex-1 flex-col gap-2">
+                            <p className="font-semibold text-2xl leading-normal text-black-900">
+                                Description
                             </p>
-                        </Link>
-                    </div>
+                            <p className="font-normal text-sm leading-normal text-black-300 text-wrap whitespace-pre-line">
+                                {userCharacter.short_bio}
+                            </p>
+                        </div>
+                    </ChatbotInformationContainer>
 
-                    <div
-                        key="character_additional_info_container"
-                        className="flex flex-col gap-4"
-                    >
-                        <div className="flex flex-row gap-2 items-center justify-center">
-                            <p>{"5.0"}</p>
-                            <Rating rating={2.5} />
-                            <p>(2)</p>
+                    <ChatbotInformationContainer>
+                        <div className="flex flex-1 flex-col gap-2">
+                            <p className="font-semibold text-2xl leading-normal text-black-900">
+                                Character Story
+                            </p>
+                            <p className="font-normal text-sm leading-normal text-black-300 text-wrap whitespace-pre-line">
+                                {userCharacter.character_story ||
+                                    "No Character Story Provided on this Character"}
+                            </p>
                         </div>
+                    </ChatbotInformationContainer>
 
-                        <div className="flex flex-row gap-2 items-center justify-center">
-                            {userCharacter?.tags?.map((val) => {
-                                return (
-                                    <div
-                                        key={val.id}
-                                        className="text-gray-400 font-semibold border border-gray-300 px-2 py-1 rounded-full"
-                                    >
-                                        <p className="text-xs">
-                                            {val.tag_name}
-                                        </p>
-                                    </div>
-                                );
-                            })}
+                    <ChatbotInformationContainer>
+                        <div className="flex flex-1 flex-col gap-2">
+                            <p className="font-semibold text-2xl leading-normal text-black-900">
+                                Initial Message
+                            </p>
+                            <p className="font-normal text-sm leading-normal text-black-300 text-wrap whitespace-pre-line">
+                                {userCharacter.initial_message}
+                            </p>
                         </div>
-                        {(userCharacter?.user === session.user?.id ||
-                            String(userCharacter?.user.id) ===
-                                String(session.user?.id)) && (
-                            <CharacterEditDeleteAction
-                                characterId={userCharacter!.id}
-                                models={formattedModel}
-                                tags={formattedTag}
-                                characterData={userCharacter!}
-                            />
-                        )}
-                    </div>
+                    </ChatbotInformationContainer>
 
-                    <div
-                        key="character_additional_basic_info_container"
-                        className="flex flex-col gap-4"
-                    >
-                        <div
-                            key="character_short_description_container"
-                            className="flex flex-col gap-2"
-                        >
-                            <h3>Short description</h3>
-                            <p>{userCharacter?.short_bio || ""}</p>
+                    <ChatbotInformationContainer>
+                        <div className="flex flex-1 flex-col gap-2">
+                            <p className="font-semibold text-2xl leading-normal text-black-900">
+                                Character Prompt
+                            </p>
+                            <p className="font-normal text-sm leading-normal text-black-300 text-wrap whitespace-pre-line">
+                                {userCharacter.prompt}
+                            </p>
                         </div>
-                        <div
-                            key="character_initial_message_container"
-                            className="flex flex-col gap-2"
-                        >
-                            <h3>Initial message</h3>
-                            <p>{userCharacter?.initial_message || ""}</p>
-                        </div>
-                        <div
-                            key="character_character_prompt_container"
-                            className="flex flex-col gap-2"
-                        >
-                            <h3>Character prompt</h3>
-                            <p
-                                dangerouslySetInnerHTML={{
-                                    __html: userCharacter?.prompt
-                                        ? userCharacter.prompt
-                                              .replace(/\\n/g, "<br />")
-                                              .replace(/\n/g, "<br />")
-                                        : "",
-                                }}
-                            ></p>
-                        </div>
-
-                        {userCharacter?.character_story && (
-                            <div
-                                key="character_character_story_container"
-                                className="flex flex-col gap-2"
-                            >
-                                <h3>Character Story</h3>
-                                <p
-                                    dangerouslySetInnerHTML={{
-                                        __html: userCharacter?.character_story
-                                            ? userCharacter.character_story
-                                                  .replace(/\\n/g, "<br />")
-                                                  .replace(/\n/g, "<br />")
-                                            : "",
-                                    }}
-                                ></p>
-                            </div>
-                        )}
-                    </div>
+                    </ChatbotInformationContainer>
                 </div>
             </div>
+
             <CreateChatRoomForm
                 character_id={character_id}
                 initialMessage={userCharacter?.initial_message}

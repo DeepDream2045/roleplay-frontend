@@ -59,7 +59,7 @@ function CreateChatRoomForm({
     }, [state, character_id]);
     return (
         <form
-            className="flex flex-row w-full left-0 items-center justify-center ml-[-1.75rem]"
+            className="flex flex-row w-full absolute bottom-0 items-center justify-center ml-[-1.75rem]"
             action={formAction}
             style={{
                 backgroundColor: "rgb(250 250 250 / var(--tw-bg-opacity))",
