@@ -36,7 +36,7 @@ const ChatList = (props: TChatListProps) => {
             <div className="h-16 flex">
                 <h1 className="text-3xl font-semibold px-4">Chats</h1>
             </div>
-            <div className="flex flex-1 flex-col pt-4 pb-8 pr-3 gap-4 overflow-y-scroll">
+            <div className="flex flex-1 flex-col pt-4 pb-8 px-3 gap-10 overflow-y-scroll scrollbar-hide">
                 {/* Chat Component */}
                 {rooms.map((item) => {
                     return (

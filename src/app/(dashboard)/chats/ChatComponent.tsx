@@ -30,24 +30,23 @@ export default function ChatComponent({
     const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
 
     return (
-        <div className="flex flex-row h-20 gap-2">
+        <div className="flex flex-row h-20 gap-3">
             <div
-                className={`flex flex-row flex-1 px-4 py-2 rounded-md items-center gap-4 cursor-pointer ${
-                    active ? "bg-slate-200" : "bg-gray-200"
+                className={`flex relative flex-row flex-1 p-4 rounded-md items-center gap-4 cursor-pointer ${
+                    active ? "bg-white-200" : "bg-white-0"
                 }`}
                 onClick={onClick}
             >
-                <div>
+                <div className="relative w-10 aspect-square rounded-full">
                     <Image
                         src={imageSrc}
                         alt="character"
-                        width={100}
-                        height={100}
-                        className="max-w-12 aspect-square rounded-full"
+                        fill
+                        className="aspect-square rounded-full object-center object-cover"
                     />
                 </div>
 
-                <div>
+                <div className="relative flex flex-1 flex-col">
                     <h3 className="text-base font-semibold line-clamp-1 cursor-pointer">
                         {name}
                     </h3>

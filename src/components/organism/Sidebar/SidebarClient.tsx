@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import BrandLogo from "@/../public/icons/BrandLogo.svg";
+import ThemeSwitch from "@/components/molecules/ThemeSwitch/ThemeSwitch";
 
 interface SidebarClientProps {
     isLogin: boolean;
@@ -95,6 +96,9 @@ export default function SidebarClient({ isLogin }: SidebarClientProps) {
                             iconOnly={pathName.includes("/chats")}
                         />
                     )}
+                </div>
+                <div className="flex flex-col pt-4">
+                    <ThemeSwitch />
                 </div>
             </nav>
         </>
