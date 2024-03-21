@@ -38,9 +38,17 @@ export async function GET(request: NextRequest) {
     } catch (error) {
         console.log(error);
         if (error instanceof Response) {
-            const errorData = await error.json();
+            let errorData;
+            try {
+                // Attempt to parse the response as JSON
+                errorData = await error.json();
+            } catch (e) {
+                // If parsing as JSON fails, fall back to parsing as text
+                errorData = await error.text();
+            }
+
             return NextResponse.json(
-                { error: errorData[0] },
+                { error: errorData },
                 { status: error.status }
             );
         }
