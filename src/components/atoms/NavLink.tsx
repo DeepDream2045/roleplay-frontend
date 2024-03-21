@@ -20,7 +20,7 @@ export default function NavLink({
         <Link
             href={path}
             className={`min-h-15 max-h-15 flex flex-1 flex-row justify-start items-center  text-base ${
-                active ? "text-blue-500" : ""
+                active ? "text-blue-500" : "text-black-900 dark:text-white-200"
             } ${iconOnly ? "" : "gap-10"}`}
         >
             <div
@@ -35,13 +35,17 @@ export default function NavLink({
             >
                 <Icon
                     className={`w-6 h-6 ${
-                        active ? "text-blue-500" : "text-black-300"
+                        active
+                            ? "text-blue-500"
+                            : "text-black-900 dark:text-white-200"
                     }`}
                 />
                 {!iconOnly && (
                     <p
                         className={`text-4 leading-normal  ${
-                            active ? "text-blue-500" : "text-black-300"
+                            active
+                                ? "text-blue-500"
+                                : "text-black-900 dark:text-white-200"
                         }`}
                     >
                         {label}

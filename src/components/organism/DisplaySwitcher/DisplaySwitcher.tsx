@@ -13,7 +13,7 @@ const DisplaySwitcher = ({
     active,
 }: DisplaySwitcherProps) => {
     return (
-        <div className="flex flex-row gap-2 p-3 bg-white-0 w-fit rounded-md">
+        <div className="flex flex-row gap-2 p-3 bg-white-0 dark:bg-black-900 w-fit rounded-md">
             <DisplaySwitcherItem
                 key={"Chatbot"}
                 href={chatbotHref}

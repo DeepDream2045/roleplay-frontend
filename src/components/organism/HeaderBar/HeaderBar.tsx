@@ -14,7 +14,7 @@ const HeaderBar = (props: Props) => {
     }
 
     return (
-        <div className="flex min-h-18 h-18 flex-row w-full justify-end bg-white-0 px-10 items-center">
+        <div className="flex min-h-18 h-18 flex-row w-full justify-end bg-white-0 dark:bg-black-900 px-10 items-center">
             <div className="flex flex-row gap-10 items-center">
                 <div className="bg-white-100 py-2 px-5 text-black-500 rounded-lg">
                     <h6 className="font-bold">{0} COM</h6>

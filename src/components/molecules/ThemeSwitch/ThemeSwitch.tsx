@@ -3,7 +3,8 @@
 
 import React, { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
-import Image from "next/image";
+import DarkModeIcon from "@/../public/icons/dark-mode.svg";
+import LightModeIcon from "@/../public/icons/light-mode.svg";
 
 const ThemeSwitch = () => {
     const [mounted, setMounted] = useState(false);
@@ -34,11 +35,8 @@ const ThemeSwitch = () => {
                     } transform rounded-full bg-white-0 transition-all`}
                 />
                 <div className="relative w-5 h-5 aspect-square">
-                    <Image
-                        src="/icons/light-mode.svg"
-                        alt="Light Mode"
-                        fill
-                        className={`select-none ${
+                    <LightModeIcon
+                        className={`relative w-5 h-5 aspect-square select-none ${
                             theme === "light"
                                 ? "text-blue-500"
                                 : "text-black-100"
@@ -47,11 +45,8 @@ const ThemeSwitch = () => {
                 </div>
 
                 <div className="relative w-5 h-5 aspect-square">
-                    <Image
-                        src="/icons/dark-mode.svg"
-                        alt="Dark Mode"
-                        fill
-                        className={`select-none ${
+                    <DarkModeIcon
+                        className={`relative w-5 h-5 aspect-square select-none ${
                             theme === "dark"
                                 ? "text-blue-500"
                                 : "text-black-100"

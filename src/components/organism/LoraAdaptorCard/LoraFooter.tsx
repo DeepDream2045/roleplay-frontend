@@ -18,7 +18,7 @@ const LoraFooter = ({ creatorImageSrc, creatorUsername }: LoraFooterProps) => {
                     className="object-cover object-center rounded-full"
                 />
             </div>
-            <p className="line-clamp-1 flex flex-1 text-ellipsis text-xs font-medium leading-normal text-black-200">
+            <p className="line-clamp-1 flex flex-1 text-ellipsis text-xs font-medium leading-normal text-black-900 dark:text-white-200">
                 {creatorUsername}
             </p>
         </div>

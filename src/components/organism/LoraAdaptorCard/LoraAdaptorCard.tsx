@@ -14,7 +14,7 @@ const LoraAdaptorCard = ({ lora }: Props) => {
         <Link
             href={`/lora-adaptor/${lora.id}`}
             key={`lora-card-${lora.id}`}
-            className="max-w-120 min-w-120 min-h-72 max-h-72 gap-4 rounded-[1rem] p-6 bg-white-0 flex flex-col cursor-pointer relative group "
+            className="max-w-120 min-w-120 min-h-72 max-h-72 gap-4 rounded-[1rem] p-6 bg-white-0 dark:bg-black-900 flex flex-col cursor-pointer relative group "
         >
             <LoraExtraInfo
                 loraAdaptorTrainStatus={lora.current_status}

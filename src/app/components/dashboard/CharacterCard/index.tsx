@@ -63,7 +63,7 @@ export default function CharacterCard({
     return (
         <div
             ref={containerRef}
-            className="p-6 w-82 max-w-82 h-100 max-h-100 rounded-2xl flex flex-col cursor-pointer relative group bg-white-0 dark:bg-black-500"
+            className="p-6 w-82 max-w-82 h-100 max-h-100 rounded-2xl flex flex-col cursor-pointer relative group bg-white-0 dark:bg-black-900"
             onClick={(e) => {
                 e.preventDefault();
                 router.push(`/character/${id}`, {});
@@ -94,16 +94,18 @@ export default function CharacterCard({
                 } top-4 min-w-[18rem] p-4`}
             >
                 <div className="overflow-hidden flex flex-col gap-1">
-                    <h3 className="font-bold text-sm leading-normal text-black-900 line-clamp-1">
+                    <h3 className="font-bold text-sm leading-normal text-black-900 dark:text-white-200 line-clamp-1">
                         {chatbotName}
                     </h3>
-                    <h4 className="font-semibold text-sm leading-normal text-black-900 line-clamp-1">
+                    <h4 className="font-semibold text-sm leading-normal text-black-900 dark:text-white-200 line-clamp-1">
                         Creator
                     </h4>
-                    <p className="text-xs">{creatorUsername}</p>
+                    <p className="text-xs text-black-900 dark:text-white-200">
+                        {creatorUsername}
+                    </p>
                     {chatbotDescription && (
                         <>
-                            <h4 className="font-semibold text-sm leading-normal text-black-900 line-clamp-1">
+                            <h4 className="font-semibold text-sm leading-normal text-black-900 dark:text-white-200 line-clamp-1">
                                 Short Description
                             </h4>
                             <p className="text-xs line-clamp-5">
@@ -112,7 +114,7 @@ export default function CharacterCard({
                         </>
                     )}
                     <hr className="border-1 my-3" />
-                    <p className="text-xs">
+                    <p className="text-xs text-black-900 dark:text-white-200">
                         {timeAgo(chatbotLastModifiedDate).join(" ")}
                     </p>
                 </div>

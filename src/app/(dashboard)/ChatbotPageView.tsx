@@ -14,7 +14,7 @@ const ChatbotPageView = ({ characterData, tags }: ChatbotPageViewProps) => {
     return (
         <>
             <div
-                className="sticky top-0 z-10 py-4 flex flex-row overflow-x-scroll gap-4 bg-white-200 scrollbar-hide"
+                className="sticky top-0 z-10 py-4 flex flex-row overflow-x-scroll gap-4 bg-white-200 dark:bg-black-500 scrollbar-hide"
                 style={{
                     maxWidth: "calc(100vw - var(--dynamic-rem) - 5rem)",
                 }}

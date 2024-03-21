@@ -43,7 +43,9 @@ export default function SidebarClient({ isLogin }: SidebarClientProps) {
         ) : (
             <div className="flex flex-row gap-2 items-center justify-start h-18 pl-10">
                 <BrandLogo className="w-8 h-8 text-blue-500" />
-                <h3 className="text-5 leading-normal">Comchat</h3>
+                <h3 className="text-5 leading-normal text-black-900 dark:text-white-200">
+                    Comchat
+                </h3>
             </div>
         );
 
@@ -56,7 +58,7 @@ export default function SidebarClient({ isLogin }: SidebarClientProps) {
                     pathName.includes("/chats")
                         ? "w-24 max-w-24"
                         : "w-56 max-w-56"
-                } flex flex-col bg-white-0 dark:bg-black-900 pb-8 z-50`}
+                } flex flex-col bg-white-0 dark:bg-black-900 transition-all pb-8 z-50`}
             >
                 <SidebarHeader />
                 <div className="flex flex-col pt-4">

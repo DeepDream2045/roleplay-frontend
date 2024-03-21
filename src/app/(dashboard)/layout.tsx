@@ -11,7 +11,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     return (
         <div className="flex flex-row max-w-dvw min-w-dvw min-h-dvh max-h-dvh ">
             <Sidebar />
-            <div className="flex flex-1 flex-col min-h-full max-h-full bg-white-100">
+            <div className="flex flex-1 flex-col min-h-full max-h-full bg-white-100 dark:bg-black-500">
                 <HeaderBar />
                 <div className="flex flex-col flex-1 overflow-y-scroll scrollbar-hide">
                     {children}
