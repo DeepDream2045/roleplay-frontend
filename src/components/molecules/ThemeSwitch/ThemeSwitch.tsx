@@ -30,9 +30,7 @@ const ThemeSwitch = () => {
             >
                 <div
                     className={`absolute block min-w-7 min-h-7 ${
-                        theme === "light"
-                            ? "-translate-x-1"
-                            : "translate-x-full"
+                        theme === "light" ? "-translate-x-1" : "translate-x-14"
                     } transform rounded-full bg-white-0 transition-all`}
                 />
                 <div className="relative w-5 h-5 aspect-square">
