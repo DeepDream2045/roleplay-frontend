@@ -31,14 +31,16 @@ const HeaderBarClient = (props: HeaderBarClientProps) => {
                 <div>
                     <ThemeSwitch />
                 </div>
-                <div className="bg-white-100 py-2 px-5 text-black-500 rounded-lg">
-                    {!userAddress && <MetaMaskLogin />}
-                    {userAddress && (
-                        <h6 className="font-bold">
-                            {balance?.substring(0, 5)} ETH
-                        </h6>
-                    )}
-                </div>
+                {props.loginData.isLogin && (
+                    <div className="bg-white-100 py-2 px-5 text-black-500 rounded-lg">
+                        {!userAddress && <MetaMaskLogin />}
+                        {userAddress && (
+                            <h6 className="font-bold">
+                                {balance?.substring(0, 5)} ETH
+                            </h6>
+                        )}
+                    </div>
+                )}
                 {userAddress && (
                     <div className="bg-white-100 py-2 px-5 text-black-500 rounded-lg">
                         <h6 className="font-bold">
