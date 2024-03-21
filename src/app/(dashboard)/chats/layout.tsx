@@ -39,7 +39,7 @@ export default async function ProtectedPageLayout({
     }
 
     return (
-        <div className="flex flex-1 flex-row w-full max-h-dvh">
+        <div className="flex flex-row flex-1 overflow-y-scroll scrollbar-hide">
             <ChatList rooms={rooms} isGuest={isGuest} />
             <div className="flex flex-1 flex-col justify-center items-center">
                 {children}
