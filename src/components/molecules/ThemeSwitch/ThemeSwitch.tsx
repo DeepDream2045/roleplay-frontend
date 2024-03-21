@@ -25,7 +25,7 @@ const ThemeSwitch = () => {
     return (
         <div className="flex w-full justify-center pl-6">
             <div
-                className={`relative flex flex-row h-10 w-24 cursor-pointer items-center justify-between bg-white-100 rounded-full px-2`}
+                className={`relative flex flex-row h-10 w-24 cursor-pointer items-center justify-between bg-white-100 rounded-full px-2 dark:bg-black-500`}
                 onClick={toggleTheme}
             >
                 <div
@@ -38,7 +38,11 @@ const ThemeSwitch = () => {
                         src="/icons/light-mode.svg"
                         alt="Light Mode"
                         fill
-                        className="select-none"
+                        className={`select-none ${
+                            theme === "light"
+                                ? "text-blue-500"
+                                : "text-black-100"
+                        }`}
                     />
                 </div>
 
@@ -47,7 +51,11 @@ const ThemeSwitch = () => {
                         src="/icons/dark-mode.svg"
                         alt="Dark Mode"
                         fill
-                        className="select-none"
+                        className={`select-none ${
+                            theme === "dark"
+                                ? "text-blue-500"
+                                : "text-black-100"
+                        }`}
                     />
                 </div>
             </div>

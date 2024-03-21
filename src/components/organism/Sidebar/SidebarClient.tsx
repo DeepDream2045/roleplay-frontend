@@ -56,7 +56,7 @@ export default function SidebarClient({ isLogin }: SidebarClientProps) {
                     pathName.includes("/chats")
                         ? "w-24 max-w-24"
                         : "w-56 max-w-56"
-                } flex flex-col bg-white-0 dark:bg-blue-500 pb-8 z-50`}
+                } flex flex-col bg-white-0 dark:bg-black-900 pb-8 z-50`}
             >
                 <SidebarHeader />
                 <div className="flex flex-col pt-4">
