@@ -38,7 +38,7 @@ const ChatList = (props: TChatListProps) => {
             </div>
             <div className="flex flex-1 flex-col pt-4 pb-8 px-3 gap-10 overflow-y-scroll scrollbar-hide">
                 {/* Chat Component */}
-                {rooms.map((item) => {
+                {rooms?.map((item) => {
                     return (
                         <ChatComponent
                             key={item.room_id}

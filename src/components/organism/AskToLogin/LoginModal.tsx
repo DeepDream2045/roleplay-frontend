@@ -25,7 +25,7 @@ function LoginModal({ onClose }: LoginModalProps) {
                         className="flex flex-col flex-1 justify-center items-center px-4 sm:px-8"
                         style={{ backgroundColor: "rgba(0, 0, 0, 0.48)" }}
                     >
-                        <div className="flex flex-col w-full bg-white-0 sm:max-w-md sm:min-w-md rounded-lg">
+                        <div className="flex flex-col w-full bg-white-0 dark:bg-black-900 sm:max-w-md sm:min-w-md rounded-lg">
                             <header className="py-4 px-6 ">
                                 <div className="h-10 flex flex-row justify-between items-center">
                                     <h2>Sign in</h2>
