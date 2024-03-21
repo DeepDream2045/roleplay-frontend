@@ -62,7 +62,7 @@ const HeaderBarClient = (props: HeaderBarClientProps) => {
                                 ? convertImageSrcUtil(
                                       props.loginData.user.userImgSrc
                                   )
-                                : "/images/profile-placeholder.png"
+                                : "/images/default-image-placeholder.webp"
                         }
                         alt="Guest Profile Picture"
                         fill
