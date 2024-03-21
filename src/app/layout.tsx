@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import "@rainbow-me/rainbowkit/styles.css";
-import Providers from "./providers";
 import { ThemeProvider } from "./ThemeProvider";
+import { EthereumProvider } from "./EthereumProvider";
 
 const poppins = Poppins({
     subsets: ["latin"],
@@ -32,10 +31,10 @@ export default async function RootLayout({
                     enableSystem
                     disableTransitionOnChange
                 >
-                    <Providers>
+                    <EthereumProvider>
                         {children}
                         <div id="modal-wrapper" />
-                    </Providers>
+                    </EthereumProvider>
                 </ThemeProvider>
             </body>
         </html>
