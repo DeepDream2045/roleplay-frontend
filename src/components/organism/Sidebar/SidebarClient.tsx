@@ -99,9 +99,6 @@ export default function SidebarClient({ isLogin }: SidebarClientProps) {
                         />
                     )}
                 </div>
-                <div className="flex flex-col pt-4">
-                    <ThemeSwitch />
-                </div>
             </nav>
         </>
     );
