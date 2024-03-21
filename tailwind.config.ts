@@ -54,6 +54,7 @@ const config: Config = {
         72: "18rem",
         82: "20.5rem",
         95: "23.75rem",
+        100: "25rem",
         112: "28rem",
         120: "30rem",
         128: "32rem",

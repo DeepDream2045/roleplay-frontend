@@ -33,17 +33,17 @@ const ChatbotDetailContainer = ({
                 />
             </div>
             <div className="flex flex-col gap-2 flex-1">
-                <div className="flex flex-row">
+                <div className="flex flex-row h-6">
                     <p className="font-bold text-sm leading-normal text-black-900 line-clamp-1">
                         {chatbotName}
                     </p>
                 </div>
-                <div className="flex flex-1 flex-row">
-                    <p className="text-wrap text-ellipsis text-xs font-medium line-clamp-2 leading-normal text-black-200">
+                <div className="flex flex-1 flex-row flex-grow shrink-0">
+                    <p className="text-wrap text-ellipsis text-xs font-medium line-clamp-3 leading-normal text-black-200">
                         {chatbotDescription}
                     </p>
                 </div>
-                <div className="flex flex-row justify-between ">
+                <div className="flex flex-row justify-between h-4">
                     <p className="line-clamp-1 flex flex-1 text-ellipsis text-xs font-medium leading-normal text-black-200">
                         {creatorUsername}
                     </p>

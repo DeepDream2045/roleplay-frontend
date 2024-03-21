@@ -63,7 +63,7 @@ export default function CharacterCard({
     return (
         <div
             ref={containerRef}
-            className="p-6 w-82 max-w-82 h-95 max-h-95 rounded-2xl flex flex-col cursor-pointer relative group bg-white-0 dark:bg-black-500"
+            className="p-6 w-82 max-w-82 h-100 max-h-100 rounded-2xl flex flex-col cursor-pointer relative group bg-white-0 dark:bg-black-500"
             onClick={(e) => {
                 e.preventDefault();
                 router.push(`/character/${id}`, {});
