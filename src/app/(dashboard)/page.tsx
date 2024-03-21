@@ -57,7 +57,22 @@ async function Dashboard({ searchParams }: DashboardProps) {
 
         const tagData = await getPublicTagInfoListAction();
 
-        if (!tagData.hasError) {
+        if (!tagData) {
+            return;
+        }
+
+        if ("hasError" in tagData && tagData.hasError) {
+            return (
+                <>
+                    <h1>{tagData.errorMsg[0]}</h1>
+                    {tagData.errorMsg?.slice(1).map((val: string) => {
+                        return <p key={val}>{val}</p>;
+                    })}
+                </>
+            );
+        }
+
+        if (!("hasError" in tagData) && Array.isArray(tagData.tags)) {
             tags = tagData.tags!;
         }
     }
