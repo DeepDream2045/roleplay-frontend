@@ -8,7 +8,6 @@ import { X } from "lucide-react";
 import React, { useState } from "react";
 import { useFormState } from "react-dom";
 import Button from "@/components/atoms/Button";
-import InputAdditionalInfo from "../../new-character/InputAdditionalInfo";
 import { TLoraInfo } from "@/types/loraInfoAction";
 import { updateLoraAction } from "@/lib/loraInfoAction";
 import InputRange from "@/components/atoms/Input/InputRange";
@@ -19,6 +18,7 @@ import {
     OPTIMIZER_CHOICES,
 } from "@/constants/constants";
 import InputTextArea from "@/components/atoms/Input/InputTextArea";
+import InputTextAreaWithUploadFile from "@/components/atoms/Input/InputTextAreaWithUploadFile";
 
 type Props = {
     onClose: () => void;
@@ -248,7 +248,8 @@ const LoraAdaptorEditModal = ({ onClose, models, loraAdaptorData }: Props) => {
                                         Dataset File for finetune the model
                                     </div>
                                     <div className="flex flex-col gap-4">
-                                        <InputAdditionalInfo
+                                        <InputTextAreaWithUploadFile
+                                            id="dataset"
                                             name="dataset"
                                             label="Dataset"
                                             errorMsg={state.errorMsg.dataset}

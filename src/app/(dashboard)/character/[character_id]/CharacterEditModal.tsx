@@ -12,8 +12,8 @@ import { X } from "lucide-react";
 import React, { useState } from "react";
 import { useFormState } from "react-dom";
 import Button from "@/components/atoms/Button";
-import InputAdditionalInfo from "../../new-character/InputAdditionalInfo";
 import { CHATBOT_PROMPT_PLACEHOLDER } from "@/constants/constants";
+import InputTextAreaWithUploadFile from "@/components/atoms/Input/InputTextAreaWithUploadFile";
 
 type Props = {
     onClose: () => void;
@@ -238,7 +238,8 @@ const CharacterEditModal = ({
                                     label="Nsfw (Not safe for work)"
                                     helperText="If this character is not safe for work, turn this on."
                                 />
-                                <InputAdditionalInfo
+                                <InputTextAreaWithUploadFile
+                                    id="character_story"
                                     label="Character Story"
                                     name="character_story"
                                     defaultValue={characterData.character_story}
