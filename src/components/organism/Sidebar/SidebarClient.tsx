@@ -34,26 +34,30 @@ export default function SidebarClient({ isLogin }: SidebarClientProps) {
         );
     }, [pathName]); // Dependency array ensures this runs only when pathName changes
 
-    const sidebarHeader = pathName.includes("/chats") ? (
-        <div className="h-10 flex flex-row items-center px-4">
-            <h4 className="text-sm bg-blue-300 p-1 rounded-full">CA</h4>
-        </div>
-    ) : (
-        <div className="h-10 flex flex-row items-center px-4">
-            <h2 className="text-xl">Chatbot AI</h2>
-        </div>
-    );
+    const SidebarHeader = () =>
+        pathName.includes("/chats") ? (
+            <div className="flex flex-row gap-2 items-center justify-center h-18">
+                <BrandLogo className="w-8 h-8 text-blue-500" />
+            </div>
+        ) : (
+            <div className="flex flex-row gap-2 items-center justify-start h-18 pl-10">
+                <BrandLogo className="w-8 h-8 text-blue-500" />
+                <h3 className="text-5 leading-normal">Comchat</h3>
+            </div>
+        );
+
     return (
         <>
             {/* Navbar that will show relatively */}
             <nav
                 id="sidebar"
-                className={`min-h-full max-h-full w-56 max-w-56 flex flex-col bg-white-0 dark:bg-blue-500 pb-8 z-50`}
+                className={`min-h-full max-h-full ${
+                    pathName.includes("/chats")
+                        ? "w-24 max-w-24"
+                        : "w-56 max-w-56"
+                } flex flex-col bg-white-0 dark:bg-blue-500 pb-8 z-50`}
             >
-                <div className="flex flex-row gap-2 items-center justify-center h-18 pl-8">
-                    <BrandLogo className="w-10 h-10 text-blue-500" />
-                    <h3 className="text-7 leading-normal">Comchat</h3>
-                </div>
+                <SidebarHeader />
                 <div className="flex flex-col pt-4">
                     <NavLink
                         path="/"

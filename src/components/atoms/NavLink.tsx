@@ -19,16 +19,20 @@ export default function NavLink({
     return (
         <Link
             href={path}
-            className={`min-h-15 max-h-15 flex flex-1 flex-row justify-start items-center gap-10 text-base ${
+            className={`min-h-15 max-h-15 flex flex-1 flex-row justify-start items-center  text-base ${
                 active ? "text-blue-500" : ""
-            }`}
+            } ${iconOnly ? "" : "gap-10"}`}
         >
             <div
                 className={`min-w-[6px] h-full rounded-r-[10px] ${
                     active ? "bg-blue-500" : ""
                 }`}
             />
-            <div className="flex flex-row gap-6 justify-start items-center">
+            <div
+                className={`flex flex-row flex-1 gap-6 ${
+                    iconOnly ? "justify-center" : "justify-start"
+                } items-center`}
+            >
                 <Icon
                     className={`w-6 h-6 ${
                         active ? "text-blue-500" : "text-black-300"
