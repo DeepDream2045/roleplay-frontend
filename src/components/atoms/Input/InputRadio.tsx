@@ -34,7 +34,7 @@ const InputRadio = (props: TInputRadioProps) => {
                             type="radio"
                             name={props.name}
                             value={option.value}
-                            className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                            className="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500"
                             required
                             checked={props.value === option.value}
                             onChange={(e) => {
@@ -44,7 +44,7 @@ const InputRadio = (props: TInputRadioProps) => {
 
                         <label
                             htmlFor={`radio-${option.value}`}
-                            className="ml-2 text-gray-700"
+                            className="ml-2 text-black-900 dark:text-white-200"
                         >
                             <span className="text-base font-normal">
                                 {option.label}

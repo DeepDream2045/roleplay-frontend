@@ -127,8 +127,10 @@ const InputSelect = ({ multiple = false, ...props }: TInputSelectProps) => {
                 <div
                     className={`${defaultInputClassName} h-10 ${
                         props.disabled ? "bg-[#b1aeae4d]" : ""
-                    } bg-white ${
-                        props.value?.length ? "text-black" : "text-gray-400"
+                    } bg-[field] ${
+                        props.value?.length
+                            ? "text-black-900"
+                            : "text-white-700"
                     } cursor-default`}
                     onMouseDown={(e) => {
                         e.preventDefault();
@@ -149,7 +151,11 @@ const InputSelect = ({ multiple = false, ...props }: TInputSelectProps) => {
                 <div
                     className={`${defaultInputClassName} h-10 ${
                         props.disabled ? "bg-[#b1aeae4d]" : ""
-                    } bg-white text-gray-400 `}
+                    } bg-[field] ${
+                        props.value?.length
+                            ? "text-black-900"
+                            : "text-white-700"
+                    } `}
                     onMouseDown={(e) => {
                         e.preventDefault();
                         if (props.disabled) {
@@ -209,7 +215,7 @@ const InputSelect = ({ multiple = false, ...props }: TInputSelectProps) => {
             <div
                 className={`absolute ${
                     multiple ? "top-24" : "top-20"
-                } bg-white-0 z-30 flex flex-col w-full overflow-x-auto rounded-lg  ${
+                } bg-white-0 dark:bg-white-900 z-30 flex flex-col w-full overflow-x-auto rounded-lg  ${
                     inputActive
                         ? "max-h-32 border border-gray-300 mt-4"
                         : "max-h-0 none"
@@ -227,7 +233,7 @@ const InputSelect = ({ multiple = false, ...props }: TInputSelectProps) => {
                             data-value={JSON.stringify(option)}
                             data-type={`${props.name}-select-option`}
                             onMouseDown={handleInput}
-                            className="p-2 w-full cursor-pointer hover:bg-blue-100 flex flex-row gap-4"
+                            className="p-2 w-full cursor-pointer hover:bg-blue-100 dark:hover:bg-blue-800 flex flex-row gap-4"
                         >
                             <div className="w-6 h-6">
                                 {props.value?.some(

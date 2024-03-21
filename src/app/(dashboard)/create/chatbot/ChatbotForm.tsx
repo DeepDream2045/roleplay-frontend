@@ -16,6 +16,7 @@ import {
     CHATBOT_PROMPT_PLACEHOLDER,
 } from "@/constants/constants";
 import InputTextAreaWithUploadFile from "@/components/atoms/Input/InputTextAreaWithUploadFile";
+import FormContainer from "@/components/atoms/Form/FormContainer";
 
 type ChatbotFormProps = {
     models: TInputOption[];
@@ -38,60 +39,60 @@ export default function ChatbotForm({
 
     return (
         <form action={formAction} className="flex flex-1 flex-col gap-10 py-5">
-            <div className="flex flex-col rounded-lg bg-white-0 p-4">
-                <p className="text-5 font-bold leading-normal text-black-900">
-                    Basic Info
-                </p>
-                <p className="text-sm font-normal leading-normal text-black-500">
+            <FormContainer>
+                <p className="text-5 font-bold leading-normal">Basic Info</p>
+                <p className="text-sm font-normal leading-normal">
                     Visualize your chatbot description
                 </p>
-            </div>
+            </FormContainer>
 
             <div className="flex flex-row gap-10">
-                <div className={`flex p-4 rounded-lg bg-white-0 flex-grow-0`}>
+                <FormContainer>
                     <InputFile
                         name="image"
                         id="image"
                         label="Add"
                         helperText="Recommend Size: 512px x 512px"
                     />
-                </div>
-                <div className="flex flex-1 flex-col gap-7 p-4 rounded-lg bg-white-0">
-                    <InputText
-                        name="character_name"
-                        id="character_name"
-                        label="Name"
-                        placeholder="Bulma"
-                        required
-                        errorMsg={state.errorMsg.character_name}
-                    />
+                </FormContainer>
+                <FormContainer fullWidth>
+                    <div className="flex flex-1 flex-col gap-7 p-4 rounded-lg ">
+                        <InputText
+                            name="character_name"
+                            id="character_name"
+                            label="Name"
+                            placeholder="Bulma"
+                            required
+                            errorMsg={state.errorMsg.character_name}
+                        />
 
-                    <InputText
-                        id="character_gender"
-                        name="character_gender"
-                        label="Gender"
-                        placeholder="Gender of the character: male, female, N/A, etc."
-                        required
-                        errorMsg={state.errorMsg.character_gender}
-                    />
-                    <InputSelect
-                        key="model_id"
-                        id="model_id"
-                        label="Model Name"
-                        placeholder="Select Model"
-                        name="model_id"
-                        options={models}
-                        required
-                        errorMsg={state.errorMsg.model_id}
-                        value={modelVal}
-                        onChange={(val) => {
-                            setModelVal(val);
-                        }}
-                    />
-                </div>
+                        <InputText
+                            id="character_gender"
+                            name="character_gender"
+                            label="Gender"
+                            placeholder="Gender of the character: male, female, N/A, etc."
+                            required
+                            errorMsg={state.errorMsg.character_gender}
+                        />
+                        <InputSelect
+                            key="model_id"
+                            id="model_id"
+                            label="Model Name"
+                            placeholder="Select Model"
+                            name="model_id"
+                            options={models}
+                            required
+                            errorMsg={state.errorMsg.model_id}
+                            value={modelVal}
+                            onChange={(val) => {
+                                setModelVal(val);
+                            }}
+                        />
+                    </div>
+                </FormContainer>
             </div>
 
-            <div className="flex flex-1 flex-col p-4 rounded-lg bg-white-0">
+            <FormContainer>
                 <InputTextArea
                     id="short_bio"
                     name="short_bio"
@@ -101,9 +102,9 @@ export default function ChatbotForm({
                     required
                     errorMsg={state.errorMsg.short_bio}
                 />
-            </div>
+            </FormContainer>
 
-            <div className="flex flex-1 flex-col p-4 rounded-lg bg-white-0">
+            <FormContainer>
                 <InputTextArea
                     id="prompt"
                     name="prompt"
@@ -113,8 +114,8 @@ export default function ChatbotForm({
                     required
                     errorMsg={state.errorMsg.prompt}
                 />
-            </div>
-            <div className="flex flex-1 flex-col p-4 rounded-lg bg-white-0">
+            </FormContainer>
+            <FormContainer>
                 <InputRadio
                     id="character_visibility"
                     name="character_visibility"
@@ -128,8 +129,8 @@ export default function ChatbotForm({
                     options={CHATBOT_AVAILABILITY_OPTIONS}
                     errorMsg={state.errorMsg.prompt_visibility}
                 />
-            </div>
-            <div className="flex flex-1 flex-col p-4 rounded-lg bg-white-0">
+            </FormContainer>
+            <FormContainer>
                 <InputSelect
                     key="tags"
                     name="tags"
@@ -146,18 +147,18 @@ export default function ChatbotForm({
                         setTagsVal(val);
                     }}
                 />
-            </div>
+            </FormContainer>
 
-            <div className="flex flex-1 flex-col p-4 rounded-lg bg-white-0">
-                <p className="text-5 font-bold leading-normal text-black-900">
+            <FormContainer>
+                <p className="text-5 font-bold leading-normal">
                     Advanced info (optional)
                 </p>
-                <p className="text-sm font-normal leading-normal text-black-500">
+                <p className="text-sm font-normal leading-normal">
                     Additional information of your chatbot to make it more real.
                 </p>
-            </div>
+            </FormContainer>
 
-            <div className="flex flex-1 flex-col p-4 rounded-lg bg-white-0">
+            <FormContainer>
                 <InputTextArea
                     id="initial_message"
                     name="initial_message"
@@ -165,9 +166,9 @@ export default function ChatbotForm({
                     helperText="This is the first message that the character will say for the conversation. If this is empty, we will use the name and the description to generate the initial message when creating the character."
                     placeholder="Enter a short description of your character..."
                 />
-            </div>
+            </FormContainer>
 
-            <div className="flex flex-1 flex-col p-4 rounded-lg bg-white-0">
+            <FormContainer>
                 <InputToggle
                     value={isNSFW}
                     onChange={(e) => {
@@ -179,9 +180,9 @@ export default function ChatbotForm({
                     label="Nsfw (Not safe for work)"
                     helperText="If this character is not safe for work, turn this on."
                 />
-            </div>
+            </FormContainer>
 
-            <div className="flex flex-1 flex-col p-4 rounded-lg bg-white-0">
+            <FormContainer>
                 <InputTextAreaWithUploadFile
                     id="character_story"
                     label="Character Story"
@@ -189,7 +190,7 @@ export default function ChatbotForm({
                     rows={8}
                     errorMsg={state.errorMsg.character_story}
                 />
-            </div>
+            </FormContainer>
 
             {state.hasError && (
                 <p className="text-red-500 mt-4">Please check the input</p>

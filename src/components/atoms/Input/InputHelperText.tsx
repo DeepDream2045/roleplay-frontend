@@ -5,7 +5,7 @@ type TInputHelperTextProps = {
     className?: HTMLAttributes<HTMLDivElement>["className"];
 };
 export const defaultHelperTextClassName =
-    "text-sm font-normal leading-normal text-black-500";
+    "text-sm font-normal leading-normal text-black-900 dark:text-white-200";
 
 const InputHelperText = ({ helperText, className }: TInputHelperTextProps) => {
     return (
