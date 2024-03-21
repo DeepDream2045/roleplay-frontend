@@ -5,6 +5,7 @@ import { getAuthSession } from "@/lib/authSession";
 import { getModelInfoListAction } from "@/lib/modelInfoAction";
 import { TInputOption } from "@/components/atoms/Input/InputType";
 import CreateLoraCharacter from "./CreateLoraCharacter";
+import DisplaySwitcher from "@/components/organism/DisplaySwitcher/DisplaySwitcher";
 
 interface NewCharacterProps {}
 
@@ -39,9 +40,15 @@ async function NewCharacter(props: NewCharacterProps) {
     });
 
     return (
-        <>
+        <div className="flex flex-col flex-1 px-10 py-10">
+            <DisplaySwitcher
+                active="LoraAdaptor"
+                chatbotHref="/create/chatbot"
+                loraHref="/create/lora"
+            />
+
             <CreateLoraCharacter formattedModel={formattedModels} />
-        </>
+        </div>
     );
 }
 

@@ -45,7 +45,7 @@ const InputRange = (props: TInputRangeProps) => {
                     id={props.id}
                     type="range"
                     name={props.name}
-                    className={`px-0 ${defaultInputClassName}  cursor-pointer`}
+                    className={`px-0 ${defaultInputClassName} items-center  cursor-pointer`}
                     value={props.value}
                     defaultValue={props.defaultValue}
                     min={props.min}
