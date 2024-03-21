@@ -9,7 +9,14 @@ const nextConfig = {
                 port: '4002',
                 pathname: '/**',
             },
+            {
+                protocol: 'https',
+                hostname: "bacceen.site",
+                port: '4002',
+                pathname: '/**',
+            },
         ],
+
     },
     webpack: config => {
         config.resolve.fallback = { fs: false, net: false, tls: false };
