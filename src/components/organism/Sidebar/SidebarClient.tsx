@@ -10,7 +10,6 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import BrandLogo from "@/../public/icons/BrandLogo.svg";
-import ThemeSwitch from "@/components/molecules/ThemeSwitch/ThemeSwitch";
 
 interface SidebarClientProps {
     isLogin: boolean;
@@ -44,7 +43,7 @@ export default function SidebarClient({ isLogin }: SidebarClientProps) {
             <div className="flex flex-row gap-2 items-center justify-start h-18 pl-10">
                 <BrandLogo className="w-8 h-8 text-blue-500" />
                 <h3 className="text-5 leading-normal text-black-900 dark:text-white-200">
-                    Comchat
+                    Comchar
                 </h3>
             </div>
         );
