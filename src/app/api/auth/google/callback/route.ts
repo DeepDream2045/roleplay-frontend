@@ -36,6 +36,7 @@ export async function GET(request: NextRequest) {
 
         return NextResponse.redirect(`${process.env.NEXTAUTH_URL}/chats`);
     } catch (error) {
+        console.log(error);
         if (error instanceof Response) {
             const errorData = await error.json();
             return NextResponse.json(
