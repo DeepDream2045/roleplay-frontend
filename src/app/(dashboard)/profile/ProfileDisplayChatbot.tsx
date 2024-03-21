@@ -9,7 +9,7 @@ type TProfileDisplayChatbotProps = {
 const ProfileDisplayChatbot = (props: TProfileDisplayChatbotProps) => {
     return (
         <>
-            <p className="font-bold text-2xl leading-normal text-black-900">
+            <p className="font-bold text-2xl leading-normal text-black-900 dark:text-white-200">
                 Characters created by You
             </p>
             {/* All Character */}

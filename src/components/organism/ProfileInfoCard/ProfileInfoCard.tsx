@@ -50,7 +50,7 @@ const ProfileInfoCard = ({
     return (
         <>
             <div className="min-h-60 max-h-60 flex flex-row gap-6">
-                <div className="flex flex-row p-6 gap-6 min-w-168 max-w-168 bg-white-0 rounded-xl">
+                <div className="flex flex-row p-6 gap-6 min-w-168 max-w-168 bg-white-0 dark:bg-black-900 rounded-xl">
                     <div className="h-48 w-48 aspect-square relative">
                         <Image
                             src={convertImageSrcUtil(userPhotoProfileSrc)}
@@ -62,15 +62,15 @@ const ProfileInfoCard = ({
                     </div>
                     <div className="flex flex-col gap-3">
                         <div className="flex flex-col gap-1">
-                            <p className="text-3xl leading-tight text-black-900 font-bold">
+                            <p className="text-3xl leading-tight text-black-900 dark:text-white-200 font-bold">
                                 {userFullName}
                             </p>
-                            <p className="text-xs leading-normal text-black-100 font-medium">
+                            <p className="text-xs leading-normal text-black-900 dark:text-white-200 font-medium">
                                 @{userUsername}
                             </p>
                         </div>
                         <div className="flex flex-1 flex-col">
-                            <p className="text-sm leading-normal text-black-300 font-medium">
+                            <p className="text-sm leading-normal text-black-900 dark:text-white-200 font-medium">
                                 {userBio}
                             </p>
                         </div>
@@ -84,7 +84,7 @@ const ProfileInfoCard = ({
                     } `}
                 >
                     <div
-                        className={`flex flex-col gap-2.5 flex-1 justify-center items-center bg-white-0 rounded-xl select-none cursor-pointer ${
+                        className={`flex flex-col gap-2.5 flex-1 justify-center items-center bg-white-0 dark:bg-black-900 text-black-900 dark:text-white-200 rounded-xl select-none cursor-pointer ${
                             visitor ? "hidden" : ""
                         }`}
                         onClick={(e) => {
@@ -92,16 +92,16 @@ const ProfileInfoCard = ({
                             setEditModalShow(true);
                         }}
                     >
-                        <Pencil className="w-6 h-6 text-black-900" />
-                        <p className="text-xs leading-normal text-black-900 font-bold">
+                        <Pencil className="w-6 h-6" />
+                        <p className="text-xs leading-normal font-bold">
                             Edit Profile
                         </p>
                     </div>
-                    <div className="flex flex-col gap-2.5 flex-1 justify-center items-center bg-white-0 rounded-xl cursor-default select-none">
-                        <p className="text-2xl leading-none text-black-900 font-bold">
+                    <div className="flex flex-col gap-2.5 flex-1 justify-center items-center bg-white-0 dark:bg-black-900 rounded-xl cursor-default select-none">
+                        <p className="text-2xl leading-none font-bold">
                             {totalData}
                         </p>
-                        <p className="text-xs leading-normal text-black-900 font-bold">
+                        <p className="text-xs leading-normal font-bold">
                             {totalDataType}
                         </p>
                     </div>

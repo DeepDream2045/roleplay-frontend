@@ -9,8 +9,9 @@ type TProfileDisplayLoraAdaptorProps = {
 const ProfileDisplayLoraAdaptor = (props: TProfileDisplayLoraAdaptorProps) => {
     return (
         <>
-            <h2>Lora Adaptors</h2>
-            <p>Lora Adaptors created by you.</p>
+            <p className="font-bold text-2xl leading-normal text-black-900 dark:text-white-200">
+                Lora created by You
+            </p>
             {/* All Character */}
             <div className="flex flex-wrap flex-row gap-4 mt-4">
                 {props.loraAdaptors.map((val, index) => {
