@@ -66,3 +66,18 @@ export const LORA_TRAIN_STATUS_BG_COLOR: TLORA_TRAIN_STATUS_BG_COLOR = {
     trained: "bg-green-200",
     untrained: "bg-black-200",
 };
+
+export const CHATBOT_AVAILABILITY_OPTIONS: TInputOption[] = [
+    {
+        label: "Private: Only you can chat",
+        value: "private",
+    },
+    {
+        label: "Unlisted: Anyone with the link can chat but not searchable",
+        value: "unlisted",
+    },
+    {
+        label: "Public: Anyone can discover and chat",
+        value: "public",
+    },
+];

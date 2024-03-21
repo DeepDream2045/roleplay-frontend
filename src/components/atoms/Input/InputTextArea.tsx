@@ -13,7 +13,7 @@ type TInputTextAreaProps = TInputProps & {
         | null;
 };
 
-const defaultRows = 3;
+const defaultRows = 5;
 
 const InputTextArea = (props: TInputTextAreaProps) => {
     const { rows } = props;
@@ -34,7 +34,9 @@ const InputTextArea = (props: TInputTextAreaProps) => {
             )}
             <textarea
                 id={props.id}
-                className={`${defaultInputClassName} `}
+                className={` min-h-[${
+                    1.3125 * actualRows
+                }rem] ${defaultInputClassName} `} // line-height 1.3125rem
                 placeholder={props.placeholder}
                 value={props.value}
                 defaultValue={props.defaultValue || undefined}

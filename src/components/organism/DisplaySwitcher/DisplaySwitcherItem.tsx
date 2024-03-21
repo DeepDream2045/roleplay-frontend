@@ -16,7 +16,7 @@ const DisplaySwitcherItem = ({
         <Link
             href={href}
             className={`flex flex-row px-4 py-2 ${
-                active ? "bg-blue-500 text-white-0" : "text-black-200"
+                active ? "bg-blue-500 text-white-0" : "text-black-300"
             } rounded-md cursor-pointer`}
         >
             {label}

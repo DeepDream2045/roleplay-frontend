@@ -15,7 +15,7 @@ type TInputToggleProps = Omit<TInputProps, "value"> & {
 const InputToggle = (props: TInputToggleProps) => {
     return (
         <>
-            <div className="flex flex-row justify-between">
+            <div className="flex flex-row justify-between items-center">
                 <div>
                     {props.label && (
                         <InputLabel
@@ -40,15 +40,15 @@ const InputToggle = (props: TInputToggleProps) => {
                 />
                 <button
                     type="button"
-                    className={`relative inline-flex h-6 w-11 items-center rounded-full ${
+                    className={`relative inline-flex min-h-6 min-w-11 max-h-6 max-w-11 items-center rounded-full ${
                         props.value ? "bg-blue-500" : "bg-gray-300"
                     }`}
                     onClick={props.onChange}
                 >
                     <span
-                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition 
-          ${props.value ? "translate-x-6" : "translate-x-1"}
-        }`}
+                        className={`inline-block absolute ${
+                            props.value ? "translate-x-6" : "translate-x-1"
+                        } min-h-4 min-w-4 transform rounded-full bg-white-0 transition-all }`}
                     />
                 </button>
             </div>

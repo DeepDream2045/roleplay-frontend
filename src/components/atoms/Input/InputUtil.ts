@@ -18,10 +18,8 @@ type TInputProps = {
     customFooterClassName?: TInputFooterProps["className"];
 };
 
-// const defaultInputClassName = "border border-gray-400 text-sm rounded p-2";
-
 let defaultInputClassName =
-    "w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50";
+    "w-full mt-[0.75rem] px-2 py-2 min-h-10 text-sm leading-normal text-black-900 placeholder:text-white-700 flex flex-row items-start border border-white-200 rounded-lg shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50";
 
 export type { TInputProps };
 export { defaultInputClassName };

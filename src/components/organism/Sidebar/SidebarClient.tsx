@@ -48,9 +48,9 @@ export default function SidebarClient({ isLogin }: SidebarClientProps) {
             {/* Navbar that will show relatively */}
             <nav
                 id="sidebar"
-                className={`min-h-full max-h-full w-62 max-w-62 flex flex-col bg-white-0 dark:bg-blue-500 pb-8 z-50`}
+                className={`min-h-full max-h-full w-56 max-w-56 flex flex-col bg-white-0 dark:bg-blue-500 pb-8 z-50`}
             >
-                <div className="flex flex-row gap-2 items-center justify-center h-25 px-8 py-8">
+                <div className="flex flex-row gap-2 items-center justify-center h-18 pl-8">
                     <BrandLogo className="w-10 h-10 text-blue-500" />
                     <h3 className="text-7 leading-normal">Comchat</h3>
                 </div>
@@ -63,10 +63,10 @@ export default function SidebarClient({ isLogin }: SidebarClientProps) {
                         iconOnly={pathName.includes("/chats")}
                     />
                     <NavLink
-                        path="/new-character"
+                        path="/create/chatbot"
                         Icon={PlusCircle}
                         label="Create"
-                        active={pathName.includes("/new-character")}
+                        active={pathName.includes("/create")}
                         iconOnly={pathName.includes("/chats")}
                     />
                     <NavLink

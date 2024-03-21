@@ -6,7 +6,6 @@ import { TInputOption } from "@/components/atoms/Input/InputType";
 import InputText from "@/components/atoms/Input/InputText";
 import InputSelect from "@/components/atoms/Input/InputSelect";
 import Button from "@/components/atoms/Button";
-import InputAdditionalInfo from "./InputAdditionalInfo";
 import InputRange from "@/components/atoms/Input/InputRange";
 import { createLoraAction } from "@/lib/loraInfoAction";
 import {
@@ -16,6 +15,7 @@ import {
     OPTIMIZER_CHOICES,
 } from "@/constants/constants";
 import InputTextArea from "@/components/atoms/Input/InputTextArea";
+import InputTextAreaWithUploadFile from "@/components/atoms/Input/InputTextAreaWithUploadFile";
 
 type AdaptorCharacterFormPropsType = {
     models: TInputOption[];
@@ -169,9 +169,11 @@ export default function AdaptorCharacterForm({
                             Dataset File for finetune the model
                         </div>
                         <div className="flex flex-col gap-4">
-                            <InputAdditionalInfo
+                            <InputTextAreaWithUploadFile
+                                id="dataset"
                                 name="dataset"
                                 label="Dataset"
+                                rows={8}
                                 errorMsg={state.errorMsg.dataset}
                                 placeholder={LORA_DATASET_PLACEHOLDER}
                                 acceptedFile={["application/json"]}

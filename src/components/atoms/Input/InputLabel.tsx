@@ -15,8 +15,10 @@ const InputLabel = ({
     labelClassName,
     requiredClassName,
 }: TInputLabelProps) => {
-    const defaultLabelClassName = "font-semibold text-sm";
-    const defaultRequiredClassName = "text-red-500";
+    const defaultLabelClassName =
+        "text-5 font-bold leading-normal text-black-900";
+    const defaultRequiredClassName =
+        "text-4 font-medium leading-normal text-black-900 text-red-500";
 
     if (notLabel) {
         return (

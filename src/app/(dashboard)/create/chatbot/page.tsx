@@ -1,15 +1,14 @@
-import { ReactElement } from "react";
-import DashboardLayout from "@/app/(dashboard)/layout";
 import AskToLogin from "@/components/organism/AskToLogin/AskToLogin";
 import { getAuthSession } from "@/lib/authSession";
 import { getModelInfoListAction } from "@/lib/modelInfoAction";
 import { TInputOption } from "@/components/atoms/Input/InputType";
 import { getTagInfoListAction } from "@/lib/tagAction";
-import PageClient from "./PageClient";
+import DisplaySwitcher from "@/components/organism/DisplaySwitcher/DisplaySwitcher";
+import CreateChatbotCharacter from "./CreateChatbotCharacter";
 
-interface NewCharacterProps {}
+interface CreateChatbotPageProps {}
 
-async function NewCharacter(props: NewCharacterProps) {
+async function CreateChatbotPage(props: CreateChatbotPageProps) {
     const session = await getAuthSession();
     if (!session?.access) {
         return (
@@ -59,17 +58,19 @@ async function NewCharacter(props: NewCharacterProps) {
     });
 
     return (
-        <>
-            <PageClient
+        <div className="flex flex-col flex-1 px-10 py-10">
+            <DisplaySwitcher
+                active="Chatbot"
+                chatbotHref="/create/chatbot"
+                loraHref="/create/lora"
+            />
+
+            <CreateChatbotCharacter
                 formattedModel={formattedModel}
                 formattedTag={formattedTag}
             />
-        </>
+        </div>
     );
 }
 
-NewCharacter.getLayout = (page: ReactElement) => {
-    return <DashboardLayout>{page}</DashboardLayout>;
-};
-
-export default NewCharacter;
+export default CreateChatbotPage;

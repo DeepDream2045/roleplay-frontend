@@ -89,7 +89,7 @@ const InputSelect = ({ multiple = false, ...props }: TInputSelectProps) => {
     };
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col relative">
             {props.label && (
                 <InputLabel
                     label={props.label}
@@ -106,7 +106,7 @@ const InputSelect = ({ multiple = false, ...props }: TInputSelectProps) => {
                 multiple={multiple}
                 id={props.id}
                 name={props.name}
-                className={`${defaultInputClassName} ${
+                className={`${defaultInputClassName} hidden ${
                     props.customSelectClassName || ""
                 }`}
                 value={value}
@@ -136,7 +136,9 @@ const InputSelect = ({ multiple = false, ...props }: TInputSelectProps) => {
                             return;
                         }
                         setInputActive(true);
-                        searchInputRef.current!.focus();
+                        Sleep(50).then(() => {
+                            searchInputRef.current!.focus();
+                        });
                     }}
                 >
                     {props.value?.[0]?.label || props.placeholder}
@@ -205,7 +207,9 @@ const InputSelect = ({ multiple = false, ...props }: TInputSelectProps) => {
             )}
 
             <div
-                className={`flex flex-col w-full overflow-x-auto rounded-lg  ${
+                className={`absolute ${
+                    multiple ? "top-24" : "top-20"
+                } bg-white-0 z-30 flex flex-col w-full overflow-x-auto rounded-lg  ${
                     inputActive
                         ? "max-h-32 border border-gray-300 mt-4"
                         : "max-h-0 none"

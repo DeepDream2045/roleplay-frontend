@@ -3,25 +3,33 @@
 import InputErrorMessage from "@/components/atoms/Input/InputErrorMessage";
 import InputHelperText from "@/components/atoms/Input/InputHelperText";
 import React, { useState, useRef } from "react";
+import InputLabel from "./InputLabel";
+import { defaultInputClassName } from "./InputUtil";
 
-export type InputAdditionalInfoProps = {
+export type InputTextAreaWithUploadFileProps = {
     label?: string;
+    id: string;
     name: string;
     errorMsg?: string[];
     defaultValue?: string | null;
     placeholder?: string;
     helperText?: string;
+    rows?: number;
     acceptedFile?: ("text/plain" | "application/json")[];
 };
-const InputAdditionalInfo = ({
+const InputTextAreaWithUploadFile = ({
     label,
+    id,
     name,
     errorMsg,
     defaultValue,
     placeholder = "The text from uploaded files will appear here...",
     helperText,
+    rows,
     acceptedFile = ["text/plain"],
-}: InputAdditionalInfoProps) => {
+}: InputTextAreaWithUploadFileProps) => {
+    const defaultRows = 5;
+    const actualRows = rows ?? defaultRows;
     const [text, setText] = useState(defaultValue || "");
 
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -64,9 +72,7 @@ const InputAdditionalInfo = ({
     return (
         <div>
             <div className="flex justify-between items-center mb-4">
-                <span className="text-gray-700">
-                    {label || "Additional Info"}
-                </span>
+                {label && <InputLabel label={label} />}
                 <span
                     className="cursor-pointer text-blue-600 hover:text-blue-800"
                     onClick={handleFileUploadClick}
@@ -85,16 +91,20 @@ const InputAdditionalInfo = ({
             {helperText && <InputHelperText helperText={helperText} />}
             <div>
                 <textarea
-                    className="w-full h-64 p-2 border border-gray-300"
+                    id={id}
+                    className={` min-h-[${
+                        1.3125 * actualRows
+                    }rem] ${defaultInputClassName} `}
                     name={name}
                     value={text}
                     onChange={(e) => setText(e.target.value)}
                     placeholder={placeholder}
-                ></textarea>
+                    rows={actualRows}
+                />
             </div>
             {errorMsg && <InputErrorMessage message={errorMsg} />}
         </div>
     );
 };
 
-export default InputAdditionalInfo;
+export default InputTextAreaWithUploadFile;
