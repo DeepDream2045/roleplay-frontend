@@ -61,13 +61,13 @@ export default function ChatComponent({
                 </div>
             </div>
             <div
-                className="flex w-16 h-full flex-col gap-1 bg-red-600 items-center justify-center rounded-md cursor-pointer"
+                className="flex w-16 h-full flex-col gap-1 bg-red-600 text-white-0 items-center justify-center rounded-md cursor-pointer"
                 onClick={() => {
                     setShowDeleteModal(true);
                 }}
             >
                 <Trash2 className="w-6 h-6 text-white" />
-                <p className="text-white font-medium text-sm">Delete</p>
+                <p className="text-white-0 font-medium text-sm">Delete</p>
             </div>
             {showDeleteModal && (
                 <RoomDeleteModal
