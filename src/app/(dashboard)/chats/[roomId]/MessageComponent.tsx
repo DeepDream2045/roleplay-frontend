@@ -31,7 +31,9 @@ export default function MessageComponent({
 
             <div
                 className={`flex ${
-                    rigth ? "bg-gray-200" : "bg-blue-50"
+                    rigth
+                        ? "bg-white-0 dark:bg-white-700"
+                        : "bg-blue-200 dark:bg-blue-700"
                 } p-2 rounded-lg`}
             >
                 <Typewriter words={message} loop={1} typeSpeed={typeSpeed} />

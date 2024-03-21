@@ -32,7 +32,7 @@ const ChatList = (props: TChatListProps) => {
     }, []);
 
     return (
-        <div className="w-96 border-r min-h-full max-h-full py-4 sticky top-0 flex flex-col">
+        <div className="w-96 border-r min-h-full max-h-full py-4 sticky top-0 flex flex-col text-black-900 dark:text-white-200">
             <div className="h-16 flex">
                 <h1 className="text-3xl font-semibold px-4">Chats</h1>
             </div>

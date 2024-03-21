@@ -46,7 +46,7 @@ const ConversationHeader = (props: TConversationHeaderProps) => {
                 <h3>{message}</h3>
             </div>
             <div className="flex flex-row items-center">
-                <MoreHorizontal className="w-8 h-8" />
+                {/* <MoreHorizontal className="w-8 h-8" /> */}
             </div>
         </div>
     );
