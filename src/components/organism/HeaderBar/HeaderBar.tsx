@@ -20,7 +20,7 @@ const HeaderBar = async (props: HeaderBarProps) => {
               };
           };
 
-    if (session) {
+    if (session.access) {
         loginData = {
             isLogin: true,
             user: {
