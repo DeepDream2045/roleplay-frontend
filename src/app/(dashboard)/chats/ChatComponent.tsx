@@ -34,7 +34,7 @@ export default function ChatComponent({
             <div
                 className={`flex relative flex-row flex-1 p-4 rounded-md items-center gap-4 cursor-pointer ${
                     active
-                        ? "bg-white-200 dark:bg-black-700"
+                        ? "bg-white-500 dark:bg-black-700"
                         : "bg-white-0 dark:bg-black-900"
                 }`}
                 onClick={onClick}
