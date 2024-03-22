@@ -9,7 +9,7 @@ type LoraFooterProps = {
 
 const LoraFooter = ({ creatorImageSrc, creatorUsername }: LoraFooterProps) => {
     return (
-        <div className="flex flex-row items-center justify-start gap-2">
+        <div className="flex flex-row items-center justify-start gap-2 cursor-pointer">
             <div className="w-8 h-8 relative rounded-full aspect-square">
                 <Image
                     src={convertImageSrcUtil(creatorImageSrc)}

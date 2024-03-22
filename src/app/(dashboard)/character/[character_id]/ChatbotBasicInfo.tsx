@@ -7,6 +7,7 @@ import ChatbotTagBadge from "@/app/components/dashboard/CharacterCard/ChatbotTag
 import { timeAgo } from "@/util/dateUtil";
 import CharacterEditDeleteAction from "./CharacterEditDeleteAction";
 import { TInputOption } from "@/components/atoms/Input/InputType";
+import Link from "next/link";
 
 type ChatbotBasicInfoProps = {
     id: number;
@@ -51,7 +52,10 @@ const ChatbotBasicInfo = (props: ChatbotBasicInfoProps) => {
                         </div>
                     </div>
                     <div className="flex flex-col flex-1 gap-2">
-                        <div className="flex flex-row items-center justify-start gap-2">
+                        <Link
+                            href={`/profile/${props.creatorUsername}`}
+                            className="flex flex-row items-center justify-start gap-2 cursor-pointer"
+                        >
                             <div className="w-8 h-8 relative rounded-full aspect-square">
                                 <Image
                                     src={convertImageSrcUtil(
@@ -65,7 +69,7 @@ const ChatbotBasicInfo = (props: ChatbotBasicInfoProps) => {
                             <p className="line-clamp-1 flex flex-1 text-ellipsis text-xs font-medium leading-normal ">
                                 {props.creatorUsername}
                             </p>
-                        </div>
+                        </Link>
                         <p className="text-5 font-semibold leading-[100%] ">
                             {props.chatbotName}
                         </p>

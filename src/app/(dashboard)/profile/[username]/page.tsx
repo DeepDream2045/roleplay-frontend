@@ -6,9 +6,9 @@ import { notFound } from "next/navigation";
 import { CharacterInfoType } from "@/types/action";
 
 async function ProfilePage({
-    params: { userId },
+    params: { username },
 }: {
-    params: { userId: string };
+    params: { username: string };
 }) {
     let characters: CharacterInfoType[] = [];
 
@@ -29,7 +29,7 @@ async function ProfilePage({
     }
 
     const filteredCharacters = characters.filter((val) => {
-        return String(val.user.id) === userId;
+        return val.user.username === username;
     });
 
     if (filteredCharacters.length === 0) {

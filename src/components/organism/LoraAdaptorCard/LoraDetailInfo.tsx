@@ -7,7 +7,7 @@ type LoraDetailInfoProps = {
 
 const LoraDetailInfo = ({ loraName, loraDescription }: LoraDetailInfoProps) => {
     return (
-        <div className="flex flex-col gap-4 flex-1">
+        <div className="flex flex-col gap-4 flex-1 cursor-pointer">
             <h4 className="text-5 font-semibold leading-normal text-black-900 dark:text-white-200 line-clamp-1">
                 {loraName}
             </h4>
