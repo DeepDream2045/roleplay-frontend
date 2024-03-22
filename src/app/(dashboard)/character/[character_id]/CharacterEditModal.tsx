@@ -71,7 +71,7 @@ const CharacterEditModal = ({
                 className="flex flex-col flex-1 justify-center items-center max-h-full p-8 overflow-hidden scrollbar-hide"
                 style={{ backgroundColor: "rgba(0, 0, 0, 0.48)" }}
             >
-                <div className="flex flex-1 overflow-y-hidden scrollbar-hide pt-4 px-8 flex-col bg-white-0 min-w-screen-lg max-w-screen-lg rounded-lg">
+                <div className="flex flex-1 overflow-y-hidden scrollbar-hide pt-4 px-8 flex-col bg-white-0 dark:bg-black-900 min-w-screen-lg max-w-screen-lg rounded-lg">
                     <header className=" py-4 px-6 ">
                         <div className="h-10 flex flex-row justify-between items-center">
                             <h2 className="flex flex-1 justify-center">
