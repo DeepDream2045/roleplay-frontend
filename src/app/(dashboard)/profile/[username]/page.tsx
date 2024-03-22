@@ -77,8 +77,8 @@ async function ProfilePage({
             <div className="flex mt-9">
                 <DisplaySwitcher
                     active={currentView}
-                    chatbotHref="/profile?character=Chatbot"
-                    loraHref="/profile?character=LoraAdaptor"
+                    chatbotHref={`/profile/${username}?character=Chatbot`}
+                    loraHref={`/profile/${username}?character=LoraAdaptor`}
                 />
             </div>
 
