@@ -71,7 +71,7 @@ async function ProfilePage({
                 }
                 visitor
                 totalDataType={
-                    currentView === "LoraAdaptor" ? "Lora(s)" : "Chatbot(s)"
+                    currentView === "LoraAdaptor" ? "Adaptor(s)" : "Chatbot(s)"
                 }
             />
             <div className="flex mt-9">

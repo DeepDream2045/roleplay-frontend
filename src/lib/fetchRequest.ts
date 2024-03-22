@@ -79,7 +79,7 @@ export async function fetchRequest<TBody, TResponse>({
             url,
             method,
             headers,
-            timeout: 50000,
+            timeout: 300000,
             // Adjusting to allow body in GET request
             ...(method.toLowerCase() === "get"
                 ? { params: body }
@@ -92,6 +92,10 @@ export async function fetchRequest<TBody, TResponse>({
         // Return a success response
         return { isError: false, responseData: response.data as TResponse };
     } catch (error) {
+        console.log("Error Happen:");
+        console.log("URL: ", url);
+        console.log("Error: ", error);
+
         // Handles any errors thrown during the Axios operation or response processing.
         if (axios.isAxiosError(error)) {
             console.log("Axios Error: ", error);
@@ -166,8 +170,6 @@ export async function fetchRequest<TBody, TResponse>({
                 errorData,
             };
         }
-
-        console.log("Unexpected Error: ", error);
 
         // Generic or unknown error handling
         throw {

@@ -14,7 +14,7 @@ type ProfileInfoCardProps = {
     userBio?: string;
     visitor?: boolean;
     totalData: number;
-    totalDataType: "Chatbot(s)" | "Lora(s)";
+    totalDataType: "Chatbot(s)" | "Adaptor(s)";
 };
 
 const ProfileInfoCard = ({

@@ -33,7 +33,7 @@ const LoraExtraInfo = ({
     }
 
     return (
-        <div className="flex flex-row gap-4 items-center justify-start cursor-pointer">
+        <div className="flex flex-row gap-4 items-center justify-start cursor-default">
             <div
                 className={`py-1 px-2 flex items-center justify-center rounded-md text-white-0 ${LORA_TRAIN_STATUS_BG_COLOR[trainStatus]}`}
             >

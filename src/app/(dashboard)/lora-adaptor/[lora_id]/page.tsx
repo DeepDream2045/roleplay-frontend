@@ -225,13 +225,13 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                     </h3>
                     <p className="text-sm font-normal leading-normal  text-wrap whitespace-pre-line">
                         {loraAdaptorAccessed?.lora_short_bio ||
-                            "No Lora Description provided"}
+                            "No Adaptor Description provided"}
                     </p>
                 </div>
 
                 <div className="flex flex-col gap-2">
                     <h3 className="text-5 leading-[100%] font-semibold ">
-                        Lora Training Information
+                        Adaptor Training Information
                     </h3>
                     <div className="grid grid-flow-row grid-cols-4 gap-2">
                         <LoraBadgeInformation
@@ -271,7 +271,7 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
 
                 <div className="flex flex-col gap-2">
                     <h3 className="text-5 leading-[100%] font-semibold ">
-                        Lora Configuration Information
+                        Adaptor Configuration Information
                     </h3>
                     <div className="grid grid-flow-row grid-cols-4 gap-2">
                         <LoraBadgeInformation

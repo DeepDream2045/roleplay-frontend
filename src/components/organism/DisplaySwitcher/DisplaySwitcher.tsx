@@ -24,7 +24,7 @@ const DisplaySwitcher = ({
                 key={"LoraAdaptor"}
                 href={loraHref}
                 active={active === "LoraAdaptor"}
-                label="Lora"
+                label="Adaptor"
             />
         </div>
     );

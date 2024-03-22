@@ -96,7 +96,7 @@ async function ProfilePage({ searchParams: { character } }: TProfilePageProps) {
                         : characters.length
                 }
                 totalDataType={
-                    currentView === "LoraAdaptor" ? "Lora(s)" : "Chatbot(s)"
+                    currentView === "LoraAdaptor" ? "Adaptor(s)" : "Chatbot(s)"
                 }
             />
             <div className="flex mt-9">

@@ -12,7 +12,7 @@ const CreateLoraCharacter = (props: Props) => {
             <header className="sticky top-0 flex flex-col flex-1 w-full text-black-900 dark:text-white-200 bg-white-100 dark:bg-black-500  items-center z-10">
                 <div className="w-full flex flex-row gap-2">
                     <h4 className={`text-5 leading-normal font-bold `}>
-                        New Lora
+                        New Adaptor
                     </h4>
                     <h5 className="text-5 leading-normal font-normal ">
                         (Draft)

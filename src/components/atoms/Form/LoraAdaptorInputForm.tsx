@@ -120,13 +120,13 @@ const LoraAdaptorInputForm = (props: LoraAdaptorInputFormProps) => {
                             1. Basic Info
                         </p>
                         <p className="text-sm font-normal leading-normal">
-                            Your lora basic information and model as base
+                            Your adaptor basic information and model as base
                         </p>
                     </div>
                     <InputText
                         key="lora_model_name"
                         id="lora_model_name"
-                        label="LoRA Model Name"
+                        label="Adaptor Model Name"
                         placeholder="Lora model name"
                         name="lora_model_name"
                         required
@@ -136,7 +136,7 @@ const LoraAdaptorInputForm = (props: LoraAdaptorInputFormProps) => {
                     <InputTextArea
                         key="lora_short_bio"
                         id="lora_short_bio"
-                        label="LoRA Model Description"
+                        label="Adaptor Model Description"
                         helperText="Description of your LoRA model"
                         placeholder="Lora Description"
                         name="lora_short_bio"
@@ -148,7 +148,7 @@ const LoraAdaptorInputForm = (props: LoraAdaptorInputFormProps) => {
                     <InputSelect
                         key="base_model_id"
                         id="base_model_id"
-                        label="LoRA Base Model"
+                        label="Adaptor Base Model"
                         placeholder="Select Model"
                         name="base_model_id"
                         options={props.models}
@@ -164,10 +164,10 @@ const LoraAdaptorInputForm = (props: LoraAdaptorInputFormProps) => {
                 <div className="flex flex-col gap-7">
                     <div className="flex flex-col gap-1">
                         <p className="text-5 font-bold leading-normal ">
-                            2. LoRA Config
+                            2. Adaptor Config
                         </p>
                         <p className="text-sm font-normal leading-normal ">
-                            Your lora parameter configuration
+                            Your adaptor parameter configuration
                         </p>
                     </div>
                     <InputRange
@@ -215,7 +215,7 @@ const LoraAdaptorInputForm = (props: LoraAdaptorInputFormProps) => {
                     <InputSelect
                         key="lora_bias"
                         id="lora_bias"
-                        label="LoRA Bias"
+                        label="lora_bias"
                         placeholder="Select LoRA Bias"
                         name="lora_bias"
                         options={LORA_BIAS_CHOICES}
@@ -258,7 +258,7 @@ const LoraAdaptorInputForm = (props: LoraAdaptorInputFormProps) => {
                             4. Training Argument
                         </p>
                         <p className="text-sm font-normal leading-normal ">
-                            Your lora parameter will used on training
+                            Your adaptor parameter will used on training
                         </p>
                     </div>
                     <InputRange
