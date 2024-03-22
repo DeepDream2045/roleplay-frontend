@@ -37,7 +37,7 @@ async function ProfilePage({ searchParams: { character } }: TProfilePageProps) {
         redirect("/profile?character=Chatbot");
     }
 
-    if (character === "Chatbot") {
+    if (currentView === "Chatbot") {
         const characterData = await getCharacterInfoAction();
         if (characterData.hasError) {
             return (
