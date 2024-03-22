@@ -25,10 +25,10 @@ const ProfileEditModal = ({ onClose, profileData }: Props) => {
     return (
         <ModalWrapper>
             <div
-                className="flex flex-col flex-1 justify-center items-center max-h-full p-8"
+                className="flex flex-col flex-1 overflow-hidden justify-center items-center max-h-full p-8"
                 style={{ backgroundColor: "rgba(0, 0, 0, 0.48)" }}
             >
-                <div className="flex flex-1 py-4 px-8 flex-col bg-white-0 min-w-2xl max-w-2xl rounded-lg">
+                <div className="flex flex-1 py-4 px-8 flex-col overflow-hidden bg-white-0 dark:bg-black-900 text-black-900 dark:text-white-200 min-w-screen-md max-w-screen-md rounded-lg">
                     <header className=" py-4 px-6 ">
                         <div className="h-10 flex flex-row justify-between items-center">
                             <h2 className="flex flex-1 justify-center">
@@ -40,7 +40,7 @@ const ProfileEditModal = ({ onClose, profileData }: Props) => {
                             />
                         </div>
                     </header>
-                    <div className="px-2 mt-8 flex flex-1 flex-col pb-12">
+                    <div className="px-2 mt-8 flex flex-1 flex-col pb-12 overflow-y-scroll scrollbar-hide">
                         <form action={formAction}>
                             <InputFile
                                 name="profile_image"
