@@ -32,6 +32,7 @@ const CharacterEditModal = ({
     characterData,
 }: Props) => {
     const chatbotData: ChatbotInputFormProps["chatbotData"] = {
+        image: characterData.image,
         character_name: characterData.character_name,
         character_gender: characterData.character_gender,
         model_id: characterData.model_id,
@@ -56,14 +57,6 @@ const CharacterEditModal = ({
             errorMsg: {},
         }
     );
-
-    // characterData.prompt = characterData.prompt.replace(/\\n/g, "\n");
-    // if (characterData.character_story) {
-    //     characterData.character_story = characterData.character_story.replace(
-    //         /\\n/g,
-    //         "\n"
-    //     );
-    // }
 
     return (
         <ModalWrapper>

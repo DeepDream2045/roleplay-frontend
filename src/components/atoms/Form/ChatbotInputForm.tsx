@@ -16,6 +16,7 @@ import InputRadio from "../Input/InputRadio";
 import InputToggle from "../Input/InputToggle";
 import InputTextAreaWithUploadFile from "../Input/InputTextAreaWithUploadFile";
 import Button from "../Button";
+import convertImageSrcUtil from "@/util/convertImageSrcUtil";
 
 export type ChatbotInputFormProps = {
     formAction: FormHTMLAttributes<HTMLFormElement>["action"];
@@ -23,7 +24,7 @@ export type ChatbotInputFormProps = {
     models: TInputOption[];
     tags: TInputOption[];
     chatbotData: {
-        image?: string;
+        image?: string | null;
         character_name?: string;
         character_gender?: string;
         model_id?: CharacterInfoType["model_id"];

@@ -20,6 +20,7 @@ import LoraExtraInfo from "@/components/organism/LoraAdaptorCard/LoraExtraInfo";
 import Image from "next/image";
 import convertImageSrcUtil from "@/util/convertImageSrcUtil";
 import LoraBadgeInformation from "@/components/organism/LoraBadgeInformation/LoraBadgeInformation";
+import Link from "next/link";
 
 type TLoraAdaptorPageProps = {
     params: { lora_id: string };
@@ -192,8 +193,11 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                         {loraAdaptorAccessed.lora_model_name}
                     </h3>
                 </div>
-                <div className="flex flex-row items-center justify-start gap-2">
-                    <div className="w-8 h-8 relative rounded-full aspect-square">
+                <Link
+                    href={`/profile/${loraAdaptorAccessed.user.username}`}
+                    className="flex flex-row items-center justify-start gap-2 cursor-pointer"
+                >
+                    <div className="w-8 h-8 relative rounded-full aspect-square ">
                         <Image
                             src={convertImageSrcUtil(
                                 loraAdaptorAccessed.user.profile_image
@@ -206,7 +210,7 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                     <p className="line-clamp-1 flex flex-1 text-ellipsis text-xs font-medium leading-normal ">
                         {loraAdaptorAccessed.user.username}
                     </p>
-                </div>
+                </Link>
                 {String(loraAdaptorAccessed.user.id) ===
                     String(session.user?.id) && (
                     <LoraAdaptorEditDeleteAction
@@ -219,16 +223,10 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                     <h3 className="text-5 leading-[100%] font-semibold ">
                         Description
                     </h3>
-                    <p
-                        className="text-sm font-normal leading-normal"
-                        dangerouslySetInnerHTML={{
-                            __html: loraAdaptorAccessed?.lora_short_bio
-                                ? loraAdaptorAccessed.lora_short_bio
-                                      .replace(/\\n/g, "<br />")
-                                      .replace(/\n/g, "<br />")
-                                : "",
-                        }}
-                    />
+                    <p className="text-sm font-normal leading-normal  text-wrap whitespace-pre-line">
+                        {loraAdaptorAccessed?.lora_short_bio ||
+                            "No Lora Description provided"}
+                    </p>
                 </div>
 
                 <div className="flex flex-col gap-2">

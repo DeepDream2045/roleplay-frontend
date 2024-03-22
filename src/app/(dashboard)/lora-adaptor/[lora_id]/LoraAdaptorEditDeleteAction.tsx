@@ -28,7 +28,7 @@ const LoraAdaptorEditDeleteAction = (props: Props) => {
                     <p className="text-white-200">EDIT</p>
                 </div>
                 <div
-                    className="flex flex-row gap-2 justify-center items-center cursor-pointer px-7 py-1 bg-red-200 text-white-200 rounded-md"
+                    className="flex flex-row gap-2 justify-center items-center cursor-pointer px-7 py-1 bg-red-500 text-white-200 rounded-md"
                     onClick={() => {
                         setDeleteModalShow(true);
                     }}

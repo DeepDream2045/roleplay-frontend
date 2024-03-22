@@ -33,7 +33,7 @@ const LoraAdaptorDeleteModal = ({ onClose, loraAdaptorData }: Props) => {
                 className="flex flex-col flex-1 justify-center items-center max-h-full p-8"
                 style={{ backgroundColor: "rgba(0, 0, 0, 0.48)" }}
             >
-                <div className="flex flex-col bg-white max-w-md min-w-md rounded-lg p-8">
+                <div className="flex flex-col bg-white-0 dark:bg-black-900 text-black-900 dark:text-white-200 max-w-lg rounded-lg py-8 px-12">
                     <header className=" py-4 ">
                         <div className="h-10 flex flex-row justify-between items-center">
                             <h2>Delete Lora Adaptor</h2>
@@ -46,7 +46,7 @@ const LoraAdaptorDeleteModal = ({ onClose, loraAdaptorData }: Props) => {
                     <div className="mt-8 flex flex-col pb-12">
                         <h3>Are you sure you want delete the lora adaptor?</h3>
                         <form action={formAction}>
-                            <div className="mt-4 flex flex-row gap-4">
+                            <div className="mt-10 flex flex-row gap-4">
                                 <Button
                                     variant="fill"
                                     color="primary"
@@ -63,7 +63,7 @@ const LoraAdaptorDeleteModal = ({ onClose, loraAdaptorData }: Props) => {
                                     color="primary"
                                     size="fullWidth"
                                     type="submit"
-                                    className="flex-1"
+                                    className="flex-1 bg-red-500"
                                 >
                                     Delete
                                 </Button>
