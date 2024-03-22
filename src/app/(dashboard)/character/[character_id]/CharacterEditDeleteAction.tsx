@@ -22,21 +22,19 @@ const CharacterEditDeleteAction = (props: Props) => {
         <>
             <div className="flex flex-row gap-2 items-center justify-between">
                 <div
-                    className="flex flex-col gap-2 justify-center items-center cursor-pointer"
+                    className="flex flex-col gap-2 justify-center items-center cursor-pointer bg-blue-500 text-white-0 py-1 px-7 rounded-md"
                     onClick={() => {
                         setEditModalShow(true);
                     }}
                 >
-                    <Pencil className="w-6 h-6" />
                     <p>Edit</p>
                 </div>
                 <div
-                    className="flex flex-col gap-2 justify-center items-center cursor-pointer"
+                    className="flex flex-col gap-2 justify-center items-center cursor-pointer bg-red-500 text-white-0 py-1 px-7 rounded-md"
                     onClick={() => {
                         setDeleteModalShow(true);
                     }}
                 >
-                    <Trash2 className="w-6 h-6" />
                     <p>Delete</p>
                 </div>
             </div>

@@ -31,10 +31,10 @@ const ChatbotBasicInfo = (props: ChatbotBasicInfoProps) => {
                         src={convertImageSrcUtil(props.chatbotImageSrc)}
                         alt={`${props.chatbotName} image`}
                         fill
-                        className="object-cover object-center rounded-xl"
+                        className="object-cover object-center rounded-xl select-none"
                     />
                 </div>
-                <div className="flex flex-col gap-2 flex-1">
+                <div className="flex flex-col gap-2 flex-1 cursor-default">
                     {/* Chatbot Extra Info */}
                     <div className="flex flex-row gap-6">
                         <div className="flex flex-row gap-2 flex-1 overflow-clip">
