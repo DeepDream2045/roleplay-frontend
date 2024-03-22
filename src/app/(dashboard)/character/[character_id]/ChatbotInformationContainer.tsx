@@ -8,7 +8,7 @@ const ChatbotInformationContainer = ({
     children,
 }: ChatbotInformationContainerProps) => {
     return (
-        <div className="flex flex-1 p-6 flex-col rounded-xl bg-white-0">
+        <div className="flex flex-1 p-6 flex-col rounded-xl bg-white-0 dark:bg-black-900 text-black-900 dark:text-white-200">
             {children}
         </div>
     );

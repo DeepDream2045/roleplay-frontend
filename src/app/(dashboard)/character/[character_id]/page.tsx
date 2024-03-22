@@ -1,9 +1,6 @@
 "use server";
 
-import Rating from "@/components/atoms/Rating/Rating";
 import { getAuthSession } from "@/lib/authSession";
-import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 import {
     getCharacterInfoAction,
@@ -11,8 +8,6 @@ import {
 } from "@/lib/characterInfoAction";
 import CreateChatRoomForm from "./CreateChatRoomForm";
 import { CharacterInfoType } from "@/types/action";
-import { MAIN_API_BASE_URL } from "@/constants/environtment";
-import CharacterEditDeleteAction from "./CharacterEditDeleteAction";
 import { TInputOption } from "@/components/atoms/Input/InputType";
 import { getTagInfoListAction } from "@/lib/tagAction";
 import { getModelInfoListAction } from "@/lib/modelInfoAction";
@@ -156,10 +151,10 @@ async function CharacterPage({
 
                     <ChatbotInformationContainer>
                         <div className="flex flex-1 flex-col gap-2">
-                            <p className="font-semibold text-2xl leading-normal text-black-900">
+                            <p className="font-semibold text-2xl leading-normal ">
                                 Description
                             </p>
-                            <p className="font-normal text-sm leading-normal text-black-300 text-wrap whitespace-pre-line">
+                            <p className="font-normal text-sm leading-normal text-wrap whitespace-pre-line">
                                 {userCharacter.short_bio}
                             </p>
                         </div>
@@ -167,10 +162,10 @@ async function CharacterPage({
 
                     <ChatbotInformationContainer>
                         <div className="flex flex-1 flex-col gap-2">
-                            <p className="font-semibold text-2xl leading-normal text-black-900">
+                            <p className="font-semibold text-2xl leading-normal ">
                                 Character Story
                             </p>
-                            <p className="font-normal text-sm leading-normal text-black-300 text-wrap whitespace-pre-line">
+                            <p className="font-normal text-sm leading-normal text-wrap whitespace-pre-line">
                                 {userCharacter.character_story ||
                                     "No Character Story Provided on this Character"}
                             </p>
@@ -179,10 +174,10 @@ async function CharacterPage({
 
                     <ChatbotInformationContainer>
                         <div className="flex flex-1 flex-col gap-2">
-                            <p className="font-semibold text-2xl leading-normal text-black-900">
+                            <p className="font-semibold text-2xl leading-normal ">
                                 Initial Message
                             </p>
-                            <p className="font-normal text-sm leading-normal text-black-300 text-wrap whitespace-pre-line">
+                            <p className="font-normal text-sm leading-normal text-wrap whitespace-pre-line">
                                 {userCharacter.initial_message}
                             </p>
                         </div>
@@ -190,10 +185,10 @@ async function CharacterPage({
 
                     <ChatbotInformationContainer>
                         <div className="flex flex-1 flex-col gap-2">
-                            <p className="font-semibold text-2xl leading-normal text-black-900">
+                            <p className="font-semibold text-2xl leading-normal ">
                                 Character Prompt
                             </p>
-                            <p className="font-normal text-sm leading-normal text-black-300 text-wrap whitespace-pre-line">
+                            <p className="font-normal text-sm leading-normal text-wrap whitespace-pre-line">
                                 {userCharacter.prompt}
                             </p>
                         </div>

@@ -43,7 +43,7 @@ const ChatbotBasicInfo = (props: ChatbotBasicInfoProps) => {
                             ))}
                         </div>
                         <div className="flex flex-row">
-                            <p className="text-xs font-medium leading-normal text-black-200">
+                            <p className="text-xs font-medium leading-normal ">
                                 {timeAgo(props.chatbotLastModifiedDate).join(
                                     " "
                                 )}
@@ -62,14 +62,14 @@ const ChatbotBasicInfo = (props: ChatbotBasicInfoProps) => {
                                     className="object-cover object-center rounded-full"
                                 />
                             </div>
-                            <p className="line-clamp-1 flex flex-1 text-ellipsis text-xs font-medium leading-normal text-black-200">
+                            <p className="line-clamp-1 flex flex-1 text-ellipsis text-xs font-medium leading-normal ">
                                 {props.creatorUsername}
                             </p>
                         </div>
-                        <p className="text-5 font-semibold leading-[100%] text-black-900">
+                        <p className="text-5 font-semibold leading-[100%] ">
                             {props.chatbotName}
                         </p>
-                        <p className="text-sm font-normal leading-normal text-black-300">
+                        <p className="text-sm font-normal leading-normal ">
                             {props.chatbotGender}
                         </p>
                     </div>

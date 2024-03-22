@@ -180,7 +180,7 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
 
     return (
         <div className="relative flex flex-col flex-1 max-h-full justify-center items-center pt-10">
-            <div className="relative max-w-screen-md min-w-screen-md overflow-y-scroll scrollbar-hide bg-white-0 flex flex-col gap-4 rounded-t-xl px-10 py-10">
+            <div className="relative max-w-screen-md min-w-screen-md overflow-y-scroll scrollbar-hide bg-white-0 dark:bg-black-900 text-black-900 dark:text-white-200 flex flex-col gap-4 rounded-xl px-10 py-10 mb-5">
                 <LoraExtraInfo
                     loraAdaptorLastModifiedDate={
                         loraAdaptorAccessed.modified_date
@@ -188,7 +188,7 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                     loraAdaptorTrainStatus={loraAdaptorAccessed.current_status}
                 />
                 <div>
-                    <h3 className="text-5 leading-[100%] font-semibold text-black-900 line-clamp-1">
+                    <h3 className="text-5 leading-[100%] font-semibold line-clamp-1">
                         {loraAdaptorAccessed.lora_model_name}
                     </h3>
                 </div>
@@ -203,7 +203,7 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                             className="object-cover object-center rounded-full"
                         />
                     </div>
-                    <p className="line-clamp-1 flex flex-1 text-ellipsis text-xs font-medium leading-normal text-black-200">
+                    <p className="line-clamp-1 flex flex-1 text-ellipsis text-xs font-medium leading-normal ">
                         {loraAdaptorAccessed.user.username}
                     </p>
                 </div>
@@ -216,11 +216,11 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                 )}
 
                 <div className="flex flex-col gap-2">
-                    <h3 className="text-5 leading-[100%] font-semibold text-black-900">
+                    <h3 className="text-5 leading-[100%] font-semibold ">
                         Description
                     </h3>
                     <p
-                        className="text-sm text-black-300 font-normal leading-normal"
+                        className="text-sm font-normal leading-normal"
                         dangerouslySetInnerHTML={{
                             __html: loraAdaptorAccessed?.lora_short_bio
                                 ? loraAdaptorAccessed.lora_short_bio
@@ -232,7 +232,7 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                    <h3 className="text-5 leading-[100%] font-semibold text-black-900">
+                    <h3 className="text-5 leading-[100%] font-semibold ">
                         Lora Training Information
                     </h3>
                     <div className="grid grid-flow-row grid-cols-4 gap-2">
@@ -272,7 +272,7 @@ async function LoraAdaptorPage({ params: { lora_id } }: TLoraAdaptorPageProps) {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                    <h3 className="text-5 leading-[100%] font-semibold text-black-900">
+                    <h3 className="text-5 leading-[100%] font-semibold ">
                         Lora Configuration Information
                     </h3>
                     <div className="grid grid-flow-row grid-cols-4 gap-2">
