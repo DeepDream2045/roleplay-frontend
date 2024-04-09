@@ -6,21 +6,26 @@ import React from "react";
 import MetaMaskLogin from "../MetaMaskLogin/MetaMaskLogin";
 import { useEthereum } from "@/app/EthereumProvider";
 import convertImageSrcUtil from "@/util/convertImageSrcUtil";
+import dynamic from 'next/dynamic';
 
 type HeaderBarClientProps = {
     loginData:
-        | {
-              isLogin: false;
-              user: {};
-          }
-        | {
-              isLogin: true;
-              user: {
-                  username: string | undefined;
-                  userImgSrc: string | undefined | null;
-              };
-          };
+    | {
+        isLogin: false;
+        user: {};
+    }
+    | {
+        isLogin: true;
+        user: {
+            username: string | undefined;
+            userImgSrc: string | undefined | null;
+        };
+    };
 };
+
+const Connect = dynamic(() => import('../../../app/PolkadotjsPorvider').then(m => m.Connect), {
+    ssr: false,
+});
 
 const HeaderBarClient = (props: HeaderBarClientProps) => {
     const { userAddress, balance } = useEthereum();
@@ -32,14 +37,21 @@ const HeaderBarClient = (props: HeaderBarClientProps) => {
                     <ThemeSwitch />
                 </div>
                 {props.loginData.isLogin && (
-                    <div className="bg-white-100 py-2 px-5 text-black-500 rounded-lg">
-                        {!userAddress && <MetaMaskLogin />}
-                        {userAddress && (
-                            <h6 className="font-bold">
-                                {balance?.substring(0, 5)} ETH
-                            </h6>
-                        )}
-                    </div>
+                <div className="bg-white-100 py-2 px-5 text-black-500 rounded-lg">
+                    {!userAddress && <MetaMaskLogin />}
+                    {userAddress && (
+                        <h6 className="font-bold">
+                            {balance?.substring(0, 5)} ETH
+                        </h6>
+                    )}
+
+                </div>
+                
+                )}
+                {props.loginData.isLogin && (
+                <div>
+                    <Connect />
+                </div>
                 )}
                 {userAddress && (
                     <div className="bg-white-100 py-2 px-5 text-black-500 rounded-lg">
@@ -60,8 +72,8 @@ const HeaderBarClient = (props: HeaderBarClientProps) => {
                         src={
                             props.loginData.isLogin
                                 ? convertImageSrcUtil(
-                                      props.loginData.user.userImgSrc
-                                  )
+                                    props.loginData.user.userImgSrc
+                                )
                                 : "/images/default-image-placeholder.webp"
                         }
                         alt="Guest Profile Picture"

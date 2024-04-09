@@ -13,7 +13,7 @@ const MetaMaskLogin = (props: MetaMaskLoginProps) => {
             className="text-black-900 font-semibold cursor-pointer"
             onClick={connectWalletHandler}
         >
-            Connect Wallet
+            MetaMask
         </div>
     );
 };
